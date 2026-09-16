@@ -93,7 +93,13 @@
     '';
   };
 
-    home.file = {
+      home.file = {
+    ".config/nvim/init.lua".source =
+      ./nvim/init.lua;
+
+    ".config/nvim/lazy-lock.json".source =
+      ./nvim/lazy-lock.json;
+
     ".config/hypr/hyprland.lua".source =
       ../../configs/hypr/hyprland.lua;
 
