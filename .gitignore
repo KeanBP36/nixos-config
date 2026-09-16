@@ -1,0 +1,22 @@
+# NixOS / editor junk
+result
+result-*
+.direnv/
+.env
+.env.*
+*.swp
+*.swo
+*~
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Machine/local files
+hardware-configuration.local.nix
+
+# Temporary backups
+*.bak
