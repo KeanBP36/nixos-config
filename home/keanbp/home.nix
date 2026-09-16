@@ -93,7 +93,7 @@
     '';
   };
 
-      home.file = {
+  home.file = {
     ".config/nvim/init.lua".source =
       ./nvim/init.lua;
 
@@ -106,6 +106,9 @@
     ".config/hypr/hyprtoolkit.conf".source =
       ../../configs/hypr/hyprtoolkit.conf;
 
+    ".config/hypr/hyprlock.conf".source =
+      ../../configs/hyprlock/hyprlock.conf;
+
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
       force = true;
@@ -114,6 +117,7 @@
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
+
 
   catppuccin = {
     enable = true;
