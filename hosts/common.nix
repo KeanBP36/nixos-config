@@ -105,9 +105,9 @@
       alias ..='cd ..'
 
       # NixOS
-      alias nixconf='nvim /etc/nixos/hosts/desktop/configuration.nix'
+      alias nixconf='nvim /etc/nixos/hosts/$HOSTNAME/configuration.nix'
       alias nixhconf='nvim /etc/nixos/home/keanbp/home.nix'
-      alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos#desktop'
+      alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos#$HOSTNAME'
       alias flakeup='cd /etc/nixos && nix flake update'
 
       # Hyprland
