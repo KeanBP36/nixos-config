@@ -100,8 +100,10 @@
     ".config/nvim/lazy-lock.json".source =
       ./nvim/lazy-lock.json;
 
-    ".config/hypr/hyprland.lua".source =
-      ../../configs/hypr/hyprland.lua;
+    ".config/hypr/hyprland.lua" = {
+      source = ../../configs/hypr/hyprland.lua;
+      force = true;
+    };
 
     ".config/hypr/hyprtoolkit.conf".source =
       ../../configs/hypr/hyprtoolkit.conf;
@@ -117,7 +119,6 @@
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
-
 
   catppuccin = {
     enable = true;
