@@ -194,32 +194,28 @@ programs.bash = {
 interactiveShellInit = ''
   fastfetch
 
-alias ll='ls -lah'
-alias la='ls -A'
-alias ..='cd ..'
+  alias ll='ls -lah'
+  alias la='ls -A'
+  alias ..='cd ..'
 
-# NixOS
-alias nixconf='nvim /etc/nixos/configuration.nix'
-alias nixhconf='nvim /etc/nixos/home.nix'
-alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos#nixos'
-alias flakeup='cd /etc/nixos && nix flake update'
+  # NixOS
+  alias nixconf='nvim /etc/nixos/hosts/desktop/configuration.nix'
+  alias nixhconf='nvim /etc/nixos/home/keanbp/home.nix'
+  alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos#desktop'
+  alias flakeup='cd /etc/nixos && nix flake update'
 
-# Hyprland
-alias hyprconf='nvim /etc/nixos/hyprland-flake/configs/hypr/hyprland.lua'
-alias hyprtest='cp /etc/nixos/hyprland-flake/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
+  # Hyprland
+  alias hyprconf='nvim /etc/nixos/configs/hypr/hyprland.lua'
+  alias hyprtest='cp /etc/nixos/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
 
-# Quickshell
-alias qsbarconf='nvim /etc/nixos/hyprland-flake/configs/quickshell/bar/shell.qml'
-alias qsbtest='cp /etc/nixos/hyprland-flake/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
+  # Quickshell
+  alias qsbarconf='nvim /etc/nixos/configs/quickshell/bar/shell.qml'
+  alias qsbtest='cp /etc/nixos/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
 
-# Hyprland flake
-alias nixhyprflake='nvim /etc/nixos/hyprland-flake/flake.nix'
-alias nixhyprhome='nvim /etc/nixos/hyprland-flake/home.nix'
+  # Fastfetch
+  alias fetchconf='nvim /etc/nixos/configs/fastfetch/config.jsonc'
 
-# Fastfetch
-alias fetchconf='nvim /etc/nixos/hyprland-flake/configs/fastfetch/config.jsonc'
-
-export EDITOR=nvim
+  export EDITOR=nvim
 
   ctrl_l_fastfetch() {
     clear
@@ -228,6 +224,7 @@ export EDITOR=nvim
 
   bind -x '"\C-l":ctrl_l_fastfetch'
 '';
+
 };
 
 }
