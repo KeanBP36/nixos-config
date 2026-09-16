@@ -48,8 +48,7 @@ vim.opt.rtp:prepend(lazypath)
 -- =========================================
 
 require("lazy").setup({
-    lockfile = "/etc/nixos/home/keanbp/nvim/lazy-lock.json",
-
+ lockfile = "/etc/nixos-config/home/keanbp/nvim/lazy-lock.json",
     -- =====================================
     -- Fuzzy finder
     -- =====================================
