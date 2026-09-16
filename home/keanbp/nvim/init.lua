@@ -43,14 +43,17 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-
 -- =========================================
 -- Plugins
 -- =========================================
 
 require("lazy").setup({
+    lockfile = "/etc/nixos/home/keanbp/nvim/lazy-lock.json",
 
-    -- Telescope
+    -- =====================================
+    -- Fuzzy finder
+    -- =====================================
+
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
@@ -58,7 +61,10 @@ require("lazy").setup({
         },
     },
 
+    -- =====================================
     -- File tree
+    -- =====================================
+
     {
         "nvim-tree/nvim-tree.lua",
         dependencies = {
@@ -66,21 +72,155 @@ require("lazy").setup({
         },
     },
 
+    -- =====================================
     -- Treesitter
+    -- =====================================
+
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
     },
 
+    -- =====================================
     -- Statusline
+    -- =====================================
+
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
     },
-})
 
+    -- =====================================
+    -- Buffer tabs
+    -- =====================================
+
+    {
+        "akinsho/bufferline.nvim",
+        version = "*",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+    },
+
+    -- =====================================
+    -- Dashboard
+    -- =====================================
+
+    {
+        "goolord/alpha-nvim",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+    },
+
+    -- =====================================
+    -- Which-key
+    -- =====================================
+
+    {
+        "folke/which-key.nvim",
+    },
+
+    -- =====================================
+    -- Git
+    -- =====================================
+
+    {
+        "lewis6991/gitsigns.nvim",
+    },
+
+    -- =====================================
+    -- Surround
+    -- =====================================
+
+    {
+        "kylechui/nvim-surround",
+        version = "*",
+    },
+
+    -- =====================================
+    -- Comments
+    -- =====================================
+
+    {
+        "numToStr/Comment.nvim",
+    },
+
+    -- =====================================
+    -- TODO / FIXME
+    -- =====================================
+
+    {
+        "folke/todo-comments.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
+
+    -- =====================================
+    -- Indentation guides
+    -- =====================================
+
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+    },
+
+    -- =====================================
+    -- Animations
+    -- =====================================
+
+    {
+        "echasnovski/mini.animate",
+        version = false,
+    },
+
+    -- =====================================
+    -- Highlight references
+    -- =====================================
+
+    {
+        "RRethy/vim-illuminate",
+    },
+
+    -- =====================================
+    -- Notifications
+    -- =====================================
+
+    {
+        "rcarriga/nvim-notify",
+    },
+
+    -- =====================================
+    -- UI
+    -- =====================================
+
+    {
+        "folke/noice.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+    },
+
+    -- =====================================
+    -- Diagnostics
+    -- =====================================
+
+    {
+        "folke/trouble.nvim",
+    },
+
+    -- =====================================
+    -- LSP
+    -- =====================================
+
+    {
+        "neovim/nvim-lspconfig",
+    },
+})
 
 -- =========================================
 -- Colors
