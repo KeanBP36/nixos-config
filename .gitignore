@@ -20,3 +20,7 @@ hardware-configuration.local.nix
 
 # Temporary backups
 *.bak
+
+#hardware
+#hosts/desktop/hardware-configuration.nix
+#hosts/laptop/hardware-configuration.nix
