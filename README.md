@@ -48,10 +48,9 @@ My personal NixOS configuration, managed with **flakes + Home Manager + Git**.
 On a fresh NixOS installation:
 
 ```bash
-sudo rm -rf /etc/nixos
 sudo mkdir -p /etc/nixos
 sudo chown "$USER":users /etc/nixos
-git clone git@github.com:KeanBP36/nixos-config.git /etc/nixos
+git clone git@github.com:KeanBP36/nixos-config.git /etc/nixos 
 ```
 
 > This requires GitHub SSH authentication to already be configured.
