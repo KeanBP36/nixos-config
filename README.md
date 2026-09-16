@@ -50,7 +50,8 @@ On a fresh NixOS installation:
 ```bash
 sudo mkdir -p /etc/nixos
 sudo chown "$USER":users /etc/nixos
-git clone git@github.com:KeanBP36/nixos-config.git /etc/nixos 
+git clone  https://github.com/KeanBP36/nixos-config.git
+cd /etc/nixos
 ```
 
 > This requires GitHub SSH authentication to already be configured.
