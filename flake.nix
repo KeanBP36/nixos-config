@@ -14,31 +14,56 @@
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { nixpkgs, home-manager, nix-flatpak, catppuccin, ... }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+  outputs = {
+    nixpkgs,
+    home-manager,
+    nix-flatpak,
+    catppuccin,
+    ...
+  }:
 
-      modules = [
-        ./hosts/desktop/configuration.nix
+  let
+    system = "x86_64-linux";
 
-        home-manager.nixosModules.home-manager
+    commonHome = {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
 
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+      home-manager.users.keanbp = {
+        imports = [
+          ./home/keanbp/home.nix
+          catppuccin.homeModules.catppuccin
+        ];
+      };
 
-          home-manager.users.keanbp = {
-            imports = [
-              ./home/keanbp/home.nix
-              catppuccin.homeModules.catppuccin
-            ];
-          };
-
-          home-manager.sharedModules = [
-            nix-flatpak.homeManagerModules.nix-flatpak
-          ];
-        }
+      home-manager.sharedModules = [
+        nix-flatpak.homeManagerModules.nix-flatpak
       ];
+    };
+  in
+  {
+    nixosConfigurations = {
+
+      desktop = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./hosts/desktop/configuration.nix
+          home-manager.nixosModules.home-manager
+          commonHome
+        ];
+      };
+
+      laptop = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          ./hosts/laptop/configuration.nix
+          home-manager.nixosModules.home-manager
+          commonHome
+        ];
+      };
+
     };
   };
 }
