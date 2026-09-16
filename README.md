@@ -43,7 +43,7 @@ My personal NixOS configuration, managed with **flakes + Home Manager + Git**.
 
 ## Quick setup
 
-### 1. Clone the repository
+### 1. Clone the repository  (WARING THIS WILL NUKE EXISTING SETUP!!!!!!)
 
 On a fresh NixOS installation:
 
