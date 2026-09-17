@@ -17,7 +17,9 @@
     wl-clipboard
     grim
     slurp
-     hyprlauncher
+    hyprlauncher
+    libnotify
+    jq
 
 
     # Apps
