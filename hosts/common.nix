@@ -144,7 +144,7 @@
       alias nixbackup='find /etc/nixos-config/backup -type f | sort'
 
       #Tree
-      alias nixtee='tree /etc/nixos-config'
+      alias nixtree='tree /etc/nixos-config'
 
       # ─────────────────────────────────────────────
       # NixOS — rebuild
