@@ -128,6 +128,7 @@ interactiveShellInit = ''
   # NixOS / Git
   alias nixmain='cd /etc/nixos-config && git switch main'
   alias nixtest='cd /etc/nixos-config && git switch test'
+  alias nixshow='cd /etc/nixos-config && git branch --show-current'
 
   # Hyprland
   alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
