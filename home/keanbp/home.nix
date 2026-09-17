@@ -31,8 +31,7 @@
     thunar
     cava
     hollywood
-    pear-desktop
-
+    pear-desktop 
     # Fonts
     nerd-fonts.symbols-only
   ];
