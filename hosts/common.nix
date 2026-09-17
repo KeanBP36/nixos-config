@@ -44,6 +44,9 @@
     xwayland.enable = true;
   };
 
+  # Hyprlock PAM
+  security.pam.services.hyprlock = {};
+
   # Login
   services.greetd = {
     enable = true;

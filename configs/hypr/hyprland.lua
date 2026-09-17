@@ -320,6 +320,9 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.bind("CTRL + S", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
 hl.bind("CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png'))
 
+-- Lockscreen
+hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
+
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
