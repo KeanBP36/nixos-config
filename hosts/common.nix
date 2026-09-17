@@ -112,8 +112,7 @@
 
       # Hyprland
       alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
-      alias hyprtest='cp /etc/nixos/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
-
+      alias hyprtest='cp /etc/nixos-config/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
       # Quickshell
       alias qsbarconf='nvim /etc/nixos/configs/quickshell/bar/shell.qml'
       alias qsbtest='cp /etc/nixos/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
