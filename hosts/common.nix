@@ -108,10 +108,26 @@ interactiveShellInit = ''
   # NixOS / Git
   alias nixconf='nvim /etc/nixos-config/hosts/$HOSTNAME/configuration.nix'
   alias nixhconf='nvim /etc/nixos-config/home/keanbp/home.nix'
+  alias nixcommon='nvim /etc/nixos-config/hosts/common.nix'
+
+  # Rebuild
   alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
+
+  # Git — current branch
   alias nixpull='cd /etc/nixos-config && git pull --ff-only'
   alias nixpush='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push'
-  alias nixcommon='nvim /etc/nixos-config/hosts/common.nix'
+
+  # Git — test branch
+  alias nixpulltest='cd /etc/nixos-config && git switch test && git pull --ff-only'
+  alias nixpushtest='cd /etc/nixos-config && git switch test && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin test'
+
+  # Git — main branch
+  alias nixpullmain='cd /etc/nixos-config && git switch main && git pull --ff-only'
+  alias nixpushmain='cd /etc/nixos-config && git switch main && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin main'
+
+  # NixOS / Git
+  alias nixmain='cd /etc/nixos-config && git switch main'
+  alias nixtest='cd /etc/nixos-config && git switch test'
 
   # Hyprland
   alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
