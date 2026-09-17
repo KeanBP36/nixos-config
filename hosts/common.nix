@@ -106,9 +106,10 @@ interactiveShellInit = ''
   alias ..='cd ..'
 
   # NixOS / Git
-  alias nixconf='nvim /etc/nixos-config/hosts/$HOSTNAME/configuration.nix'
-  alias nixhconf='nvim /etc/nixos-config/home/keanbp/home.nix'
-  alias nixcommon='nvim /etc/nixos-config/hosts/common.nix'
+  alias nixconf='find /etc/nixos-config/hosts/$HOSTNAME -type f | sort'
+  alias nixhconf='find /etc/nixos-config/home/keanbp -type f | sort'
+  alias nixcommon='find /etc/nixos-config/hosts -name "common.nix" -type f'
+  alias nixshowconf='find /etc/nixos-config -type f | sort'
 
   # Rebuild
   alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
@@ -130,20 +131,11 @@ interactiveShellInit = ''
   alias nixtest='cd /etc/nixos-config && git switch test'
   alias nixshow='cd /etc/nixos-config && git branch --show-current'
 
-  # Hyprland
-  alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
-  alias hyprtoolkitconf='nvim /etc/nixos-config/configs/hypr/hyprtoolkit.conf'
-  alias hyprtest='cp /etc/nixos-config/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
-
-  # Hyprlock
-  alias hyprlockconf='nvim /etc/nixos-config/configs/hyprlock/hyprlock.conf'
-
-  # Quickshell
-  alias qsbarconf='nvim /etc/nixos-config/configs/quickshell/bar/shell.qml'
-  alias qsbtest='cp /etc/nixos-config/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
-
-  # Fastfetch
-  alias fetchconf='nvim /etc/nixos-config/configs/fastfetch/config.jsonc'
+  # Config searches
+  alias nixhypr='find /etc/nixos-config/configs/hypr -type f | sort'
+  alias nixhyprlock='find /etc/nixos-config/configs/hyprlock -type f | sort'
+  alias nixquickshell='find /etc/nixos-config/configs/quickshell -type f | sort'
+  alias nixfastfetch='find /etc/nixos-config/configs/fastfetch -type f | sort'
 
   export EDITOR=nvim
 
