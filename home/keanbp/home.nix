@@ -25,7 +25,6 @@
     prismlauncher
     discord
     neovim
-    btop
     stremio-linux-shell
     openrgb
     thunar

@@ -94,6 +94,18 @@
     flatpak
     git
     hyprlauncher
+    
+#Terminial tools
+    tree
+    zoxide
+    bat
+    eza
+    fd
+    fzf
+    tldr
+    ncdu
+    btop
+
   ];
 
   # BASH CONFIG START
