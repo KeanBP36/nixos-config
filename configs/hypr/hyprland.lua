@@ -81,7 +81,7 @@ hl.env("XCURSOR_SIZE", "24")
 
  hl.config({
    ecosystem = {
-     enforce_permissions = true,
+     enforce_permissions = false,
    },
  })
 
