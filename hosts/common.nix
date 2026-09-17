@@ -104,7 +104,7 @@ interactiveShellInit = ''
   # ─────────────────────────────────────────────
   # Welp
   # ─────────────────────────────────────────────
-  alias nixwelp='sed -n "104,167p" /etc/nixos-config/hosts/common.nix'
+  alias nixwelp='sed -n "/# BASH CONFIG START/,/# BASH CONFIG END/p" /etc/nixos-config/hosts/common.nix'
 
   # ─────────────────────────────────────────────
   # Startup
