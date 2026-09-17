@@ -110,7 +110,8 @@ interactiveShellInit = ''
   alias nixhconf='nvim /etc/nixos-config/home/keanbp/home.nix'
   alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
   alias nixpull='cd /etc/nixos-config && git pull --ff-only'
-  alias nixpush='cd /etc/nixos-config && git status && git add . && git commit && git push'
+  alias nixpush='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push'
+  alias nixcommon='nvim /etc/nixos-config/hosts/common.nix'
 
   # Hyprland
   alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
