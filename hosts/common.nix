@@ -111,7 +111,7 @@
       alias flakeup='cd /etc/nixos && nix flake update'
 
       # Hyprland
-      alias hyprconf='nvim /etc/nixos/configs/hypr/hyprland.lua'
+      alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
       alias hyprtest='cp /etc/nixos/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
 
       # Quickshell
