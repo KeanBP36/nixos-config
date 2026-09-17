@@ -96,7 +96,7 @@
     hyprlauncher
   ];
 
-  # Bash
+  # BASH CONFIG START
   programs.bash = {
     enable = true;
 interactiveShellInit = ''
@@ -185,7 +185,7 @@ interactiveShellInit = ''
 
   bind -x '"\C-l":ctrl_l_fastfetch'
 '';
-
+# BASH CONFIG END
       };
 
   system.stateVersion = "26.05";
