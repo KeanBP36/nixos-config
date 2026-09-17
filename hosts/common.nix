@@ -92,9 +92,7 @@
   # Shared system packages
   environment.systemPackages = with pkgs; [
     flatpak
-    git
-    hyprlauncher
-    
+    git  
 #Terminial tools
     tree
     zoxide

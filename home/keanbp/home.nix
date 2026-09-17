@@ -17,6 +17,8 @@
     wl-clipboard
     grim
     slurp
+     hyprlauncher
+
 
     # Apps
     fastfetch
