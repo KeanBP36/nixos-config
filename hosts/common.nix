@@ -96,7 +96,7 @@
     hyprlauncher
   ];
 
-  # BASH CONFIG START
+  # BASH CONFIG STAT
   programs.bash = {
     enable = true;
 interactiveShellInit = ''
@@ -104,7 +104,7 @@ interactiveShellInit = ''
   # ─────────────────────────────────────────────
   # Welp
   # ─────────────────────────────────────────────
-  alias nixwelp='sed -n "/# BASH CONFIG START/,/# BASH CONFIG END/p" /etc/nixos-config/hosts/common.nix'
+  alias nixwelp='awk "/# WELP START/{p=1} p; /# WELP END/{exit}" /etc/nixos-config/hosts/common.nix'
 
   # ─────────────────────────────────────────────
   # Startup
