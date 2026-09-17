@@ -135,6 +135,17 @@
       alias nixcommon='find /etc/nixos-config/hosts -name "common.nix" -type f'
       alias nixshowconf='find /etc/nixos-config -type f | sort'
 
+      # Major branches
+      alias nixconfigs='find /etc/nixos-config/configs -type f | sort'
+      alias nixhome='find /etc/nixos-config/home -type f | sort'
+      alias nixhosts='find /etc/nixos-config/hosts -type f | sort'
+      alias nixmodules='find /etc/nixos-config/modules -type f | sort'
+      alias nixpatches='find /etc/nixos-config/patches -type f | sort'
+      alias nixbackup='find /etc/nixos-config/backup -type f | sort'
+
+      #Tree
+      alias nixtee='tree /etc/nixos-config'
+
       # ─────────────────────────────────────────────
       # NixOS — rebuild
       # ─────────────────────────────────────────────
