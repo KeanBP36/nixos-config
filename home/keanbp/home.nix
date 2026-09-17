@@ -15,6 +15,8 @@
     awww
     bibata-cursors
     wl-clipboard
+    grim
+    slurp
 
     # Apps
     fastfetch

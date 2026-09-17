@@ -79,15 +79,15 @@ hl.env("XCURSOR_SIZE", "24")
 -- Please note permission changes here require a Hyprland restart and are not applied on-the-fly
 -- for security reasons
 
--- hl.config({
---   ecosystem = {
---     enforce_permissions = true,
---   },
--- })
+ hl.config({
+   ecosystem = {
+     enforce_permissions = true,
+   },
+ })
 
--- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
--- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
--- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+ hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
+ hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
+ hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
 
 -----------------------
@@ -316,6 +316,9 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
+-- Screenshots
+hl.bind("CTRL + S", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
+hl.bind("CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png'))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
