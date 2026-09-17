@@ -97,39 +97,49 @@
   programs.bash = {
     enable = true;
 
-    interactiveShellInit = ''
-      fastfetch
 
-      alias ll='ls -lah'
-      alias la='ls -A'
-      alias ..='cd ..'
+interactiveShellInit = ''
+  fastfetch
 
-      # NixOS
-      alias nixconf='nvim /etc/nixos/hosts/$HOSTNAME/configuration.nix'
-      alias nixhconf='nvim /etc/nixos/home/keanbp/home.nix'
-     alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
-      alias flakeup='cd /etc/nixos && nix flake update'
+  alias ll='ls -lah'
+  alias la='ls -A'
+  alias ..='cd ..'
 
-      # Hyprland
-      alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
-      alias hyprtest='cp /etc/nixos-config/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
-      # Quickshell
-      alias qsbarconf='nvim /etc/nixos/configs/quickshell/bar/shell.qml'
-      alias qsbtest='cp /etc/nixos/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
+  # NixOS / Git
+  alias nixconf='nvim /etc/nixos-config/hosts/$HOSTNAME/configuration.nix'
+  alias nixhconf='nvim /etc/nixos-config/home/keanbp/home.nix'
+  alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
+  alias nixpull='cd /etc/nixos-config && git pull --ff-only'
+  alias nixpush='cd /etc/nixos-config && git status && git add . && git commit && git push'
 
-      # Fastfetch
-      alias fetchconf='nvim /etc/nixos/configs/fastfetch/config.jsonc'
+  # Hyprland
+  alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
+  alias hyprtoolkitconf='nvim /etc/nixos-config/configs/hypr/hyprtoolkit.conf'
+  alias hyprtest='cp /etc/nixos-config/configs/hypr/hyprland.lua ~/.config/hypr/hyprland.lua'
 
-      export EDITOR=nvim
+  # Hyprlock
+  alias hyprlockconf='nvim /etc/nixos-config/configs/hyprlock/hyprlock.conf'
 
-      ctrl_l_fastfetch() {
-        clear
-        fastfetch
-      }
+  # Quickshell
+  alias qsbarconf='nvim /etc/nixos-config/configs/quickshell/bar/shell.qml'
+  alias qsbtest='cp /etc/nixos-config/configs/quickshell/bar/shell.qml ~/.config/quickshell/bar/shell.qml'
 
-      bind -x '"\C-l":ctrl_l_fastfetch'
-    '';
-  };
+  # Fastfetch
+  alias fetchconf='nvim /etc/nixos-config/configs/fastfetch/config.jsonc'
+
+  export EDITOR=nvim
+
+  ctrl_l_fastfetch() {
+    clear
+    fastfetch
+  }
+
+  bind -x '"\C-l":ctrl_l_fastfetch'
+'';
+
+
+
+      };
 
   system.stateVersion = "26.05";
 }
