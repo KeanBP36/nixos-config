@@ -112,6 +112,8 @@ interactiveShellInit = ''
   alias nixpull='cd /etc/nixos-config && git pull --ff-only'
   alias nixpush='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push'
   alias nixcommon='nvim /etc/nixos-config/hosts/common.nix'
+  alias nixpulltest='cd /etc/nixos-config && git fetch origin test && git merge origin/test'
+  alias nixpushtest='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin test'
 
   # Hyprland
   alias hyprconf='nvim /etc/nixos-config/configs/hypr/hyprland.lua'
