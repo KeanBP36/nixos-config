@@ -107,7 +107,7 @@
       # NixOS
       alias nixconf='nvim /etc/nixos/hosts/$HOSTNAME/configuration.nix'
       alias nixhconf='nvim /etc/nixos/home/keanbp/home.nix'
-      alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos#$HOSTNAME'
+     alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
       alias flakeup='cd /etc/nixos && nix flake update'
 
       # Hyprland
