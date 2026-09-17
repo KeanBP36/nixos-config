@@ -96,97 +96,118 @@
     hyprlauncher
   ];
 
-  # BASH CONFIG STAT
+  # BASH CONFIG START
   programs.bash = {
     enable = true;
-interactiveShellInit = ''
+    interactiveShellInit = ''
+      # ─────────────────────────────────────────────
+      # Welp
+      # ─────────────────────────────────────────────
+      alias nixwelp='sed -n "103,192p" /etc/nixos-config/hosts/common.nix'
 
-  # ─────────────────────────────────────────────
-  # Welp
-  # ─────────────────────────────────────────────
-  alias nixwelp='sed -n "104,167p" /etc/nixos-config/hosts/common.nix'
+      # ─────────────────────────────────────────────
+      # Startup
+      # ─────────────────────────────────────────────
+      fastfetch
 
-  # ─────────────────────────────────────────────
-  # Startup
-  # ─────────────────────────────────────────────
-  fastfetch
+      # ─────────────────────────────────────────────
+      # General aliases
+      # ─────────────────────────────────────────────
+      alias ll='ls -lah'
+      alias la='ls -A'
+      alias ..='cd ..'
 
-  # ─────────────────────────────────────────────
-  # General aliases
-  # ─────────────────────────────────────────────
-  alias ll='ls -lah'
-  alias la='ls -A'
-  alias ..='cd ..'
+      # ─────────────────────────────────────────────
+      # NixOS — configuration
+      # ─────────────────────────────────────────────
+      alias nixconf='find /etc/nixos-config/hosts/$HOSTNAME -type f | sort'
+      alias nixhconf='find /etc/nixos-config/home/keanbp -type f | sort'
+      alias nixcommon='find /etc/nixos-config/hosts -name "common.nix" -type f'
+      alias nixshowconf='find /etc/nixos-config -type f | sort'
 
-  # ─────────────────────────────────────────────
-  # NixOS — configuration
-  # ─────────────────────────────────────────────
-  alias nixconf='find /etc/nixos-config/hosts/$HOSTNAME -type f | sort'
-  alias nixhconf='find /etc/nixos-config/home/keanbp -type f | sort'
-  alias nixcommon='find /etc/nixos-config/hosts -name "common.nix" -type f'
-  alias nixshowconf='find /etc/nixos-config -type f | sort'
+      # ─────────────────────────────────────────────
+      # NixOS — rebuild
+      # ─────────────────────────────────────────────
+      alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
 
-  # ─────────────────────────────────────────────
-  # NixOS — rebuild
-  # ─────────────────────────────────────────────
-  alias nixrebsw='sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME'
+      # ─────────────────────────────────────────────
+      # Git — branch navigation
+      # ─────────────────────────────────────────────
+      alias nixmain='cd /etc/nixos-config && git switch main'
+      alias nixtesting='cd /etc/nixos-config && git switch testing'
+      alias nixalpha='cd /etc/nixos-config && git switch alpha'
+      alias nixbeta='cd /etc/nixos-config && git switch beta'
+      alias nixunstable='cd /etc/nixos-config && git switch unstable'
+      alias nixshow='cd /etc/nixos-config && git branch --show-current'
+      alias nixbranchlist='cd /etc/nixos-config && git branch -vv'
 
-  # ─────────────────────────────────────────────
-  # Git — branch navigation
-  # ─────────────────────────────────────────────
-  alias nixmain='cd /etc/nixos-config && git switch main'
-  alias nixtest='cd /etc/nixos-config && git switch test'
-  alias nixshow='cd /etc/nixos-config && git branch --show-current'
+      # ─────────────────────────────────────────────
+      # Git — current branch
+      # ─────────────────────────────────────────────
+      alias nixpull='cd /etc/nixos-config && git pull --ff-only'
+      alias nixpush='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push'
 
-  # ─────────────────────────────────────────────
-  # Git — current branch
-  # ─────────────────────────────────────────────
-  alias nixpull='cd /etc/nixos-config && git pull --ff-only'
-  alias nixpush='cd /etc/nixos-config && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push'
+      # ─────────────────────────────────────────────
+      # Git — testing branch
+      # ─────────────────────────────────────────────
+      alias nixpulltesting='cd /etc/nixos-config && git switch testing && git pull --ff-only'
+      alias nixpushtesting='cd /etc/nixos-config && git switch testing && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin testing'
 
-  # ─────────────────────────────────────────────
-  # Git — test branch
-  # ─────────────────────────────────────────────
-  alias nixpulltest='cd /etc/nixos-config && git switch test && git pull --ff-only'
-  alias nixpushtest='cd /etc/nixos-config && git switch test && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin test'
+      # ─────────────────────────────────────────────
+      # Git — alpha branch
+      # ─────────────────────────────────────────────
+      alias nixpullalpha='cd /etc/nixos-config && git switch alpha && git pull --ff-only'
+      alias nixpushalpha='cd /etc/nixos-config && git switch alpha && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin alpha'
 
-  # ─────────────────────────────────────────────
-  # Git — main branch
-  # ─────────────────────────────────────────────
-  alias nixpullmain='cd /etc/nixos-config && git switch main && git pull --ff-only'
-  alias nixpushmain='cd /etc/nixos-config && git switch main && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin main'
+      # ─────────────────────────────────────────────
+      # Git — beta branch
+      # ─────────────────────────────────────────────
+      alias nixpullbeta='cd /etc/nixos-config && git switch beta && git pull --ff-only'
+      alias nixpushbeta='cd /etc/nixos-config && git switch beta && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin beta'
 
-  # ─────────────────────────────────────────────
-  # Git — branch synchronization
-  # ─────────────────────────────────────────────
-  alias nixsynctest='cd /etc/nixos-config && git switch test && git reset --hard main && git push origin test'
-  alias nixmerge='cd /etc/nixos-config && git switch main && git merge test && git push origin main'
+      # ─────────────────────────────────────────────
+      # Git — unstable branch
+      # ─────────────────────────────────────────────
+      alias nixpullunstable='cd /etc/nixos-config && git switch unstable && git pull --ff-only'
+      alias nixpushunstable='cd /etc/nixos-config && git switch unstable && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin unstable'
 
-  # ─────────────────────────────────────────────
-  # Config — Hyprland
-  # ─────────────────────────────────────────────
-  alias nixhypr='find /etc/nixos-config/configs/hypr -type f | sort'
-  alias nixhyprlock='find /etc/nixos-config/configs/hyprlock -type f | sort'
-  alias nixquickshell='find /etc/nixos-config/configs/quickshell -type f | sort'
-  alias nixfastfetch='find /etc/nixos-config/configs/fastfetch -type f | sort'
+      # ─────────────────────────────────────────────
+      # Git — main branch
+      # ─────────────────────────────────────────────
+      alias nixpullmain='cd /etc/nixos-config && git switch main && git pull --ff-only'
+      alias nixpushmain='cd /etc/nixos-config && git switch main && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin main'
 
-  # ─────────────────────────────────────────────
-  # Editor
-  # ─────────────────────────────────────────────
-  export EDITOR=nvim
+      # ─────────────────────────────────────────────
+      # Git — branch synchronization
+      # ─────────────────────────────────────────────
+      alias nixsynctesting='cd /etc/nixos-config && git switch testing && git reset --hard main && git push origin testing'
+      alias nixmerge='cd /etc/nixos-config && git switch main && git merge testing && git push origin main'
 
-  # ─────────────────────────────────────────────
-  # Terminal
-  # ─────────────────────────────────────────────
-  ctrl_l_fastfetch() {
-    clear
-    fastfetch
-  }
+      # ─────────────────────────────────────────────
+      # Config — Hyprland
+      # ─────────────────────────────────────────────
+      alias nixhypr='find /etc/nixos-config/configs/hypr -type f | sort'
+      alias nixhyprlock='find /etc/nixos-config/configs/hyprlock -type f | sort'
+      alias nixquickshell='find /etc/nixos-config/configs/quickshell -type f | sort'
+      alias nixfastfetch='find /etc/nixos-config/configs/fastfetch -type f | sort'
 
-  bind -x '"\C-l":ctrl_l_fastfetch'
-'';
-# BASH CONFIG END
-      };
+      # ─────────────────────────────────────────────
+      # Editor
+      # ─────────────────────────────────────────────
+      export EDITOR=nvim
+
+      # ─────────────────────────────────────────────
+      # Terminal
+      # ─────────────────────────────────────────────
+      ctrl_l_fastfetch() {
+        clear
+        fastfetch
+      }
+
+      bind -x '"\C-l":ctrl_l_fastfetch'
+    '';
+ };
+  # BASH CONFIG END
 
   system.stateVersion = "26.05";
 }
