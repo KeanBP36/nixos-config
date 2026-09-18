@@ -21,7 +21,6 @@
     libnotify
     jq
 
-
     # Apps
     fastfetch
     kitty
@@ -34,9 +33,12 @@
     thunar
     cava
     hollywood
-    pear-desktop 
+    pear-desktop
+    orca-slicer
+
     # Fonts
     nerd-fonts.symbols-only
+
   ];
 
   services.flatpak.packages = [
@@ -47,7 +49,7 @@
 
     extraConfig = ''
       # =========================
-      # Nvim-style Theme
+      # Theme
       # =========================
 
       background #1f1f1f
