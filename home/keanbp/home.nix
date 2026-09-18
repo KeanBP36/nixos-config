@@ -35,6 +35,7 @@
     hollywood
     pear-desktop
     orca-slicer
+    dolphin
 
     # Fonts
     nerd-fonts.symbols-only
