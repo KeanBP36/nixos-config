@@ -119,7 +119,7 @@
      # ─────────────────────────────────────────────
      # Welp
      # ─────────────────────────────────────────────
-     alias nixwelp='sed -n "103,192p" /etc/nixos-config/hosts/common.nix'
+     alias nixwelp='sed -n "119,241p" /etc/nixos-config/hosts/common.nix'
 
      # ─────────────────────────────────────────────
      # Startup
