@@ -270,11 +270,49 @@
 
       # Show unstable's locked inputs
       alias nixunstablelock='cd /etc/nixos-config && git show unstable:flake.lock'
-         
+
+
+      # ─────────────────────────────────────────────
+      # Git — mass sync testing → unstable
+      # ─────────────────────────────────────────────
+
+        nixsyncunstablesafe() {
+            cd /etc/nixos-config || return
+
+            echo "Switching to unstable..."
+            git switch unstable || return
+
+            echo
+            echo "Finding commits from testing not on unstable..."
+            echo
+
+            commits=$(git rev-list --reverse unstable..testing)
+
+            if [ -z "$commits" ]; then
+                echo "Nothing to sync."
+                return
+            fi
+
+            for commit in $commits; do
+                files=$(git diff-tree --no-commit-id --name-only -r "$commit")
+
+                if echo "$files" | grep -qE '^(flake\.nix|flake\.lock)$'; then
+                    echo "SKIP $commit — changes flake.nix/flake.lock"
+                    continue
+                fi
+
+                echo "SYNC $commit"
+                git cherry-pick "$commit" || return
+            done
+
+            echo
+            echo "Mass sync complete."
+        }
+             
       # ─────────────────────────────────────────────
       # Editor
       # ─────────────────────────────────────────────
-     export EDITOR=nvim
+      export EDITOR=nvim
 
       # ─────────────────────────────────────────────
       # Terminal
