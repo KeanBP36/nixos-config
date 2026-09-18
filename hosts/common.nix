@@ -239,8 +239,38 @@
       alias nixhyprlock='find /etc/nixos-config/configs/hyprlock -type f | sort'
       alias nixquickshell='find /etc/nixos-config/configs/quickshell -type f | sort'
       alias nixfastfetch='find /etc/nixos-config/configs/fastfetch -type f | sort'
+
+      # ─────────────────────────────────────────────
+      # Git — branch synchronization helpers
+      # ─────────────────────────────────────────────
+
+      # Show commits on testing that are not on unstable
+      alias nixlogtestingto='cd /etc/nixos-config && git log --oneline unstable..testing'
+
+      # Show commits on unstable that are not on testing
+      alias nixlogunstableto='cd /etc/nixos-config && git log --oneline testing..unstable'
+
+      # Show which files differ between testing and unstable
+      alias nixdifftestingunstable='cd /etc/nixos-config && git diff --name-status unstable..testing'
+
+      # Show a specific commit before syncing it
+      alias nixshowcommit='cd /etc/nixos-config && git show --stat --oneline'
  
- 
+      # Copy a selected commit into the current branch
+      alias nixsync='cd /etc/nixos-config && git cherry-pick'
+
+      # Switch to unstable and cherry-pick selected commit(s)
+      alias nixsynctounstable='cd /etc/nixos-config && git switch unstable && git cherry-pick'
+
+      # Show commits touching flake inputs/package versions
+      alias nixpackagecommits='cd /etc/nixos-config && git log --oneline -- flake.nix flake.lock'
+
+      # Show unstable's flake configuration
+      alias nixunstableflake='cd /etc/nixos-config && git show unstable:flake.nix'
+
+      # Show unstable's locked inputs
+      alias nixunstablelock='cd /etc/nixos-config && git show unstable:flake.lock'
+         
       # ─────────────────────────────────────────────
       # Editor
       # ─────────────────────────────────────────────
