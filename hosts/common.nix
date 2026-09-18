@@ -196,6 +196,8 @@
       # ─────────────────────────────────────────────
       alias nixpullunstable='cd /etc/nixos-config && git switch unstable && git pull --ff-only'
       alias nixpushunstable='cd /etc/nixos-config && git switch unstable && git status && git add . && read -p "Commit message: " msg && git commit -m "$msg" && git push origin unstable'
+      alias nixcheckunstable='cd /etc/nixos-config && git switch unstable && git fetch origin && git log --oneline unstable..origin/testing'
+      alias nixsyncunstable='cd /etc/nixos-config && git switch unstable && git fetch origin && git cherry-pick $(git rev-list --reverse unstable..origin/testing)'
 
       # ─────────────────────────────────────────────
       # Git — main branch
