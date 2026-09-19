@@ -16,8 +16,7 @@
     bibata-cursors
     wl-clipboard
     grim
-    slurp
-    #hyprlauncher
+    slurp    
     libnotify
     jq
     rofi

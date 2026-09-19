@@ -86,8 +86,6 @@ hl.env("XCURSOR_SIZE", "24")
  })
 
 hl.permission("/etc/profiles/per-user/keanbp/bin/grim", "screencopy", "allow")
-hl.permission("/etc/profiles/per-user/keanbp/bin/hyprlauncher", "screencopy", "allow")
-
 hl.permission("/usr/(bin|local/bin)/xdg-desktop-portal-hyprland", "screencopy", "allow")
 hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
