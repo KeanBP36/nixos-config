@@ -17,9 +17,10 @@
     wl-clipboard
     grim
     slurp
-    hyprlauncher
+    #hyprlauncher
     libnotify
     jq
+    rofi
 
     # Apps
     fastfetch
@@ -35,7 +36,7 @@
     hollywood
     pear-desktop
     orca-slicer
-    dolphin
+    kdePackages.dolphin
 
     # Fonts
     nerd-fonts.symbols-only
