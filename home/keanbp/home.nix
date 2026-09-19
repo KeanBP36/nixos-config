@@ -125,6 +125,9 @@
 
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
+
+          ".config/btop/btop.conf".source =
+      ../../configs/btop/btop.conf;
   };
  
  xdg.configFile."rofi/config.rasi".source =
