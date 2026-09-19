@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
+let
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in
 
 {
   home.username = "keanbp";
@@ -36,6 +39,7 @@
     pear-desktop
     orca-slicer
     kdePackages.dolphin
+    unstable.brave-origin
 
     # Fonts
     nerd-fonts.symbols-only

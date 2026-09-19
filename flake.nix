@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -17,10 +18,11 @@
   outputs = {
     nixpkgs,
     home-manager,
+    nixpkgs-unstable,
     nix-flatpak,
     catppuccin,
     ...
-  }:
+  }@inputs:
 
   let
     system = "x86_64-linux";
@@ -37,15 +39,20 @@
       };
 
       home-manager.sharedModules = [
+        ({ ... }: {
+          _module.args.inputs = inputs;
+        })
+
         nix-flatpak.homeManagerModules.nix-flatpak
       ];
     };
   in
   {
     nixosConfigurations = {
-
       desktop = nixpkgs.lib.nixosSystem {
         inherit system;
+
+        specialArgs = { inherit inputs; };
 
         modules = [
           ./hosts/desktop/configuration.nix
@@ -57,13 +64,14 @@
       laptop = nixpkgs.lib.nixosSystem {
         inherit system;
 
+        specialArgs = { inherit inputs; };
+
         modules = [
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           commonHome
         ];
       };
-
     };
   };
 }
