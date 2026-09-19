@@ -127,6 +127,10 @@
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
+ 
+ xdg.configFile."rofi/config.rasi".source =
+    ../../configs/rofi/config.rasi;
+
 
   catppuccin = {
     enable = true;

@@ -1,0 +1,107 @@
+ configuration {
+    modi: "drun";
+    show-icons: true;
+    drun-display-format: "{name}";
+    display-drun: "Apps";
+}
+
+* {
+    bg:              rgba(31, 31, 31, 75%);
+    fg:              #b8b8b8;
+    selected-bg:     rgba(58, 58, 58, 80%);
+    selected-fg:     #d4d4d4;
+
+    border-gray:     #777777;
+    muted-gray:      #888888;
+    blue:            #569cd6;
+    offwhite:        #f5f5f5;
+
+    background-color: @bg;
+    text-color: @fg;
+
+    normal-background: transparent;
+    normal-foreground: @fg;
+
+    alternate-normal-background: transparent;
+    alternate-normal-foreground: @fg;
+
+    selected-normal-background: @selected-bg;
+    selected-normal-foreground: @selected-fg;
+
+    selected-active-background: @selected-bg;
+    selected-active-foreground: @selected-fg;
+
+    selected-urgent-background: @selected-bg;
+    selected-urgent-foreground: @selected-fg;
+}
+
+window {
+    background-color: @bg;
+    width: 600px;
+    border: 2px;
+    border-color: @border-gray;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 15px;
+    background-color: transparent;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    spacing: 10px;
+    background-color: transparent;
+}
+
+prompt {
+    text-color: @offwhite;
+}
+
+entry {
+    text-color: @fg;
+    placeholder: "Search applications...";
+    placeholder-color: @muted-gray;
+}
+
+listview {
+    lines: 8;
+    spacing: 4px;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element normal {
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element alternate {
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element selected {
+    background-color: @selected-bg;
+    text-color: @selected-fg;
+}
+
+element-icon {
+    size: 32px;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
