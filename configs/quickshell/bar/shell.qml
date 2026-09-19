@@ -43,7 +43,12 @@ PanelWindow {
         spacing: 6
 
         Repeater {
-            model: Hyprland.workspaces
+            // Hide special workspaces from the normal workspace list
+            model: ScriptModel {
+                values: Hyprland.workspaces.values.filter(
+                    ws => !ws.name.startsWith("special:")
+                )
+            }
 
             Rectangle {
                 required property var modelData
@@ -76,8 +81,45 @@ PanelWindow {
                 }
             }
         }
-    }
 
+        // =========================
+        // Special Workspace
+        // =========================
+
+        Rectangle {
+            width: 32
+            height: 28
+            radius: 4
+
+            color: root.background
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "✦"
+
+                color: root.foreground
+
+                font.pixelSize: 16
+                font.bold: true
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: {
+                    console.log("SCRATCHPAD CLICKED")
+
+                    Quickshell.execDetached([
+                        "hyprctl",
+                        "dispatch",
+                        'hl.dsp.workspace.toggle_special("magic")'
+                    ])
+                }
+            }
+        }
+    }
     // =========================
     // Music
     // =========================

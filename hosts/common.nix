@@ -43,6 +43,12 @@
     enable32Bit = true;
   };
 
+  # OpenRGB
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
+
   # Hyprland
   programs.hyprland = {
     enable = true;
