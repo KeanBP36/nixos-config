@@ -100,7 +100,7 @@
     '';
   };
 
-  home.file = {
+   home.file = {
     ".config/nvim/init.lua".source =
       ./nvim/init.lua;
 
@@ -125,14 +125,15 @@
 
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
-
-          ".config/btop/btop.conf".source =
-      ../../configs/btop/btop.conf;
   };
- 
- xdg.configFile."rofi/config.rasi".source =
-    ../../configs/rofi/config.rasi;
 
+  xdg.configFile."btop/btop.conf" = {
+    source = ../../configs/btop/btop.conf;
+    force = true;
+  };
+
+  xdg.configFile."rofi/config.rasi".source =
+    ../../configs/rofi/config.rasi;
 
   catppuccin = {
     enable = true;
