@@ -14,10 +14,10 @@
   # Networking
   networking.networkmanager.enable = true;
 
-  networking.nameservers = [
-  "1.1.1.1"
-  "1.0.0.1"
-  ];
+ # networking.nameservers = [
+ # "1.1.1.1"
+ # "1.0.0.1"
+ # ];
 
   # Bluetooth
   hardware.bluetooth = {
@@ -97,6 +97,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "disk"
     ];
   };
 
