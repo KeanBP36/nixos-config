@@ -9,6 +9,10 @@ in
 
   home.stateVersion = "26.05";
 
+  home.sessionVariables = {
+    XDG_DATA_DIRS = "$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS";
+  };
+
   home.packages = with pkgs; [
     # Desktop
     quickshell
@@ -40,13 +44,16 @@ in
     orca-slicer
     kdePackages.dolphin
     unstable.brave-origin
+    rpi-imager
 
     # Fonts
     nerd-fonts.symbols-only
 
   ];
 
+ services.flatpak.enable = true;
   services.flatpak.packages = [
+  "io.gitlab.librewolf-community"
   ];
 
   programs.kitty = {

@@ -85,7 +85,7 @@
   };
 
   # Firefox
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
   # Unfree
   nixpkgs.config.allowUnfree = true;
