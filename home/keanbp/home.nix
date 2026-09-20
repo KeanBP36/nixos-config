@@ -10,9 +10,9 @@ in
   home.stateVersion = "26.05";
 
   home.sessionVariables = {
-  XDG_DATA_DIRS = "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS";
-};
-  
+   XDG_DATA_DIRS = "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+}; 
+
   home.packages = with pkgs; [
     # Desktop
     quickshell

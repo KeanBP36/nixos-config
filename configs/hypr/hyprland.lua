@@ -70,6 +70,8 @@ end)
 -- hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")
 hl.env("XCURSOR_SIZE", "24")
+--hl.env("XDG_DATA_DIRS", "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share")
+hl.env("XDG_DATA_DIRS", "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/nix/store/n4jgwmyj5lyrli2s5lkfpld3b00f7jl8-desktops/share:/home/keanbp/.nix-profile/share:/nix/profile/share:/home/keanbp/.local/state/nix/profile/share:/etc/profiles/per-user/keanbp/share:/nix/var/nix/profiles/default/share:/run/current-system/sw/share")
 
 -----------------------
 ----- PERMISSIONS -----
