@@ -126,7 +126,7 @@
      # ─────────────────────────────────────────────
      # Welp
      # ─────────────────────────────────────────────
-     alias nixwelp='sed -n "119,241p" /etc/nixos-config/hosts/common.nix'
+     alias nixwelp='sed -n "126,324p" /etc/nixos-config/hosts/common.nix'
 
      # ─────────────────────────────────────────────
      # Startup
@@ -278,6 +278,11 @@
       # Show unstable's locked inputs
       alias nixunstablelock='cd /etc/nixos-config && git show unstable:flake.lock'
 
+      # ─────────────────────────────────────────────
+      # ethernet up
+      # ─────────────────────────────────────────────
+      
+      alias ethup='sudo nmcli device connect enp4s0'
 
       # ─────────────────────────────────────────────
       # Git — mass sync testing → unstable
