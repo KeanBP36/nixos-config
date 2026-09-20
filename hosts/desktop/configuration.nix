@@ -16,4 +16,9 @@
     modesetting.enable = true;
     nvidiaSettings = true;
   };
+
+  networking.networkmanager.unmanaged = [
+    "interface-name:wlp5s0"
+];
+
 }
