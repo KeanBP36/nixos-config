@@ -27,6 +27,8 @@ in
     libnotify
     jq
     rofi
+    pavucontrol
+    networkmanagerapplet
 
     # Apps
     fastfetch
@@ -112,12 +114,14 @@ in
   };
 
    home.file = {
+    #Nvim
     ".config/nvim/init.lua".source =
       ./nvim/init.lua;
 
     ".config/nvim/lazy-lock.json".source =
-      ./nvim/lazy-lock.json;
+      ./nvim/lazy-lock.json;     
 
+    #hyprland
     ".config/hypr/hyprland.lua" = {
       source = ../../configs/hypr/hyprland.lua;
       force = true;
@@ -129,11 +133,33 @@ in
     ".config/hypr/hyprlock.conf".source =
       ../../configs/hyprlock/hyprlock.conf;
 
+
+    #Quickshell
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
       force = true;
     };
+   
+    ".config/quickshell/bar/ControlPanel.qml" = {
+     source = ../../configs/quickshell/bar/ControlPanel.qml;
+     force = true;
+   };
+       ".config/quickshell/bar/AudioPanel.qml" = {
+      source = ../../configs/quickshell/bar/AudioPanel.qml;
+      force = true;
+    };
 
+    ".config/quickshell/bar/NetworkPanel.qml" = {
+      source = ../../configs/quickshell/bar/NetworkPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/BluetoothPanel.qml" = {
+      source = ../../configs/quickshell/bar/BluetoothPanel.qml;
+      force = true;
+    };
+
+    #Other
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };

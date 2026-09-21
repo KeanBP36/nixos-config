@@ -321,4 +321,64 @@ PanelWindow {
             }
         }
     }
+    // =========================
+    // Control Panel
+    // =========================
+
+    Rectangle {
+        id: controlButton
+
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
+
+        width: 36
+        height: 32
+
+        radius: 6
+
+        color: controlButton.panelOpen
+            ? root.highlight
+            : root.background
+
+        border.width: 1
+        border.color: root.foreground
+
+        property bool panelOpen: false
+
+        Text {
+            anchors.centerIn: parent
+
+            text: "󰍜"
+
+            color: root.foreground
+            font.pixelSize: 20
+        }
+
+        MouseArea {
+            anchors.fill: parent
+
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: {
+                controlButton.panelOpen =
+                    !controlButton.panelOpen
+
+                console.log("CONTROL PANEL:", controlButton.panelOpen)
+            }
+        }
+    }
+
+    ControlPanel {
+        id: controlPanel
+
+        anchorItem: controlButton
+
+        visible: controlButton.panelOpen
+
+        onVisibleChanged: {
+            if (!visible)
+                controlButton.panelOpen = false
+        }
+    }
 }
