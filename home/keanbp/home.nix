@@ -172,6 +172,11 @@ in
   xdg.configFile."rofi/config.rasi".source =
     ../../configs/rofi/config.rasi;
 
+  xdg.configFile."mako/config" = {
+     source = ../../configs/mako/config;
+     force = true;
+   };
+
   catppuccin = {
     enable = true;
     autoEnable = true;
