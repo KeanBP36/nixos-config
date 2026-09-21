@@ -26,7 +26,7 @@ PopupWindow {
 
         radius: 10
 
-        border.width: 1
+        border.width: 3
         border.color: Qt.rgba(0.83, 0.83, 0.83, 0.18)
 
         // =================================
