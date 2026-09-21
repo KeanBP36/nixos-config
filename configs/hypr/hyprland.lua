@@ -325,6 +325,9 @@ hl.bind("CTRL + ALT + S", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq 
 -- Lockscreen
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
 
+--App
+hl.bind("SUPER + B", hl.dsp.exec_cmd("brave-origin"))
+
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
