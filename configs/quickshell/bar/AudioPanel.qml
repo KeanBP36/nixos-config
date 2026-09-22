@@ -11,10 +11,24 @@ Column {
     spacing: 14
 
     property var players: Mpris.players.values
-    property var player: players.length > 0 ? players[0] : null
+    property var player: null
 
     function updatePlayer() {
         root.players = Mpris.players.values
+
+        // Prefer the player that is currently playing
+        for (let i = 0; i < root.players.length; i++) {
+            if (root.players[i].isPlaying) {
+                root.player = root.players[i]
+                return
+            }
+        }
+
+        // If nothing is playing, keep the current player if it still exists
+        if (root.player && root.players.indexOf(root.player) !== -1)
+            return
+
+        // Otherwise use the first available player
         root.player = root.players.length > 0
             ? root.players[0]
             : null
@@ -35,6 +49,34 @@ Column {
     function next() {
         if (root.player && root.player.canGoNext)
             root.player.next()
+    }
+
+    // System-wide PipeWire volume controls
+    function volumeUp() {
+        Quickshell.execDetached([
+            "wpctl",
+            "set-volume",
+            "@DEFAULT_AUDIO_SINK@",
+            "5%+"
+        ])
+    }
+
+    function volumeDown() {
+        Quickshell.execDetached([
+            "wpctl",
+            "set-volume",
+            "@DEFAULT_AUDIO_SINK@",
+            "5%-"
+        ])
+    }
+
+    function toggleMute() {
+        Quickshell.execDetached([
+            "wpctl",
+            "set-mute",
+            "@DEFAULT_AUDIO_SINK@",
+            "toggle"
+        ])
     }
 
     Component.onCompleted: updatePlayer()
@@ -225,7 +267,7 @@ Column {
             }
         }
 
-                // Play / Pause
+        // Play / Pause
         Rectangle {
             width: 46
             height: 46
@@ -298,6 +340,99 @@ Column {
                 cursorShape: Qt.PointingHandCursor
 
                 onClicked: root.next()
+            }
+        }
+    }
+
+    // System volume controls
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 7
+
+        // Volume Down
+        Rectangle {
+            width: 42
+            height: 38
+            radius: 10
+
+            color: volumeDownMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "󰕿"
+                color: "#d4d4d4"
+                font.pixelSize: 18
+            }
+
+            MouseArea {
+                id: volumeDownMouse
+
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.volumeDown()
+            }
+        }
+
+        // Mute
+        Rectangle {
+            width: 42
+            height: 38
+            radius: 10
+
+            color: muteMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "󰖁"
+                color: "#d4d4d4"
+                font.pixelSize: 18
+            }
+
+            MouseArea {
+                id: muteMouse
+
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.toggleMute()
+            }
+        }
+
+        // Volume Up
+        Rectangle {
+            width: 42
+            height: 38
+            radius: 10
+
+            color: volumeUpMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "󰕾"
+                color: "#d4d4d4"
+                font.pixelSize: 18
+            }
+
+            MouseArea {
+                id: volumeUpMouse
+
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.volumeUp()
             }
         }
     }
