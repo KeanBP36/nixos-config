@@ -123,21 +123,23 @@ PanelWindow {
     // =========================
     // Music
     // =========================
+   Row {
+    id: music
 
-    Row {
-        id: music
+    anchors.right: parent.right
+    anchors.rightMargin: 20
+    anchors.verticalCenter: parent.verticalCenter
 
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        anchors.verticalCenter: parent.verticalCenter
+    spacing: 8
 
-        spacing: 8
+    property var player: Mpris.players.values.length > 0
+        ? Mpris.players.values[0]
+        : null
 
-        property var player: Mpris.players.values.length > 0
-            ? Mpris.players.values[0]
-            : null
+    
+        }
 
-        // =========================
+         // =========================
         // Visualizer
         // =========================
 

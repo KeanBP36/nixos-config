@@ -1,309 +1,463 @@
 import QtQuick
+import QtQuick.Controls
 import Quickshell
-import Quickshell.Services.Pipewire
+import Quickshell.Services.Mpris
 
 Column {
     id: root
 
     signal backRequested()
 
-    spacing: 10
+    spacing: 14
 
-    // =================================
-    // PipeWire object tracking
-    // =================================
+    property var players: Mpris.players.values
+    property var player: players.length > 0 ? players[0] : null
 
-    PwObjectTracker {
-        objects: Pipewire.nodes
+    function updatePlayer() {
+        players = Mpris.players.values
+        player = players.length > 0 ? players[0] : null
     }
 
-    // =================================
+    function playPause() {
+        if (!player)
+            return
+
+        if (player.isPlaying)
+            player.pause()
+        else
+            player.play()
+    }
+
+    function previous() {
+        if (player)
+            player.previous()
+    }
+
+    function next() {
+        if (player)
+            player.next()
+    }
+
+    function rewind() {
+        if (player && player.canSeek)
+            player.seek(-10)
+    }
+
+    function forward() {
+        if (player && player.canSeek)
+            player.seek(10)
+    }
+
+    Component.onCompleted: updatePlayer()
+
+    Connections {
+        target: Mpris.players
+
+        function onValuesChanged() {
+            root.updatePlayer()
+        }
+    }
+
+    // ─────────────────────────────
     // Header
-    // =================================
+    // ─────────────────────────────
 
     Row {
         width: parent.width
-        height: 32
-        spacing: 8
+        height: 38
+        spacing: 10
 
         Rectangle {
-            width: 32
-            height: 32
-            radius: 6
+            width: 38
+            height: 38
+            radius: 10
 
             color: backMouse.containsMouse
                 ? "#3a3a3a"
-                : "#252525"
+                : "#292929"
 
             Text {
                 anchors.centerIn: parent
 
-                text: "󰁍"
-                color: "#ffffff"
+                text: "‹"
 
-                font.pixelSize: 18
+                color: "#d4d4d4"
+
+                font.pixelSize: 27
             }
 
             MouseArea {
                 id: backMouse
 
                 anchors.fill: parent
-
                 hoverEnabled: true
+
                 cursorShape: Qt.PointingHandCursor
 
-                onClicked: {
-                    root.backRequested()
-                }
+                onClicked: root.backRequested()
             }
         }
 
-        Text {
-            text: "Audio"
-
-            color: "#ffffff"
-
-            font.pixelSize: 20
-            font.bold: true
-
+        Column {
             anchors.verticalCenter: parent.verticalCenter
+            spacing: 1
+
+            Text {
+                text: "Music"
+
+                color: "#d4d4d4"
+
+                font.pixelSize: 19
+                font.bold: true
+            }
+
+            Text {
+                text: root.player
+                    ? (root.player.identity || "Media")
+                    : "No player"
+
+                color: "#666666"
+
+                font.pixelSize: 11
+            }
         }
     }
+
+    // ─────────────────────────────
+    // Album artwork
+    // ─────────────────────────────
 
     Rectangle {
+        width: 230
+        height: 230
+
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        radius: 18
+        color: "#292929"
+
+        clip: true
+
+        Image {
+            id: artwork
+
+            anchors.fill: parent
+
+            source: root.player
+                ? root.player.trackArtUrl
+                : ""
+
+            fillMode: Image.PreserveAspectCrop
+
+            asynchronous: true
+            cache: true
+            smooth: true
+
+            visible: status === Image.Ready
+        }
+
+        Text {
+            anchors.centerIn: parent
+
+            text: "♫"
+
+            color: "#555555"
+
+            font.pixelSize: 64
+
+            visible: !artwork.visible
+        }
+    }
+
+    // ─────────────────────────────
+    // Track information
+    // ─────────────────────────────
+
+    Column {
         width: parent.width
-        height: 1
-
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
-    }
-
-    // =================================
-    // Outputs
-    // =================================
-
-    Text {
-        text: "Outputs"
-
-        color: "#ffffff"
-
-        font.pixelSize: 14
-        font.bold: true
-    }
-
-    Repeater {
-        model: ScriptModel {
-            values: Pipewire.nodes.filter(function(node) {
-                return node.audio !== null
-                    && node.isSink
-                    && !node.isStream
-                    && node.ready
-            })
-        }
-
-        delegate: AudioItem {
-            width: root.width
-            node: modelData
-        }
-    }
-
-    // =================================
-    // Applications
-    // =================================
-
-    Text {
-        text: "Applications"
-
-        color: "#ffffff"
-
-        font.pixelSize: 14
-        font.bold: true
-
-        topPadding: 4
-    }
-
-    Repeater {
-        model: ScriptModel {
-            values: Pipewire.nodes.filter(function(node) {
-                return node.audio !== null
-                    && node.isStream
-                    && !node.isSink
-                    && node.ready
-            })
-        }
-
-        delegate: AudioItem {
-            width: root.width
-            node: modelData
-        }
-    }
-
-    // =================================
-    // Audio item
-    // =================================
-
-    component AudioItem: Column {
-        id: item
-
-        property var node
-
-        spacing: 4
+        spacing: 3
 
         Text {
             width: parent.width
 
-            text: item.node
-                ? (
-                    item.node.description
-                    || item.node.name
-                    || "Unknown"
-                )
-                : "Unknown"
+            text: root.player
+                ? (root.player.trackTitle || "Nothing playing")
+                : "Nothing playing"
 
             color: "#d4d4d4"
 
-            font.pixelSize: 12
+            font.pixelSize: 17
+            font.bold: true
+
+            horizontalAlignment: Text.AlignHCenter
 
             elide: Text.ElideRight
         }
 
-        Row {
+        Text {
             width: parent.width
 
-            spacing: 8
+            text: root.player
+                ? (root.player.trackArtist || "Unknown artist")
+                : ""
 
-            // =========================
-            // Mute button
-            // =========================
+            color: "#999999"
 
-            Rectangle {
-                width: 28
-                height: 26
+            font.pixelSize: 13
 
-                radius: 5
+            horizontalAlignment: Text.AlignHCenter
 
-                color: muteMouse.containsMouse
-                    ? "#3a3a3a"
-                    : "#252525"
+            elide: Text.ElideRight
+        }
 
-                Text {
-                    anchors.centerIn: parent
+        Text {
+            width: parent.width
 
-                    text: item.node
-                        && item.node.audio
-                        && item.node.audio.muted
-                        ? "󰝟"
-                        : "󰕾"
+            text: root.player
+                ? (root.player.trackAlbum || "")
+                : ""
 
-                    color: "#ffffff"
+            color: "#666666"
 
-                    font.pixelSize: 16
-                }
+            font.pixelSize: 11
 
-                MouseArea {
-                    id: muteMouse
+            horizontalAlignment: Text.AlignHCenter
 
-                    anchors.fill: parent
+            elide: Text.ElideRight
+        }
+    }
 
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
+    // ─────────────────────────────
+    // Playback controls
+    // ─────────────────────────────
 
-                    onClicked: {
-                        if (item.node && item.node.audio) {
-                            item.node.audio.muted =
-                                !item.node.audio.muted
-                        }
-                    }
-                }
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        spacing: 7
+
+        // ─────────────
+        // Rewind
+        // ─────────────
+
+        Rectangle {
+            width: 42
+            height: 42
+            radius: 11
+
+            color: rewindMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            opacity: root.player ? 1.0 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "↶"
+
+                color: "#d4d4d4"
+
+                font.pixelSize: 21
             }
 
-            // =========================
-            // Volume slider
-            // =========================
+            MouseArea {
+                id: rewindMouse
 
-            Rectangle {
-                id: slider
+                anchors.fill: parent
 
-                width: parent.width - 36
-                height: 26
+                hoverEnabled: true
 
-                radius: 6
+                enabled: root.player !== null
 
-                color: "#252525"
+                cursorShape: Qt.PointingHandCursor
 
-                Rectangle {
-                    width: {
-                        if (!item.node || !item.node.audio)
-                            return 0
+                onClicked: root.rewind()
+            }
+        }
 
-                        return Math.max(
-                            0,
-                            Math.min(
-                                slider.width,
-                                slider.width
-                                    * item.node.audio.volume
-                            )
-                        )
-                    }
+        // ─────────────
+        // Previous
+        // ─────────────
 
-                    height: parent.height
+        Rectangle {
+            width: 42
+            height: 42
+            radius: 11
 
-                    radius: 6
+            color: previousMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
 
-                    color: "#d4d4d4"
-                }
+            opacity: root.player ? 1.0 : 0.45
 
-                MouseArea {
-                    anchors.fill: parent
+            Text {
+                anchors.centerIn: parent
 
-                    cursorShape: Qt.PointingHandCursor
+                text: "⏮"
 
-                    onClicked: function(mouse) {
-                        if (!item.node || !item.node.audio)
-                            return
+                color: "#d4d4d4"
 
-                        item.node.audio.volume =
-                            Math.max(
-                                0,
-                                Math.min(
-                                    1,
-                                    mouse.x / slider.width
-                                )
-                            )
-                    }
+                font.pixelSize: 17
+            }
 
-                    onPositionChanged: function(mouse) {
-                        if (!pressed)
-                            return
+            MouseArea {
+                id: previousMouse
 
-                        if (!item.node || !item.node.audio)
-                            return
+                anchors.fill: parent
 
-                        item.node.audio.volume =
-                            Math.max(
-                                0,
-                                Math.min(
-                                    1,
-                                    mouse.x / slider.width
-                                )
-                            )
-                    }
-                }
+                hoverEnabled: true
 
-                Text {
-                    anchors.centerIn: parent
+                enabled: root.player !== null
 
-                    text: item.node && item.node.audio
-                        ? Math.round(
-                            item.node.audio.volume * 100
-                          ) + "%"
-                        : "0%"
+                cursorShape: Qt.PointingHandCursor
 
-                    color: "#ffffff"
+                onClicked: root.previous()
+            }
+        }
 
-                    font.pixelSize: 11
-                }
+        // ─────────────
+        // Play / Pause
+        // ─────────────
+
+        Rectangle {
+            width: 54
+            height: 54
+
+            radius: 27
+
+            anchors.verticalCenter: parent.verticalCenter
+
+            color: playMouse.containsMouse
+                ? "#6aa9df"
+                : "#569cd6"
+
+            opacity: root.player ? 1.0 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+
+                text: root.player && root.player.isPlaying
+                    ? "Ⅱ"
+                    : "▶"
+
+                color: "#ffffff"
+
+                font.pixelSize: 18
+                font.bold: true
+            }
+
+            MouseArea {
+                id: playMouse
+
+                anchors.fill: parent
+
+                hoverEnabled: true
+
+                enabled: root.player !== null
+
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.playPause()
+            }
+        }
+
+        // ─────────────
+        // Next
+        // ─────────────
+
+        Rectangle {
+            width: 42
+            height: 42
+            radius: 11
+
+            color: nextMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            opacity: root.player ? 1.0 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "⏭"
+
+                color: "#d4d4d4"
+
+                font.pixelSize: 17
+            }
+
+            MouseArea {
+                id: nextMouse
+
+                anchors.fill: parent
+
+                hoverEnabled: true
+
+                enabled: root.player !== null
+
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.next()
+            }
+        }
+
+        // ─────────────
+        // Forward
+        // ─────────────
+
+        Rectangle {
+            width: 42
+            height: 42
+            radius: 11
+
+            color: forwardMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            opacity: root.player ? 1.0 : 0.45
+
+            Text {
+                anchors.centerIn: parent
+
+                text: "↷"
+
+                color: "#d4d4d4"
+
+                font.pixelSize: 21
+            }
+
+            MouseArea {
+                id: forwardMouse
+
+                anchors.fill: parent
+
+                hoverEnabled: true
+
+                enabled: root.player !== null
+
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: root.forward()
             }
         }
     }
-}
 
+    // ─────────────────────────────
+    // Status
+    // ─────────────────────────────
+
+    Text {
+        width: parent.width
+
+        text: root.player
+            ? (root.player.isPlaying ? "Playing" : "Paused")
+            : "Nothing playing"
+
+        color: "#666666"
+
+        font.pixelSize: 11
+
+        horizontalAlignment: Text.AlignHCenter
+    }
+}
