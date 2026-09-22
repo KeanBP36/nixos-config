@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Mpris
+import Quickshell.Io
 
 PanelWindow {
     id: root
@@ -43,7 +44,6 @@ PanelWindow {
         spacing: 6
 
         Repeater {
-            // Hide special workspaces from the normal workspace list
             model: ScriptModel {
                 values: Hyprland.workspaces.values.filter(
                     ws => !ws.name.startsWith("special:")
@@ -106,6 +106,7 @@ PanelWindow {
 
             MouseArea {
                 anchors.fill: parent
+
                 cursorShape: Qt.PointingHandCursor
 
                 onClicked: {
@@ -120,194 +121,158 @@ PanelWindow {
             }
         }
     }
+
     // =========================
-    // Music
+    // REAL AUDIO VISUALIZER
     // =========================
-   Row {
-    id: music
-
-    anchors.right: parent.right
-    anchors.rightMargin: 20
-    anchors.verticalCenter: parent.verticalCenter
-
-    spacing: 8
-
-    property var player: Mpris.players.values.length > 0
-        ? Mpris.players.values[0]
-        : null
-
-    
-        }
-
-         // =========================
-        // Visualizer
-        // =========================
 
         Row {
-            id: visualizer
+        id: visualizer
 
-            width: 38
-            height: 24
-            spacing: 2
+        anchors.right: controlButton.left
+        anchors.rightMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
 
-            anchors.verticalCenter: parent.verticalCenter
+        width: 38
+        height: 24
 
-            Repeater {
-                model: 8
+        spacing: 2
 
-                Rectangle {
-                    property real barHeight: music.player &&
-                                              music.player.isPlaying
-                                              ? 4 + Math.random() * 16
-                                              : 2
+        property var levels: [
+            0, 0, 0, 0,
+            0, 0, 0, 0
+        ]
 
-                    width: 3
-                    height: barHeight
+        // =========================
+        // CAVA FFT PROCESS
+        // =========================
 
-                    anchors.verticalCenter: parent.verticalCenter
+        Process {
+            id: cava
 
-                    radius: 2
-                    color: root.foreground
+            command: [
+                "bash",
+                "-c",
+                "printf '%s\\n' " +
+                "'[general]' " +
+                "'framerate = 30' " +
+                "'bars = 8' " +
+                "'autosens = 1' " +
+                "'sensitivity = 100' " +
+                "'[input]' " +
+                "'method = pulse' " +
+                "'source = auto' " +
+                "'[output]' " +
+                "'method = raw' " +
+                "'channels = mono' " +
+                "'data_format = ascii' " +
+                "'ascii_max_range = 100' " +
+                "'bar_delimiter = 59' " +
+                "'frame_delimiter = 10' " +
+                "'[smoothing]' " +
+                "'monstercat = 1' " +
+                "'waves = 0' " +
+                "'gravity = 100' " +
+                "'integral = 70' " +
+                "'ignore = 0' " +
+                "| cava -p /dev/stdin"
+            ]
 
-                    Behavior on barHeight {
-                        NumberAnimation {
-                            duration: 200
-                            easing.type: Easing.OutQuad
-                        }
+            running: true
+
+            stdout: SplitParser {
+                splitMarker: "\n"
+
+                onRead: data => {
+                    var values = data.trim().split(";")
+
+                    if (values.length < 8)
+                        return
+
+                    var newLevels = []
+
+                    for (var i = 0; i < 8; ++i) {
+                        var value = parseFloat(values[i])
+
+                        if (isNaN(value))
+                            value = 0
+
+                        newLevels.push(
+                            Math.max(
+                                0,
+                                Math.min(1, value / 100)
+                            )
+                        )
                     }
 
-                    Timer {
-                        interval: 180
+                    visualizer.levels = newLevels
+                }
+            }
 
-                        running: music.player !== null &&
-                                 music.player.isPlaying
+            stderr: SplitParser {
+                splitMarker: "\n"
 
-                        repeat: true
-
-                        onTriggered: {
-                            barHeight = 4 + Math.random() * 16
-                        }
-                    }
-
-                    Connections {
-                        target: music.player
-
-                        function onIsPlayingChanged() {
-                            if (music.player &&
-                                music.player.isPlaying) {
-                                barHeight = 4 + Math.random() * 16
-                            } else {
-                                barHeight = 2
-                            }
-                        }
-                    }
+                onRead: data => {
+                    console.log("CAVA:", data)
                 }
             }
         }
 
         // =========================
-        // Previous
+        // RESTART CAVA IF IT DIES
         // =========================
 
-        Text {
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: "󰒮"
-            color: root.foreground
-            font.pixelSize: 17
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    if (music.player &&
-                        music.player.canGoPrevious) {
-                        music.player.previous()
-                    }
-                }
-            }
+        onVisibleChanged: {
+            if (visible && !cava.running)
+                cava.running = true
         }
 
         // =========================
-        // Play / Pause
+        // FFT BARS
         // =========================
 
-        Text {
-            anchors.verticalCenter: parent.verticalCenter
+        Repeater {
+            model: 8
 
-            text: music.player
-                ? (music.player.isPlaying ? "󰏤" : "󰐊")
-                : "󰐊"
+            Rectangle {
+                required property int index
 
-            color: root.foreground
-            font.pixelSize: 18
-            font.bold: true
+                width: 3
+                radius: 2
 
-            MouseArea {
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
 
-                onClicked: {
-                    if (music.player &&
-                        music.player.canTogglePlaying) {
-                        music.player.togglePlaying()
+                property real audioLevel:
+                    visualizer.levels[index] ?? 0
+
+                property real targetHeight:
+                    audioLevel > 0.01
+                        ? 3 + audioLevel * 19
+                        : 2
+
+                height: targetHeight
+
+                color: root.foreground
+
+                Behavior on height {
+                    NumberAnimation {
+                        duration: 45
+                        easing.type: Easing.OutQuad
                     }
                 }
             }
-        }
-
-        // =========================
-        // Next
-        // =========================
-
-        Text {
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: "󰒭"
-            color: root.foreground
-            font.pixelSize: 17
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    if (music.player &&
-                        music.player.canGoNext) {
-                        music.player.next()
-                    }
-                }
-            }
-        }
-
-        // =========================
-        // Track
-        // =========================
-
-        Text {
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: music.player
-                ? music.player.trackTitle +
-                  " — " +
-                  music.player.trackArtist
-                : "No music"
-
-            color: root.foreground
-            font.pixelSize: 14
-
-            elide: Text.ElideRight
-            maximumLineCount: 1
-            width: 220
         }
     }
 
     // =========================
-    // Clock
+    // CLOCK
     // =========================
 
     Text {
         anchors.centerIn: parent
 
         color: root.foreground
+
         font.pixelSize: 16
         font.bold: true
 
@@ -315,16 +280,19 @@ PanelWindow {
 
         Timer {
             interval: 1000
+
             running: true
             repeat: true
 
             onTriggered: {
-                parent.text = Qt.formatTime(new Date(), "HH:mm")
+                parent.text =
+                    Qt.formatTime(new Date(), "HH:mm")
             }
         }
     }
+
     // =========================
-    // Control Panel
+    // CONTROL PANEL BUTTON
     // =========================
 
     Rectangle {
@@ -339,21 +307,20 @@ PanelWindow {
 
         radius: 6
 
-        color: controlButton.panelOpen
+        property bool panelOpen: false
+
+        color: panelOpen
             ? root.highlight
             : root.background
 
-        border.width: 1
-        border.color: root.foreground
-
-        property bool panelOpen: false
-
+        
         Text {
             anchors.centerIn: parent
 
             text: "󰍜"
 
             color: root.foreground
+
             font.pixelSize: 20
         }
 
@@ -366,10 +333,17 @@ PanelWindow {
                 controlButton.panelOpen =
                     !controlButton.panelOpen
 
-                console.log("CONTROL PANEL:", controlButton.panelOpen)
+                console.log(
+                    "CONTROL PANEL:",
+                    controlButton.panelOpen
+                )
             }
         }
     }
+
+    // =========================
+    // CONTROL PANEL
+    // =========================
 
     ControlPanel {
         id: controlPanel

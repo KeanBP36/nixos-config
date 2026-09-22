@@ -102,8 +102,8 @@ Column {
 
     // Album artwork
     Rectangle {
-        width: 230
-        height: 230
+        width: 150
+        height: 150
         anchors.horizontalCenter: parent.horizontalCenter
         radius: 18
         color: "#292929"
@@ -188,50 +188,46 @@ Column {
     // Media controls
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 7
+        spacing: 8
 
         // Previous
-        Rectangle {
-            width: 42
-            height: 42
-            radius: 11
-
-            color: previousMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            opacity: root.player ? 1.0 : 0.45
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "⏮"
-                color: "#d4d4d4"
-                font.pixelSize: 17
-            }
-
-            MouseArea {
-                id: previousMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-
-                enabled: root.player !== null
-                    && root.player.canGoPrevious
-
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.previous()
-            }
-        }
-
-                // Play / Pause
         Rectangle {
             width: 46
             height: 46
             radius: 8
 
-            anchors.verticalCenter: parent.verticalCenter
+            color: previousMouse.containsMouse
+                ? "#3a3a3a"
+                : "#292929"
+
+            border.width: 1
+            border.color: "#444444"
+
+            Text {
+                anchors.centerIn: parent
+                text: "󰒮"
+                color: "#d4d4d4"
+                font.pixelSize: 19
+            }
+
+            MouseArea {
+                id: previousMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onClicked: {
+                    if (root.player)
+                        root.player.previous()
+                }
+            }
+        }
+
+        // Play / Pause
+        Rectangle {
+            width: 46
+            height: 46
+            radius: 8
 
             color: playMouse.containsMouse
                 ? "#3a3a3a"
@@ -239,8 +235,6 @@ Column {
 
             border.width: 1
             border.color: "#444444"
-
-            opacity: root.player ? 1.0 : 0.45
 
             Text {
                 anchors.centerIn: parent
@@ -268,36 +262,34 @@ Column {
 
         // Next
         Rectangle {
-            width: 42
-            height: 42
-            radius: 11
+            width: 46
+            height: 46
+            radius: 8
 
             color: nextMouse.containsMouse
                 ? "#3a3a3a"
                 : "#292929"
 
-            opacity: root.player ? 1.0 : 0.45
+            border.width: 1
+            border.color: "#444444"
 
             Text {
                 anchors.centerIn: parent
-
-                text: "⏭"
+                text: "󰒭"
                 color: "#d4d4d4"
-                font.pixelSize: 17
+                font.pixelSize: 19
             }
 
             MouseArea {
                 id: nextMouse
-
                 anchors.fill: parent
                 hoverEnabled: true
-
-                enabled: root.player !== null
-                    && root.player.canGoNext
-
                 cursorShape: Qt.PointingHandCursor
 
-                onClicked: root.next()
+                onClicked: {
+                    if (root.player)
+                        root.player.next()
+                }
             }
         }
     }
@@ -314,5 +306,5 @@ Column {
         font.pixelSize: 11
 
         horizontalAlignment: Text.AlignHCenter
-    }
+   }
 }

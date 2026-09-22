@@ -12,7 +12,7 @@ PopupWindow {
     anchor.gravity: Edges.Bottom | Edges.Right
 
     implicitWidth: 340
-    implicitHeight: 360
+    implicitHeight: 500
 
     color: "transparent"
 
@@ -159,6 +159,35 @@ PopupWindow {
                     Quickshell.execDetached([
                         "systemctl",
                         "reboot"
+                    ])
+                }
+            }
+
+            QuickButton {
+                width: parent.width
+
+                icon: "󰒲"
+                label: "Sleep"
+
+                onClicked: {
+                    Quickshell.execDetached([
+                        "systemctl",
+                        "suspend"
+                    ])
+                }
+            }
+
+            QuickButton {
+                width: parent.width
+
+                icon: "󰍃"
+                label: "Logout"
+
+                onClicked: {
+                    Quickshell.execDetached([
+                        "loginctl",
+                        "terminate-user",
+                        "keanbp"
                     ])
                 }
             }
