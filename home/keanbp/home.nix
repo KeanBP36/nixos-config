@@ -1,17 +1,32 @@
-{ config, pkgs, inputs, ... }:
-let
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in
+{ config, pkgs, inputs, unstable, ... }:
 
 {
+  imports = [
+    ./bash.nix
+  ];
+
+  # ─────────────────────────────────────────────
+  # Home
+  # ─────────────────────────────────────────────
+
   home.username = "keanbp";
   home.homeDirectory = "/home/keanbp";
-
   home.stateVersion = "26.05";
 
+
+  # ─────────────────────────────────────────────
+  # Environment
+  # ─────────────────────────────────────────────
+
   home.sessionVariables = {
-   XDG_DATA_DIRS = "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
-}; 
+    XDG_DATA_DIRS =
+      "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+  };
+
+
+  # ─────────────────────────────────────────────
+  # Packages
+  # ─────────────────────────────────────────────
 
   home.packages = with pkgs; [
     # Desktop
@@ -23,14 +38,14 @@ in
     bibata-cursors
     wl-clipboard
     grim
-    slurp    
+    slurp
     libnotify
     jq
     rofi
     pavucontrol
     networkmanagerapplet
 
-    # Apps
+    # Applications
     fastfetch
     kitty
     steam
@@ -50,13 +65,23 @@ in
 
     # Fonts
     nerd-fonts.symbols-only
-
   ];
 
- services.flatpak.enable = true;
+
+  # ─────────────────────────────────────────────
+  # Flatpak
+  # ─────────────────────────────────────────────
+
+  services.flatpak.enable = true;
+
   services.flatpak.packages = [
-  "io.gitlab.librewolf-community"
+    "io.gitlab.librewolf-community"
   ];
+
+
+  # ─────────────────────────────────────────────
+  # Kitty
+  # ─────────────────────────────────────────────
 
   programs.kitty = {
     enable = true;
@@ -113,15 +138,24 @@ in
     '';
   };
 
-   home.file = {
-    #Nvim
+
+  # ─────────────────────────────────────────────
+  # Neovim
+  # ─────────────────────────────────────────────
+
+  home.file = {
+
     ".config/nvim/init.lua".source =
       ./nvim/init.lua;
 
     ".config/nvim/lazy-lock.json".source =
-      ./nvim/lazy-lock.json;     
+      ./nvim/lazy-lock.json;
 
-    #hyprland
+
+    # ───────────────────────────────────────────
+    # Hyprland
+    # ───────────────────────────────────────────
+
     ".config/hypr/hyprland.lua" = {
       source = ../../configs/hypr/hyprland.lua;
       force = true;
@@ -134,17 +168,21 @@ in
       ../../configs/hyprlock/hyprlock.conf;
 
 
-    #Quickshell
+    # ───────────────────────────────────────────
+    # Quickshell
+    # ───────────────────────────────────────────
+
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
       force = true;
     };
-   
+
     ".config/quickshell/bar/ControlPanel.qml" = {
-     source = ../../configs/quickshell/bar/ControlPanel.qml;
-     force = true;
-   };
-       ".config/quickshell/bar/AudioPanel.qml" = {
+      source = ../../configs/quickshell/bar/ControlPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/AudioPanel.qml" = {
       source = ../../configs/quickshell/bar/AudioPanel.qml;
       force = true;
     };
@@ -159,10 +197,19 @@ in
       force = true;
     };
 
-    #Other
+
+    # ───────────────────────────────────────────
+    # Fastfetch
+    # ───────────────────────────────────────────
+
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
+
+
+  # ─────────────────────────────────────────────
+  # Other application configs
+  # ─────────────────────────────────────────────
 
   xdg.configFile."btop/btop.conf" = {
     source = ../../configs/btop/btop.conf;
@@ -173,13 +220,19 @@ in
     ../../configs/rofi/config.rasi;
 
   xdg.configFile."mako/config" = {
-     source = ../../configs/mako/config;
-     force = true;
-   };
+    source = ../../configs/mako/config;
+    force = true;
+  };
+
+
+  # ─────────────────────────────────────────────
+  # Catppuccin
+  # ─────────────────────────────────────────────
 
   catppuccin = {
     enable = true;
     autoEnable = true;
+
     flavor = "mocha";
     accent = "blue";
 
