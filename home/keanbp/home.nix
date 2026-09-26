@@ -3,6 +3,7 @@
 {
   imports = [
     ./bash.nix
+    ./coding.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -40,7 +41,6 @@
     grim
     slurp
     libnotify
-    jq
     rofi
     pavucontrol
     networkmanagerapplet

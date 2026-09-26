@@ -9,6 +9,7 @@
       ll = "ls -lah";
       la = "ls -A";
       ".." = "cd ..";
+      #ranger = "ranger /etc/nixos-config";
 
       # NixOS configuration
       nixconf = "find /etc/nixos-config/hosts/$HOSTNAME -type f | sort";
@@ -160,6 +161,17 @@
         git add .
         read -rp "Commit message: " msg
         git commit -m "$msg" && git push origin unstable
+      }
+      
+      #extra
+            decrypt() {
+        if [ -z "$1" ]; then
+          echo "Usage: decrypt <partition>"
+          echo "Example: decrypt sdc2"
+          return 1
+        fi
+
+        udisksctl unlock -b "/dev/$1"
       }
 
       # ─────────────────────────────────────────────

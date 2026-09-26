@@ -130,6 +130,8 @@
     motherboard = "amd";
   };
 
+  services.udisks2.enable = true;
+
 
   # ─────────────────────────────────────────────
   # Printing
@@ -166,11 +168,13 @@
     zoxide
     bat
     eza
-    fd
     fzf
     tldr
     ncdu
     btop
+    mpvpaper
+    gcc
+    ranger
   ];
 
 
