@@ -2,8 +2,9 @@
 
 {
   home.packages = with pkgs; [
+
     # ─────────────────────────────────────────────
-    # General development
+    # General Development
     # ─────────────────────────────────────────────
     git
     gnumake
@@ -21,13 +22,14 @@
     # ─────────────────────────────────────────────
     # Python
     # ─────────────────────────────────────────────
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
-    python3Packages.pytest
-    python3Packages.black
-    python3Packages.ruff
-    python3Packages.pyautogui
+    (python3.withPackages (ps: with ps; [
+      pip
+      virtualenv
+      pytest
+      black
+      ruff
+      pyautogui
+    ]))
 
     # ─────────────────────────────────────────────
     # Rust
@@ -67,22 +69,28 @@
     nasm
 
     # ─────────────────────────────────────────────
-    # Development CLI tools
+    # Development CLI Tools
     # ─────────────────────────────────────────────
     jq
     yq
     ripgrep
     fd
-  ];
 
     # ─────────────────────────────────────────────
+    # Other Tools
+    # ─────────────────────────────────────────────
+    ydotool
+
+  ];
+
+  # ─────────────────────────────────────────────
   # Ranger
   # ─────────────────────────────────────────────
-
   xdg.configFile."ranger/rc.conf".source =
     ../../configs/ranger/rc.conf;
 
-  xdg.configFile."ranger/scope.sh".source =
-    ../../configs/ranger/scope.sh;
-
+  xdg.configFile."ranger/scope.sh" = {
+    source = ../../configs/ranger/scope.sh;
+    executable = true;
+  };
 }

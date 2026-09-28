@@ -151,6 +151,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "uinput"
     ];
   };
 
@@ -194,4 +195,15 @@
   # ─────────────────────────────────────────────
 
   system.stateVersion = "26.05";
-}
+
+  #─────────────────────────────────────────────
+  #ydotool
+  #─────────────────────────────────────────────
+
+  users.groups.uinput = {};
+
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="uinput", MODE="0660"
+    '';
+
+    }

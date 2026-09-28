@@ -65,19 +65,11 @@
 
     # Fonts
     nerd-fonts.symbols-only
-  ];
 
-
-  # ─────────────────────────────────────────────
-  # Flatpak
-  # ─────────────────────────────────────────────
-
-  services.flatpak.enable = true;
-
-  services.flatpak.packages = [
-    "io.gitlab.librewolf-community"
-  ];
-
+    #muisc
+    ffmpeg
+    ffmpegthumbnailer
+  ]; 
 
   # ─────────────────────────────────────────────
   # Kitty
