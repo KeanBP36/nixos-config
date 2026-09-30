@@ -62,6 +62,8 @@
     kdePackages.dolphin
     unstable.brave-origin
     rpi-imager
+    heroic
+    qutebrowser
 
     # Fonts
     nerd-fonts.symbols-only
@@ -198,7 +200,17 @@
       ../../configs/fastfetch/config.jsonc;
   };
 
+    # ───────────────────────────────────────────
+    # Qutebrowser
+    # ───────────────────────────────────────────
+    xdg.configFile."qutebrowser/config.py".source =
+      ../../configs/qutebrowser/config.py;
 
+      xdg.configFile."qutebrowser/bookmarks/urls" = {
+      source = ../../configs/qutebrowser/bookmarks;
+      force = true;
+    };
+ 
   # ─────────────────────────────────────────────
   # Other application configs
   # ─────────────────────────────────────────────
@@ -216,6 +228,7 @@
     force = true;
   };
 
+  
 
   # ─────────────────────────────────────────────
   # Catppuccin

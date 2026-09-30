@@ -10,6 +10,8 @@
     serviceConfig.Type = "oneshot";
 
     script = ''
+      sleep 15
+
       ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists \
         flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     '';

@@ -326,8 +326,10 @@ hl.bind("CTRL + ALT + S", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq 
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
 
 --App
-hl.bind("SUPER + B", hl.dsp.exec_cmd("brave-origin"))
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("brave-origin"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty ranger"))
+hl.bind("SUPER + B", hl.dsp.exec_cmd("qutebrowser"))
+
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
