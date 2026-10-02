@@ -1,19 +1,58 @@
-{ ... }:
+{ config, pkgs, unstable, ... }:
 
 {
   imports = [
     ../common.nix
     ./hardware-configuration.nix
+    ../../modules/flatpak.nix
   ];
 
   networking.hostName = "desktop";
+
+  # Use the latest kernel from nixpkgs-unstable.
+  #boot.kernelPackages = unstable.linuxPackages_latest;
 
   # NVIDIA
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
+    # Match NVIDIA to the selected kernel package set.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     open = true;
     modesetting.enable = true;
     nvidiaSettings = true;
+  };
+
+  # Gaming / graphics tools
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    mesa-demos
+    mangohud
+    gamescope
+    jdk25
+  ];
+
+  programs.gamemode.enable = true;
+
+  networking.networkmanager.unmanaged = [
+    "interface-name:wlp5s0"
+  ];
+  # Storage
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-uuid/df489494-bf49-4ef5-baf2-b0a062dd5687";
+    fsType = "ext4";
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=10s"
+    ];
+  };
+
+  fileSystems."/mnt/sdb1" = {
+    device = "/dev/disk/by-uuid/383349db-d73e-42ba-a848-d34c569379a5";
+    fsType = "ext4";
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=10s"
+    ];
   };
 }

@@ -70,6 +70,8 @@ end)
 -- hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")
 hl.env("XCURSOR_SIZE", "24")
+--hl.env("XDG_DATA_DIRS", "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share")
+hl.env("XDG_DATA_DIRS", "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/nix/store/n4jgwmyj5lyrli2s5lkfpld3b00f7jl8-desktops/share:/home/keanbp/.nix-profile/share:/nix/profile/share:/home/keanbp/.local/state/nix/profile/share:/etc/profiles/per-user/keanbp/share:/nix/var/nix/profiles/default/share:/run/current-system/sw/share")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -269,7 +271,7 @@ hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -316,12 +318,17 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- Screenshots
-hl.bind("CTRL + S", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen captured'"))
-hl.bind("CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send "Screenshot" "Selected area captured"'))
-hl.bind("CTRL + ALT + S", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Active screen captured'"))
+hl.bind("CTRL + P", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen captured'"))
+hl.bind("CTRL + SHIFT + P", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send "Screenshot" "Selected area captured"'))
+hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Active screen captured'"))
 
 -- Lockscreen
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
+
+--App
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("brave-origin"))
+hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty ranger"))
+hl.bind("SUPER + B", hl.dsp.exec_cmd("qutebrowser"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

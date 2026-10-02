@@ -1,27 +1,39 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, unstable, ... }:
 
 {
+  imports = [
+    ./bash.nix
+    ./coding.nix
+    ../../modules/distrobox.nix
+  ];
+
+  # ─────────────────────────────────────────────
+  # Home
+  # ─────────────────────────────────────────────
+
   home.username = "keanbp";
   home.homeDirectory = "/home/keanbp";
-
   home.stateVersion = "26.05";
 
-  home.packages = with pkgs; [
-    # Desktop
-    quickshell
-    mako
-    hyprlock
-    hypridle
-    awww
-    bibata-cursors
-    wl-clipboard
-    grim
-    slurp    
-    libnotify
-    jq
-    rofi
 
-    # Apps
+  # ─────────────────────────────────────────────
+  # Environment
+  # ─────────────────────────────────────────────
+
+  home.sessionVariables = {
+    XDG_DATA_DIRS =
+      "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+  };
+
+
+  # ─────────────────────────────────────────────
+  # Packages
+  # ─────────────────────────────────────────────
+
+  home.packages = with pkgs; [
+    
+
+    # Applications
     fastfetch
     kitty
     steam
@@ -36,14 +48,23 @@
     pear-desktop
     orca-slicer
     kdePackages.dolphin
+    unstable.brave-origin
+    rpi-imager
+    heroic
+    qutebrowser
+    ranger
 
     # Fonts
     nerd-fonts.symbols-only
 
-  ];
+    #muisc
+    ffmpeg
+    ffmpegthumbnailer
+  ]; 
 
-  services.flatpak.packages = [
-  ];
+  # ─────────────────────────────────────────────
+  # Kitty
+  # ─────────────────────────────────────────────
 
   programs.kitty = {
     enable = true;
@@ -100,12 +121,22 @@
     '';
   };
 
+
+  # ─────────────────────────────────────────────
+  # Neovim
+  # ─────────────────────────────────────────────
+
   home.file = {
+
     ".config/nvim/init.lua".source =
-      ./nvim/init.lua;
+      ../../configs/nvim/init.lua;
 
     ".config/nvim/lazy-lock.json".source =
-      ./nvim/lazy-lock.json;
+      ../../configs/nvim/lazy-lock.json;
+
+    # ───────────────────────────────────────────
+    # Hyprland
+    # ───────────────────────────────────────────
 
     ".config/hypr/hyprland.lua" = {
       source = ../../configs/hypr/hyprland.lua;
@@ -118,22 +149,83 @@
     ".config/hypr/hyprlock.conf".source =
       ../../configs/hyprlock/hyprlock.conf;
 
+
+    # ───────────────────────────────────────────
+    # Quickshell
+    # ───────────────────────────────────────────
+
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
       force = true;
     };
 
+    ".config/quickshell/bar/ControlPanel.qml" = {
+      source = ../../configs/quickshell/bar/ControlPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/AudioPanel.qml" = {
+      source = ../../configs/quickshell/bar/AudioPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/NetworkPanel.qml" = {
+      source = ../../configs/quickshell/bar/NetworkPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/BluetoothPanel.qml" = {
+      source = ../../configs/quickshell/bar/BluetoothPanel.qml;
+      force = true;
+    };
+
+
+    # ───────────────────────────────────────────
+    # Fastfetch
+    # ───────────────────────────────────────────
+
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
+
+    # ───────────────────────────────────────────
+    # Qutebrowser
+    # ───────────────────────────────────────────
+    xdg.configFile."qutebrowser/config.py".source =
+      ../../configs/qutebrowser/config.py;
+
+      xdg.configFile."qutebrowser/bookmarks/urls" = {
+      source = ../../configs/qutebrowser/bookmarks;
+      force = true;
+    };
  
- xdg.configFile."rofi/config.rasi".source =
+  # ─────────────────────────────────────────────
+  # Other application configs
+  # ─────────────────────────────────────────────
+
+  xdg.configFile."btop/btop.conf" = {
+    source = ../../configs/btop/btop.conf;
+    force = true;
+  };
+
+  xdg.configFile."rofi/config.rasi".source =
     ../../configs/rofi/config.rasi;
 
+  xdg.configFile."mako/config" = {
+    source = ../../configs/mako/config;
+    force = true;
+  };
+
+  
+
+  # ─────────────────────────────────────────────
+  # Catppuccin
+  # ─────────────────────────────────────────────
 
   catppuccin = {
     enable = true;
     autoEnable = true;
+
     flavor = "mocha";
     accent = "blue";
 
