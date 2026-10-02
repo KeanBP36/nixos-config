@@ -167,19 +167,30 @@
   environment.systemPackages = with pkgs; [
     flatpak
     git
+    podman
+    docker
 
     # Terminal utilities
     tree
-    zoxide
-    bat
-    eza
-    fzf
-    tldr
-    ncdu
     btop
     mpvpaper
     gcc
-    ranger
+
+    # Desktop
+    quickshell
+    mako
+    hyprlock
+    hypridle
+    awww
+    bibata-cursors
+    wl-clipboard
+    grim
+    slurp
+    libnotify
+    rofi
+    pavucontrol
+    networkmanagerapplet
+    
   ];
 
 
@@ -209,5 +220,17 @@
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="uinput", MODE="0660"
     '';
+
+   #─────────────────────────────────────────────
+   #Virtualization
+   #─────────────────────────────────────────────
+
+   virtualisation.podman.enable = true;
+
+   virtualisation.containers.registries.search = [
+  "docker.io"
+ ];
+
+
 
     }

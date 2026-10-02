@@ -318,9 +318,9 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- Screenshots
-hl.bind("CTRL + S", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen captured'"))
-hl.bind("CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send "Screenshot" "Selected area captured"'))
-hl.bind("CTRL + ALT + S", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Active screen captured'"))
+hl.bind("CTRL + P", hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen captured'"))
+hl.bind("CTRL + SHIFT + P", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send "Screenshot" "Selected area captured"'))
+hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Active screen captured'"))
 
 -- Lockscreen
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))

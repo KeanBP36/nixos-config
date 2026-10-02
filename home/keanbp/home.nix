@@ -4,6 +4,7 @@
   imports = [
     ./bash.nix
     ./coding.nix
+    ../../modules/distrobox.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -30,20 +31,7 @@
   # ─────────────────────────────────────────────
 
   home.packages = with pkgs; [
-    # Desktop
-    quickshell
-    mako
-    hyprlock
-    hypridle
-    awww
-    bibata-cursors
-    wl-clipboard
-    grim
-    slurp
-    libnotify
-    rofi
-    pavucontrol
-    networkmanagerapplet
+    
 
     # Applications
     fastfetch
@@ -64,6 +52,7 @@
     rpi-imager
     heroic
     qutebrowser
+    ranger
 
     # Fonts
     nerd-fonts.symbols-only
@@ -140,11 +129,10 @@
   home.file = {
 
     ".config/nvim/init.lua".source =
-      ./nvim/init.lua;
+      ../../configs/nvim/init.lua;
 
     ".config/nvim/lazy-lock.json".source =
-      ./nvim/lazy-lock.json;
-
+      ../../configs/nvim/lazy-lock.json;
 
     # ───────────────────────────────────────────
     # Hyprland
