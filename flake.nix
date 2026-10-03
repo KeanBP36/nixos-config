@@ -12,6 +12,11 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     catppuccin.url = "github:catppuccin/nix";
+
+    nix-snapd = {
+      url = "github:nix-community/nix-snapd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -21,6 +26,7 @@
       home-manager,
       nix-flatpak,
       catppuccin,
+      nix-snapd,
       ...
     }@inputs:
 
@@ -32,6 +38,14 @@
       unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+      };
+
+      # Shared system configuration.
+      common = {
+        imports = [
+          ./hosts/common.nix
+          nix-snapd.nixosModules.default
+        ];
       };
 
       # Shared Home Manager configuration.
@@ -67,6 +81,7 @@
           };
 
           modules = [
+            common
             ./hosts/desktop/configuration.nix
             home-manager.nixosModules.home-manager
             commonHome
@@ -81,6 +96,7 @@
           };
 
           modules = [
+            common
             ./hosts/laptop/configuration.nix
             home-manager.nixosModules.home-manager
             commonHome
