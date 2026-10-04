@@ -32,6 +32,7 @@
 
     let
       system = "x86_64-linux";
+      username = "keanbp";
 
       # Unstable packages are opt-in.
       # Allow unfree packages such as NVIDIA.
@@ -53,55 +54,54 @@
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
 
-        home-manager.users.keanbp = {
+        home-manager.users.${username} = {
           imports = [
-            ./home/keanbp/home.nix
+            ./home/user/home.nix
             catppuccin.homeModules.catppuccin
           ];
         };
 
-        # Make inputs and the unstable package set
-        # available to Home Manager modules.
+        # Make inputs, unstable, and username available
+        # to Home Manager modules.
         home-manager.extraSpecialArgs = {
-          inherit inputs unstable;
+          inherit inputs unstable username;
         };
 
         home-manager.sharedModules = [
           nix-flatpak.homeManagerModules.nix-flatpak
         ];
       };
+
+      # Build a complete NixOS system.
+      #
+      # The hardware configuration is supplied by the
+      # machine-specific wrapper flake, not this public repo.
+      mkSystem =
+        {
+          hostname,
+          hardware,
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+
+          specialArgs = {
+            inherit inputs unstable username;
+          };
+
+          modules = [
+            common
+            ./hosts/${hostname}/configuration.nix
+            hardware
+            home-manager.nixosModules.home-manager
+            commonHome
+          ];
+        };
     in
     {
-      nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            inherit inputs unstable;
-          };
-
-          modules = [
-            common
-            ./hosts/desktop/configuration.nix
-            home-manager.nixosModules.home-manager
-            commonHome
-          ];
-        };
-
-        laptop = nixpkgs.lib.nixosSystem {
-          inherit system;
-
-          specialArgs = {
-            inherit inputs;
-          };
-
-          modules = [
-            common
-            ./hosts/laptop/configuration.nix
-            home-manager.nixosModules.home-manager
-            commonHome
-          ];
-        };
-      };
+      # Reusable system builder.
+      #
+      # A local machine-specific flake supplies the hardware
+      # configuration when creating a nixosConfigurations output.
+      lib.mkSystem = mkSystem;
     };
 }
