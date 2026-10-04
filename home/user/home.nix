@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, unstable, ... }:
+{ config, pkgs, inputs, unstable, username, ... }:
 
 {
   imports = [
@@ -11,8 +11,8 @@
   # Home
   # ─────────────────────────────────────────────
 
-  home.username = "keanbp";
-  home.homeDirectory = "/home/keanbp";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "26.05";
 
 
@@ -22,7 +22,7 @@
 
   home.sessionVariables = {
     XDG_DATA_DIRS =
-      "/home/keanbp/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+      "/home/${username}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
   };
 
 
@@ -31,7 +31,6 @@
   # ─────────────────────────────────────────────
 
   home.packages = with pkgs; [
-    
 
     # Applications
     fastfetch
@@ -57,10 +56,11 @@
     # Fonts
     nerd-fonts.symbols-only
 
-    #muisc
+    # Music
     ffmpeg
     ffmpegthumbnailer
-  ]; 
+  ];
+
 
   # ─────────────────────────────────────────────
   # Kitty
@@ -134,6 +134,7 @@
     ".config/nvim/lazy-lock.json".source =
       ../../configs/nvim/lazy-lock.json;
 
+
     # ───────────────────────────────────────────
     # Hyprland
     # ───────────────────────────────────────────
@@ -188,17 +189,20 @@
       ../../configs/fastfetch/config.jsonc;
   };
 
-    # ───────────────────────────────────────────
-    # Qutebrowser
-    # ───────────────────────────────────────────
-    xdg.configFile."qutebrowser/config.py".source =
-      ../../configs/qutebrowser/config.py;
 
-      xdg.configFile."qutebrowser/bookmarks/urls" = {
-      source = ../../configs/qutebrowser/bookmarks;
-      force = true;
-    };
- 
+  # ─────────────────────────────────────────────
+  # Qutebrowser
+  # ─────────────────────────────────────────────
+
+  xdg.configFile."qutebrowser/config.py".source =
+    ../../configs/qutebrowser/config.py;
+
+  xdg.configFile."qutebrowser/bookmarks/urls" = {
+    source = ../../configs/qutebrowser/bookmarks;
+    force = true;
+  };
+
+
   # ─────────────────────────────────────────────
   # Other application configs
   # ─────────────────────────────────────────────
@@ -216,7 +220,6 @@
     force = true;
   };
 
-  
 
   # ─────────────────────────────────────────────
   # Catppuccin

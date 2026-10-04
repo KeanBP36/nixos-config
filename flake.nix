@@ -1,5 +1,5 @@
 {
-  description = "Kean's NixOS configuration";
+  description = "Reusable NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
@@ -19,89 +19,94 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      nix-flatpak,
-      catppuccin,
-      nix-snapd,
-      ...
-    }@inputs:
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    home-manager,
+    nix-flatpak,
+    catppuccin,
+    nix-snapd,
+    ...
+  }:
 
-    let
-      system = "x86_64-linux";
-      username = "keanbp";
+  let
+    mkSystem =
+      {
+        system ? "x86_64-linux",
+        hostname,
+        username,
+        hardware,
+        modules ? [ ],
+      }:
 
-      # Unstable packages are opt-in.
-      # Allow unfree packages such as NVIDIA.
-      unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      # Shared system configuration.
-      common = {
-        imports = [
-          ./hosts/common.nix
-          nix-snapd.nixosModules.default
-        ];
-      };
-
-      # Shared Home Manager configuration.
-      commonHome = {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-
-        home-manager.users.${username} = {
-          imports = [
-            ./home/user/home.nix
-            catppuccin.homeModules.catppuccin
-          ];
-        };
-
-        # Make inputs, unstable, and username available
-        # to Home Manager modules.
-        home-manager.extraSpecialArgs = {
-          inherit inputs unstable username;
-        };
-
-        home-manager.sharedModules = [
-          nix-flatpak.homeManagerModules.nix-flatpak
-        ];
-      };
-
-      # Build a complete NixOS system.
-      #
-      # The hardware configuration is supplied by the
-      # machine-specific wrapper flake, not this public repo.
-      mkSystem =
-        {
-          hostname,
-          hardware,
-        }:
-        nixpkgs.lib.nixosSystem {
+      let
+        unstable = import nixpkgs-unstable {
           inherit system;
-
-          specialArgs = {
-            inherit inputs unstable username;
-          };
-
-          modules = [
-            common
-            ./hosts/${hostname}/configuration.nix
-            hardware
-            home-manager.nixosModules.home-manager
-            commonHome
-          ];
+          config.allowUnfree = true;
         };
-    in
-    {
-      # Reusable system builder.
-      #
-      # A local machine-specific flake supplies the hardware
-      # configuration when creating a nixosConfigurations output.
-      lib.mkSystem = mkSystem;
+      in
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        specialArgs = {
+          inherit inputs unstable username hostname;
+        };
+
+        modules = [
+          ./hosts/common.nix
+
+          nix-snapd.nixosModules.default
+
+          ./modules/snap.nix
+
+          home-manager.nixosModules.home-manager
+
+          {
+            networking.hostName = hostname;
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.${username} = {
+              imports = [
+                ./home/user/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
+            };
+
+            home-manager.extraSpecialArgs = {
+              inherit inputs unstable username;
+            };
+
+            home-manager.sharedModules = [
+              nix-flatpak.homeManagerModules.nix-flatpak
+            ];
+          }
+
+          hardware
+        ]
+
+        ++ modules;
+      };
+  in
+  {
+    lib = {
+      mkSystem = mkSystem;
+
+      profiles = {
+        # GPU
+        nvidia-gpu = ./profiles/nvidia-gpu.nix;
+        amd-gpu = ./profiles/amd-gpu.nix;
+        intel-gpu = ./profiles/intel-gpu.nix;
+
+        # CPU
+        amd-cpu = ./profiles/amd-cpu.nix;
+        intel-cpu = ./profiles/intel-cpu.nix;
+
+        # Features
+        gaming = ./profiles/gaming.nix;
+      };
     };
+  };
 }

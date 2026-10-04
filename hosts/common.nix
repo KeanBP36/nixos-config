@@ -1,242 +1,253 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, username, ... }:
 
 {
-  # ─────────────────────────────────────────────
-  # Boot
-  # ─────────────────────────────────────────────
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+# ─────────────────────────────────────────────
 
+# Boot
 
-  # ─────────────────────────────────────────────
-  # Nix
-  # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+boot.loader.systemd-boot.enable = true;
+boot.loader.efi.canTouchEfiVariables = true;
 
-  nixpkgs.config.allowUnfree = true;
+# ─────────────────────────────────────────────
 
+# Nix
 
-  # ─────────────────────────────────────────────
-  # Networking
-  # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 
-  networking.networkmanager.enable = true;
+nix.settings.experimental-features = [
+"nix-command"
+"flakes"
+];
 
-  networking.nameservers = [
-    "1.1.1.1"
-    "1.0.0.1"
-  ];
+nixpkgs.config.allowUnfree = true;
 
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # Bluetooth
-  # ─────────────────────────────────────────────
+# Networking
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
+# ─────────────────────────────────────────────
 
-  services.blueman.enable = true;
+networking.networkmanager.enable = true;
 
-  # ─────────────────────────────────────────────
-  # Snap
-  # ─────────────────────────────────────────────
+networking.nameservers = [
+"1.1.1.1"
+"1.0.0.1"
+];
 
-  services.snap.enable = true;
-  
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # Locale
-  # ─────────────────────────────────────────────
+# Bluetooth
 
-  time.timeZone = "Africa/Johannesburg";
+# ─────────────────────────────────────────────
 
-  i18n.defaultLocale = "en_ZA.UTF-8";
+hardware.bluetooth = {
+enable = true;
+powerOnBoot = true;
+};
 
+services.blueman.enable = true;
 
-  # ─────────────────────────────────────────────
-  # Keyboard
-  # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 
-  services.xserver.xkb = {
-    layout = "za";
-    variant = "";
-  };
+# Snap
 
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # Graphics
-  # ─────────────────────────────────────────────
+services.snap.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+# ─────────────────────────────────────────────
 
+# Locale
 
-  # ─────────────────────────────────────────────
-  # Hyprland
-  # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+time.timeZone = "Africa/Johannesburg";
 
-  security.pam.services.hyprlock = {};
+i18n.defaultLocale = "en_ZA.UTF-8";
 
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # Login
-  # ─────────────────────────────────────────────
+# Keyboard
 
-  services.greetd = {
-    enable = true;
+# ─────────────────────────────────────────────
 
-    settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
-      user = "keanbp";
-    };
-  };
-
-
-  # ─────────────────────────────────────────────
-  # Audio
-  # ─────────────────────────────────────────────
-
-  services.pulseaudio.enable = false;
-
-  security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
+services.xserver.xkb = {
+layout = "za";
+variant = "";
+};
 
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-
-    pulse.enable = true;
-  };
+# ─────────────────────────────────────────────
 
-
-  # ─────────────────────────────────────────────
-  # Hardware
-  # ─────────────────────────────────────────────
-
-  services.hardware.openrgb = {
-    enable = true;
-    motherboard = "amd";
-  };
+# Graphics
 
-  services.udisks2.enable = true;
+# ─────────────────────────────────────────────
 
+hardware.graphics = {
+enable = true;
+enable32Bit = true;
+};
 
-  # ─────────────────────────────────────────────
-  # Printing
-  # ─────────────────────────────────────────────
-      services.printing = {
-      enable = true;
-      drivers = with pkgs; [
-        epson-escpr
-      ];
-    };
+# ─────────────────────────────────────────────
 
+# Hyprland
 
-  # ─────────────────────────────────────────────
-  # User
-  # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 
-  users.users.keanbp = {
-    isNormalUser = true;
-    description = "Kean Brandt Pieterse";
+programs.hyprland = {
+enable = true;
+xwayland.enable = true;
+};
 
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "uinput"
-    ];
-  };
+security.pam.services.hyprlock = {};
 
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # Shared system packages
-  # ─────────────────────────────────────────────
+# Login
 
-  environment.systemPackages = with pkgs; [
-    flatpak
-    git
-    podman
-    docker
+# ─────────────────────────────────────────────
 
-    # Terminal utilities
-    tree
-    btop
-    mpvpaper
-    gcc
+services.greetd = {
+enable = true;
 
-    # Desktop
-    quickshell
-    mako
-    hyprlock
-    hypridle
-    awww
-    bibata-cursors
-    wl-clipboard
-    grim
-    slurp
-    libnotify
-    rofi
-    pavucontrol
-    networkmanagerapplet
-    
-  ];
+settings.default_session = {
+  command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+  user = username;
+};
 
+};
 
-  # ─────────────────────────────────────────────
-  # Bash
-  # ─────────────────────────────────────────────
-  #
-  # Personal aliases and functions will eventually
-  # live in Home Manager instead of the system config.
-  #
+# ─────────────────────────────────────────────
 
-  programs.bash.enable = true;
+# Audio
 
+# ─────────────────────────────────────────────
 
-  # ─────────────────────────────────────────────
-  # System state
-  # ─────────────────────────────────────────────
+services.pulseaudio.enable = false;
 
-  system.stateVersion = "26.05";
+security.rtkit.enable = true;
 
-  #─────────────────────────────────────────────
-  #ydotool
-  #─────────────────────────────────────────────
+services.pipewire = {
+enable = true;
 
-  users.groups.uinput = {};
+alsa = {
+  enable = true;
+  support32Bit = true;
+};
 
-  services.udev.extraRules = ''
-    KERNEL=="uinput", GROUP="uinput", MODE="0660"
-    '';
+pulse.enable = true;
 
-   #─────────────────────────────────────────────
-   #Virtualization
-   #─────────────────────────────────────────────
+};
 
-   virtualisation.podman.enable = true;
+# ─────────────────────────────────────────────
 
-   virtualisation.containers.registries.search = [
-  "docker.io"
- ];
+# Hardware
 
+# ─────────────────────────────────────────────
 
+services.hardware.openrgb.enable = true;
 
-    }
+services.udisks2.enable = true;
+
+# ─────────────────────────────────────────────
+
+# Printing
+
+# ─────────────────────────────────────────────
+
+services.printing.enable = true;
+
+# ─────────────────────────────────────────────
+
+# User
+
+# ─────────────────────────────────────────────
+
+users.users.${username} = {
+isNormalUser = true;
+
+extraGroups = [
+  "networkmanager"
+  "wheel"
+  "uinput"
+];
+
+};
+
+# ─────────────────────────────────────────────
+
+# Shared system packages
+
+# ─────────────────────────────────────────────
+
+environment.systemPackages = with pkgs; [
+flatpak
+git
+podman
+docker
+
+# Terminal
+tree
+btop
+mpvpaper
+gcc
+
+# Desktop
+quickshell
+mako
+hyprlock
+hypridle
+awww
+bibata-cursors
+wl-clipboard
+grim
+slurp
+libnotify
+rofi
+pavucontrol
+networkmanagerapplet
+
+];
+
+# ─────────────────────────────────────────────
+
+# Bash
+
+# ─────────────────────────────────────────────
+
+programs.bash.enable = true;
+
+# ─────────────────────────────────────────────
+
+# System state
+
+# ─────────────────────────────────────────────
+
+system.stateVersion = "26.05";
+
+# ─────────────────────────────────────────────
+
+# ydotool / uinput
+
+# ─────────────────────────────────────────────
+
+users.groups.uinput = {};
+
+services.udev.extraRules = ''
+KERNEL=="uinput", GROUP="uinput", MODE="0660"
+'';
+
+# ─────────────────────────────────────────────
+
+# Virtualization
+
+# ─────────────────────────────────────────────
+
+virtualisation.podman.enable = true;
+
+virtualisation.containers.registries.search = [
+"docker.io"
+];
+}
