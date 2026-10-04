@@ -1,17 +1,12 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
-services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-hardware.nvidia = {
-package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-open = true;
-
-modesetting.enable = true;
-
-nvidiaSettings = true;
-
-};
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = true;
+    modesetting.enable = true;
+    nvidiaSettings = true;
+  };
 }
-

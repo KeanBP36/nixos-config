@@ -1,253 +1,128 @@
 { config, pkgs, lib, username, ... }:
 
 {
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  networking.networkmanager.enable = true;
+
+  networking.nameservers = [
+    "1.1.1.1"
+    "1.0.0.1"
+  ];
 
-# ─────────────────────────────────────────────
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
-# Boot
+  services.blueman.enable = true;
 
-# ─────────────────────────────────────────────
+  time.timeZone = "Africa/Johannesburg";
+  i18n.defaultLocale = "en_ZA.UTF-8";
 
-boot.loader.systemd-boot.enable = true;
-boot.loader.efi.canTouchEfiVariables = true;
+  services.xserver.xkb = {
+    layout = "za";
+    variant = "";
+  };
 
-# ─────────────────────────────────────────────
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
-# Nix
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
-# ─────────────────────────────────────────────
+  security.pam.services.hyprlock = {};
 
-nix.settings.experimental-features = [
-"nix-command"
-"flakes"
-];
+  services.greetd = {
+    enable = true;
 
-nixpkgs.config.allowUnfree = true;
+    settings.default_session = {
+      command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+      user = username;
+    };
+  };
 
-# ─────────────────────────────────────────────
+  services.pulseaudio.enable = false;
 
-# Networking
+  security.rtkit.enable = true;
 
-# ─────────────────────────────────────────────
+  services.pipewire = {
+    enable = true;
 
-networking.networkmanager.enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
 
-networking.nameservers = [
-"1.1.1.1"
-"1.0.0.1"
-];
+    pulse.enable = true;
+  };
 
-# ─────────────────────────────────────────────
+  services.hardware.openrgb.enable = true;
+  services.udisks2.enable = true;
 
-# Bluetooth
+  services.printing.enable = true;
 
-# ─────────────────────────────────────────────
+  users.users.${username} = {
+    isNormalUser = true;
 
-hardware.bluetooth = {
-enable = true;
-powerOnBoot = true;
-};
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "uinput"
+    ];
+  };
 
-services.blueman.enable = true;
+  environment.systemPackages = with pkgs; [
+    flatpak
+    git
+    podman
+    docker
 
-# ─────────────────────────────────────────────
+    tree
+    btop
+    mpvpaper
+    gcc
 
-# Snap
+    quickshell
+    mako
+    hyprlock
+    hypridle
+    awww
+    bibata-cursors
+    wl-clipboard
+    grim
+    slurp
+    libnotify
+    rofi
+    pavucontrol
+    networkmanagerapplet
+  ];
 
-# ─────────────────────────────────────────────
+  programs.bash.enable = true;
 
-services.snap.enable = true;
+  system.stateVersion = "26.05";
 
-# ─────────────────────────────────────────────
+  users.groups.uinput = {};
 
-# Locale
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="uinput", MODE="0660"
+  '';
 
-# ─────────────────────────────────────────────
+  virtualisation.podman.enable = true;
 
-time.timeZone = "Africa/Johannesburg";
-
-i18n.defaultLocale = "en_ZA.UTF-8";
-
-# ─────────────────────────────────────────────
-
-# Keyboard
-
-# ─────────────────────────────────────────────
-
-services.xserver.xkb = {
-layout = "za";
-variant = "";
-};
-
-# ─────────────────────────────────────────────
-
-# Graphics
-
-# ─────────────────────────────────────────────
-
-hardware.graphics = {
-enable = true;
-enable32Bit = true;
-};
-
-# ─────────────────────────────────────────────
-
-# Hyprland
-
-# ─────────────────────────────────────────────
-
-programs.hyprland = {
-enable = true;
-xwayland.enable = true;
-};
-
-security.pam.services.hyprlock = {};
-
-# ─────────────────────────────────────────────
-
-# Login
-
-# ─────────────────────────────────────────────
-
-services.greetd = {
-enable = true;
-
-settings.default_session = {
-  command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
-  user = username;
-};
-
-};
-
-# ─────────────────────────────────────────────
-
-# Audio
-
-# ─────────────────────────────────────────────
-
-services.pulseaudio.enable = false;
-
-security.rtkit.enable = true;
-
-services.pipewire = {
-enable = true;
-
-alsa = {
-  enable = true;
-  support32Bit = true;
-};
-
-pulse.enable = true;
-
-};
-
-# ─────────────────────────────────────────────
-
-# Hardware
-
-# ─────────────────────────────────────────────
-
-services.hardware.openrgb.enable = true;
-
-services.udisks2.enable = true;
-
-# ─────────────────────────────────────────────
-
-# Printing
-
-# ─────────────────────────────────────────────
-
-services.printing.enable = true;
-
-# ─────────────────────────────────────────────
-
-# User
-
-# ─────────────────────────────────────────────
-
-users.users.${username} = {
-isNormalUser = true;
-
-extraGroups = [
-  "networkmanager"
-  "wheel"
-  "uinput"
-];
-
-};
-
-# ─────────────────────────────────────────────
-
-# Shared system packages
-
-# ─────────────────────────────────────────────
-
-environment.systemPackages = with pkgs; [
-flatpak
-git
-podman
-docker
-
-# Terminal
-tree
-btop
-mpvpaper
-gcc
-
-# Desktop
-quickshell
-mako
-hyprlock
-hypridle
-awww
-bibata-cursors
-wl-clipboard
-grim
-slurp
-libnotify
-rofi
-pavucontrol
-networkmanagerapplet
-
-];
-
-# ─────────────────────────────────────────────
-
-# Bash
-
-# ─────────────────────────────────────────────
-
-programs.bash.enable = true;
-
-# ─────────────────────────────────────────────
-
-# System state
-
-# ─────────────────────────────────────────────
-
-system.stateVersion = "26.05";
-
-# ─────────────────────────────────────────────
-
-# ydotool / uinput
-
-# ─────────────────────────────────────────────
-
-users.groups.uinput = {};
-
-services.udev.extraRules = ''
-KERNEL=="uinput", GROUP="uinput", MODE="0660"
-'';
-
-# ─────────────────────────────────────────────
-
-# Virtualization
-
-# ─────────────────────────────────────────────
-
-virtualisation.podman.enable = true;
-
-virtualisation.containers.registries.search = [
-"docker.io"
-];
+  virtualisation.containers.registries.search = [
+    "docker.io"
+  ];
 }

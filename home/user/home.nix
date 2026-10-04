@@ -5,34 +5,19 @@
     ./bash.nix
     ./coding.nix
     ../../modules/distrobox.nix
+    ../../modules/appimage.nix
   ];
-
-  # ─────────────────────────────────────────────
-  # Home
-  # ─────────────────────────────────────────────
 
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "26.05";
-
-
-  # ─────────────────────────────────────────────
-  # Environment
-  # ─────────────────────────────────────────────
 
   home.sessionVariables = {
     XDG_DATA_DIRS =
       "/home/${username}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
   };
 
-
-  # ─────────────────────────────────────────────
-  # Packages
-  # ─────────────────────────────────────────────
-
   home.packages = with pkgs; [
-
-    # Applications
     fastfetch
     kitty
     steam
@@ -52,41 +37,22 @@
     heroic
     qutebrowser
     ranger
-
-    # Fonts
+    gpu-screen-recorder
+    gpu-screen-recorder-gtk
     nerd-fonts.symbols-only
-
-    # Music
     ffmpeg
     ffmpegthumbnailer
   ];
 
-
-  # ─────────────────────────────────────────────
-  # Kitty
-  # ─────────────────────────────────────────────
-
   programs.kitty = {
     enable = true;
-
     extraConfig = ''
-      # =========================
-      # Theme
-      # =========================
-
       background #1f1f1f
       foreground #d4d4d4
-
       cursor #d4d4d4
       cursor_text_color #1f1f1f
-
       selection_background #3a3a3a
       selection_foreground #d4d4d4
-
-      # =========================
-      # Terminal Colors
-      # =========================
-
       color0  #1f1f1f
       color1  #f44747
       color2  #608b4e
@@ -95,7 +61,6 @@
       color5  #c586c0
       color6  #4ec9b0
       color7  #d4d4d4
-
       color8  #666666
       color9  #f44747
       color10 #608b4e
@@ -104,40 +69,18 @@
       color13 #c586c0
       color14 #4ec9b0
       color15 #ffffff
-
-      # =========================
-      # Appearance
-      # =========================
-
       font_size 11.0
-
       cursor_shape block
       cursor_blink_interval 0
-
       window_padding_width 8
-
       confirm_os_window_close 0
       enable_audio_bell no
     '';
   };
 
-
-  # ─────────────────────────────────────────────
-  # Neovim
-  # ─────────────────────────────────────────────
-
   home.file = {
-
-    ".config/nvim/init.lua".source =
-      ../../configs/nvim/init.lua;
-
-    ".config/nvim/lazy-lock.json".source =
-      ../../configs/nvim/lazy-lock.json;
-
-
-    # ───────────────────────────────────────────
-    # Hyprland
-    # ───────────────────────────────────────────
+    ".config/nvim/init.lua".source = ../../configs/nvim/init.lua;
+    ".config/nvim/lazy-lock.json".source = ../../configs/nvim/lazy-lock.json;
 
     ".config/hypr/hyprland.lua" = {
       source = ../../configs/hypr/hyprland.lua;
@@ -149,11 +92,6 @@
 
     ".config/hypr/hyprlock.conf".source =
       ../../configs/hyprlock/hyprlock.conf;
-
-
-    # ───────────────────────────────────────────
-    # Quickshell
-    # ───────────────────────────────────────────
 
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
@@ -180,19 +118,9 @@
       force = true;
     };
 
-
-    # ───────────────────────────────────────────
-    # Fastfetch
-    # ───────────────────────────────────────────
-
     ".config/fastfetch/config.jsonc".source =
       ../../configs/fastfetch/config.jsonc;
   };
-
-
-  # ─────────────────────────────────────────────
-  # Qutebrowser
-  # ─────────────────────────────────────────────
 
   xdg.configFile."qutebrowser/config.py".source =
     ../../configs/qutebrowser/config.py;
@@ -201,11 +129,6 @@
     source = ../../configs/qutebrowser/bookmarks;
     force = true;
   };
-
-
-  # ─────────────────────────────────────────────
-  # Other application configs
-  # ─────────────────────────────────────────────
 
   xdg.configFile."btop/btop.conf" = {
     source = ../../configs/btop/btop.conf;
@@ -220,18 +143,11 @@
     force = true;
   };
 
-
-  # ─────────────────────────────────────────────
-  # Catppuccin
-  # ─────────────────────────────────────────────
-
   catppuccin = {
     enable = true;
     autoEnable = true;
-
     flavor = "mocha";
     accent = "blue";
-
     kitty.enable = true;
     nvim.enable = true;
   };

@@ -16,8 +16,9 @@
       nixtree = "tree /etc/nixos-config";
 
       # NixOS rebuild
-      nixrebsw = "sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME";
-      nixcheck = "nix flake check /etc/nixos-config";
+      #nixrebsw = "sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME";
+      nixrebsw = "sudo NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME --impure";
+      nixcheck = "NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nix flake check /etc/nixos-config --impure";
  
       # Git branches
       nixmain = "cd /etc/nixos-config && git switch main";

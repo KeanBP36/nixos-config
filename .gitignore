@@ -25,3 +25,4 @@ hardware-configuration.local.nix
 #hosts/desktop/hardware-configuration.nix
 #hosts/laptop/hardware-configuration.nix
 hosts/*/hardware-configuration.nix
+hardware-configuration.nix
