@@ -31,13 +31,21 @@
   }:
 
   let
+    hardwareConfig =
+      let
+        path = builtins.getEnv "NIXOS_HARDWARE_CONFIG";
+      in
+      if path != "" then
+        [ path ]
+      else
+        [ ];
+
     mkSystem =
       {
         system ? "x86_64-linux",
         hostname,
         username,
-        hardware,
-        modules ? [ ],
+        hostModule,
       }:
 
       let
@@ -53,58 +61,64 @@
           inherit inputs unstable username hostname;
         };
 
-        modules = [
-          ./hosts/common.nix
+        modules =
+          [
+            hostModule
 
-          nix-snapd.nixosModules.default
+            home-manager.nixosModules.home-manager
+            nix-snapd.nixosModules.default
 
-          ./modules/snap.nix
+            {
+              networking.hostName = hostname;
 
-          home-manager.nixosModules.home-manager
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
 
-          {
-            networking.hostName = hostname;
+              home-manager.users.${username} = {
+                imports = [
+                  ./home/user/home.nix
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
 
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {
+                inherit inputs unstable username;
+              };
 
-            home-manager.users.${username} = {
-              imports = [
-                ./home/user/home.nix
-                catppuccin.homeModules.catppuccin
+              home-manager.sharedModules = [
+                nix-flatpak.homeManagerModules.nix-flatpak
               ];
-            };
-
-            home-manager.extraSpecialArgs = {
-              inherit inputs unstable username;
-            };
-
-            home-manager.sharedModules = [
-              nix-flatpak.homeManagerModules.nix-flatpak
-            ];
-          }
-
-          hardware
-        ]
-
-        ++ modules;
+            }
+          ]
+          ++ hardwareConfig;
       };
   in
   {
+    nixosConfigurations = {
+      desktop = mkSystem {
+        hostname = "desktop";
+        username = "keanbp";
+        hostModule = ./hosts/desktop/configuration.nix;
+      };
+
+      laptop = mkSystem {
+        hostname = "laptop";
+        username = "keanbp";
+        hostModule = ./hosts/laptop/configuration.nix;
+      };
+    };
+
     lib = {
-      mkSystem = mkSystem;
+      inherit mkSystem;
 
       profiles = {
-        # GPU
         nvidia-gpu = ./profiles/nvidia-gpu.nix;
         amd-gpu = ./profiles/amd-gpu.nix;
         intel-gpu = ./profiles/intel-gpu.nix;
 
-        # CPU
         amd-cpu = ./profiles/amd-cpu.nix;
         intel-cpu = ./profiles/intel-cpu.nix;
 
-        # Features
         gaming = ./profiles/gaming.nix;
       };
     };

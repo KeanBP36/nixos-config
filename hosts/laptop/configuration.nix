@@ -3,7 +3,8 @@
 {
   imports = [
     ../common.nix
-  ];
 
-  networking.hostName = "laptop";
+    ../../modules/flatpak.nix
+    ../../modules/snap.nix
+  ];
 }
