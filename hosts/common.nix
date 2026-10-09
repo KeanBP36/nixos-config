@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, unstable, ... }:
 
 {
   boot.loader.systemd-boot.enable = true;
@@ -69,6 +69,12 @@
     pulse.enable = true;
   };
 
+  # Mullvad VPN: use matching packages from the locked unstable input.
+  services.mullvad-vpn = {
+    enable = true;
+    package = unstable.mullvad;
+  };
+
   services.hardware.openrgb.enable = true;
   services.udisks2.enable = true;
 
@@ -109,6 +115,8 @@
     rofi
     pavucontrol
     networkmanagerapplet
+  ] ++ [
+    unstable.mullvad-vpn
   ];
 
   programs.bash.enable = true;
