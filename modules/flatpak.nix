@@ -27,7 +27,9 @@
     script = ''
       ${pkgs.flatpak}/bin/flatpak install -y flathub \
         io.gitlab.librewolf-community \
-        org.kde.kalzium
+        org.kde.kalzium \
+        com.stremio.Stremio
+
     '';
   };
 }
