@@ -75,6 +75,8 @@
     package = unstable.mullvad;
   };
 
+  services.vice.enable = true;
+
   services.hardware.openrgb.enable = true;
   services.udisks2.enable = true;
 
@@ -87,6 +89,7 @@
       "networkmanager"
       "wheel"
       "uinput"
+      "input"
     ];
   };
 
@@ -96,6 +99,9 @@
     podman
     docker
     unzip
+    _7zz
+    zip
+    wget
 
     tree
     btop

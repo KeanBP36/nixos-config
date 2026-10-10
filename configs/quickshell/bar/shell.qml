@@ -16,6 +16,52 @@ PanelWindow {
     readonly property color highlight: "#3a3a3a"
 
     // =========================
+    // Mullvad VPN State
+    // =========================
+
+    property bool mullvadConnected: false
+    property bool mullvadStatusKnown: false
+
+    Process {
+        id: mullvadCheck
+
+        command: ["mullvad", "status"]
+        running: true
+
+        stdout: SplitParser {
+            splitMarker: "\n"
+
+            onRead: data => {
+                var status = data.trim().toLowerCase()
+
+                if (status.includes("disconnected")) {
+                    root.mullvadConnected = false
+                    root.mullvadStatusKnown = true
+                } else if (status.includes("connected")) {
+                    root.mullvadConnected = true
+                    root.mullvadStatusKnown = true
+                }
+            }
+        }
+
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode !== 0)
+                root.mullvadStatusKnown = false
+        }
+    }
+
+    Timer {
+        interval: 5000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            if (!mullvadCheck.running)
+                mullvadCheck.running = true
+        }
+    }
+
+    // =========================
     // Bar
     // =========================
 
@@ -65,7 +111,6 @@ PanelWindow {
                     anchors.centerIn: parent
 
                     text: modelData.name
-
                     color: root.foreground
 
                     font.pixelSize: 14
@@ -75,9 +120,7 @@ PanelWindow {
                 MouseArea {
                     anchors.fill: parent
 
-                    onClicked: {
-                        modelData.activate()
-                    }
+                    onClicked: modelData.activate()
                 }
             }
         }
@@ -90,14 +133,12 @@ PanelWindow {
             width: 32
             height: 28
             radius: 4
-
             color: root.background
 
             Text {
                 anchors.centerIn: parent
 
                 text: "✦"
-
                 color: root.foreground
 
                 font.pixelSize: 16
@@ -106,7 +147,6 @@ PanelWindow {
 
             MouseArea {
                 anchors.fill: parent
-
                 cursorShape: Qt.PointingHandCursor
 
                 onClicked: {
@@ -126,7 +166,7 @@ PanelWindow {
     // REAL AUDIO VISUALIZER
     // =========================
 
-        Row {
+    Row {
         id: visualizer
 
         anchors.right: controlButton.left
@@ -135,17 +175,12 @@ PanelWindow {
 
         width: 38
         height: 24
-
         spacing: 2
 
         property var levels: [
             0, 0, 0, 0,
             0, 0, 0, 0
         ]
-
-        // =========================
-        // CAVA FFT PROCESS
-        // =========================
 
         Process {
             id: cava
@@ -198,10 +233,7 @@ PanelWindow {
                             value = 0
 
                         newLevels.push(
-                            Math.max(
-                                0,
-                                Math.min(1, value / 100)
-                            )
+                            Math.max(0, Math.min(1, value / 100))
                         )
                     }
 
@@ -212,24 +244,14 @@ PanelWindow {
             stderr: SplitParser {
                 splitMarker: "\n"
 
-                onRead: data => {
-                    console.log("CAVA:", data)
-                }
+                onRead: data => console.log("CAVA:", data)
             }
         }
-
-        // =========================
-        // RESTART CAVA IF IT DIES
-        // =========================
 
         onVisibleChanged: {
             if (visible && !cava.running)
                 cava.running = true
         }
-
-        // =========================
-        // FFT BARS
-        // =========================
 
         Repeater {
             model: 8
@@ -251,7 +273,6 @@ PanelWindow {
                         : 2
 
                 height: targetHeight
-
                 color: root.foreground
 
                 Behavior on height {
@@ -265,10 +286,59 @@ PanelWindow {
     }
 
     // =========================
+    // MULLVAD STATUS INDICATOR
+    // =========================
+
+    Rectangle {
+        id: mullvadIndicator
+
+        anchors.right: clockText.left
+        anchors.rightMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
+
+        width: 24
+        height: 28
+        radius: 4
+
+        color: root.background
+
+        Text {
+            anchors.centerIn: parent
+
+            text: "󰦝"
+
+            font.pixelSize: 19
+
+            color: !root.mullvadStatusKnown
+                ? "#f9e2af"
+                : root.mullvadConnected
+                    ? "#a6e3a1"
+                    : "#f38ba8"
+        }
+
+        
+        MouseArea {
+            anchors.fill: parent
+
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: {
+                Quickshell.execDetached([
+                    "mullvad",
+                    "status"
+                ])
+            }
+        }
+    }
+
+    // =========================
     // CLOCK
     // =========================
 
     Text {
+        id: clockText
+
         anchors.centerIn: parent
 
         color: root.foreground
@@ -285,7 +355,7 @@ PanelWindow {
             repeat: true
 
             onTriggered: {
-                parent.text =
+                clockText.text =
                     Qt.formatTime(new Date(), "HH:mm")
             }
         }
@@ -304,7 +374,6 @@ PanelWindow {
 
         width: 36
         height: 32
-
         radius: 6
 
         property bool panelOpen: false
@@ -313,12 +382,10 @@ PanelWindow {
             ? root.highlight
             : root.background
 
-        
         Text {
             anchors.centerIn: parent
 
             text: "󰍜"
-
             color: root.foreground
 
             font.pixelSize: 20
@@ -358,3 +425,4 @@ PanelWindow {
         }
     }
 }
+

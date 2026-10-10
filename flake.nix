@@ -1,126 +1,145 @@
 {
-  description = "Reusable NixOS configuration";
+description = "Reusable NixOS configuration";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+inputs = {
+nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+home-manager = {
+  url = "github:nix-community/home-manager/release-26.05";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
-    catppuccin.url = "github:catppuccin/nix";
+nix-flatpak.url = "github:gmodena/nix-flatpak";
+catppuccin.url = "github:catppuccin/nix";
 
-    nix-snapd = {
-      url = "github:nix-community/nix-snapd";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+nix-snapd = {
+  url = "github:nix-community/nix-snapd";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    nix-flatpak,
-    catppuccin,
-    nix-snapd,
-    ...
+helium = {
+  url = "github:oxcl/nix-flake-helium-browser";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
+
+# Game clipping
+vice.url = "github:eklonofficial/Vice";
+
+};
+
+outputs = inputs @ {
+self,
+nixpkgs,
+nixpkgs-unstable,
+home-manager,
+nix-flatpak,
+catppuccin,
+nix-snapd,
+vice,
+helium,
+...
+}:
+
+let
+hardwareConfig =
+let
+path = builtins.getEnv "NIXOS_HARDWARE_CONFIG";
+in
+if path != "" then
+[ path ]
+else
+[ ];
+
+mkSystem =
+  {
+    system ? "x86_64-linux",
+    hostname,
+    username,
+    hostModule,
   }:
 
   let
-    hardwareConfig =
-      let
-        path = builtins.getEnv "NIXOS_HARDWARE_CONFIG";
-      in
-      if path != "" then
-        [ path ]
-      else
-        [ ];
-
-    mkSystem =
-      {
-        system ? "x86_64-linux",
-        hostname,
-        username,
-        hostModule,
-      }:
-
-      let
-        unstable = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      in
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-
-        specialArgs = {
-          inherit inputs unstable username hostname;
-        };
-
-        modules =
-          [
-            hostModule
-
-            home-manager.nixosModules.home-manager
-            nix-snapd.nixosModules.default
-
-            {
-              networking.hostName = hostname;
-
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              home-manager.users.${username} = {
-                imports = [
-                  ./home/user/home.nix
-                  catppuccin.homeModules.catppuccin
-                ];
-              };
-
-              home-manager.extraSpecialArgs = {
-                inherit inputs unstable username;
-              };
-
-              home-manager.sharedModules = [
-                nix-flatpak.homeManagerModules.nix-flatpak
-              ];
-            }
-          ]
-          ++ hardwareConfig;
-      };
+    unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in
-  {
-    nixosConfigurations = {
-      desktop = mkSystem {
-        hostname = "desktop";
-        username = "keanbp";
-        hostModule = ./hosts/desktop/configuration.nix;
-      };
+  nixpkgs.lib.nixosSystem {
+    inherit system;
 
-      laptop = mkSystem {
-        hostname = "laptop";
-        username = "keanbp";
-        hostModule = ./hosts/laptop/configuration.nix;
-      };
+    specialArgs = {
+      inherit inputs unstable username hostname;
     };
 
-    lib = {
-      inherit mkSystem;
+    modules =
+      [
+        hostModule
 
-      profiles = {
-        nvidia-gpu = ./profiles/nvidia-gpu.nix;
-        amd-gpu = ./profiles/amd-gpu.nix;
-        intel-gpu = ./profiles/intel-gpu.nix;
+        home-manager.nixosModules.home-manager
+        nix-snapd.nixosModules.default
 
-        amd-cpu = ./profiles/amd-cpu.nix;
-        intel-cpu = ./profiles/intel-cpu.nix;
+        # Vice game clipping
+        vice.nixosModules.default
 
-        gaming = ./profiles/gaming.nix;
-      };
-    };
+        {
+          networking.hostName = hostname;
+
+          # Home Manager
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.${username} = {
+            imports = [
+              ./home/user/home.nix
+              catppuccin.homeModules.catppuccin
+            ];
+            home.packages = [ helium.packages.${system}.default ];
+          };
+
+          home-manager.extraSpecialArgs = {
+            inherit inputs unstable username;
+          };
+
+          home-manager.sharedModules = [
+            nix-flatpak.homeManagerModules.nix-flatpak
+          ];
+        }
+      ]
+      ++ hardwareConfig;
   };
+
+in
+{
+nixosConfigurations = {
+desktop = mkSystem {
+hostname = "desktop";
+username = "keanbp";
+hostModule = ./hosts/desktop/configuration.nix;
+};
+
+  laptop = mkSystem {
+    hostname = "laptop";
+    username = "keanbp";
+    hostModule = ./hosts/laptop/configuration.nix;
+  };
+};
+
+lib = {
+  inherit mkSystem;
+
+  profiles = {
+    nvidia-gpu = ./profiles/nvidia-gpu.nix;
+    amd-gpu = ./profiles/amd-gpu.nix;
+    intel-gpu = ./profiles/intel-gpu.nix;
+
+    amd-cpu = ./profiles/amd-cpu.nix;
+    intel-cpu = ./profiles/intel-cpu.nix;
+
+    gaming = ./profiles/gaming.nix;
+  };
+};
+
+};
 }
+

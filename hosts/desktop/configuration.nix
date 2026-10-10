@@ -6,6 +6,7 @@
 
     ../../profiles/amd-cpu.nix
     ../../profiles/nvidia-gpu.nix
+    ../../profiles/cuda.nix
     ../../profiles/gaming.nix
 
     ../../modules/flatpak.nix

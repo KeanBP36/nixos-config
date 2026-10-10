@@ -326,9 +326,9 @@ hl.bind("CTRL + ALT + P", hl.dsp.exec_cmd("grim -o \"$(hyprctl monitors -j | jq 
 hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
 
 --App
-hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("brave-origin"))
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("flatpak run io.gitlab.librewolf-community"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("kitty ranger"))
-hl.bind("SUPER + B", hl.dsp.exec_cmd("qutebrowser"))
+hl.bind("SUPER + B", hl.dsp.exec_cmd("helium"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
