@@ -69,8 +69,18 @@
     pulse.enable = true;
   };
 
+    # Virtualization: QEMU/KVM + libvirt + virt-manager
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  boot.kernelModules = [ "kvm-amd" ];
+
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ username ];
+
+  virtualisation.xen.enable = true;
+ 
   # Mullvad VPN: use matching packages from the locked unstable input.
-  services.mullvad-vpn = {
+    services.mullvad-vpn = {
     enable = true;
     package = unstable.mullvad;
   };
@@ -90,7 +100,8 @@
       "wheel"
       "uinput"
       "input"
-    ];
+      "libvirtd" 
+      ];
   };
 
   environment.systemPackages = with pkgs; [
