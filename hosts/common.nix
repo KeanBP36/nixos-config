@@ -1,8 +1,14 @@
 { config, pkgs, lib, username, unstable, ... }:
 
 {
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10;
+    sortKey = "nixos";
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [ "kvm-amd" ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -12,7 +18,6 @@
   nixpkgs.config.allowUnfree = true;
 
   networking.networkmanager.enable = true;
-
   networking.nameservers = [
     "1.1.1.1"
     "1.0.0.1"
@@ -21,6 +26,11 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
   };
 
   services.blueman.enable = true;
@@ -33,14 +43,14 @@
     variant = "";
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+  };
+
+  programs.mango = {
+    enable = true;
+    addLoginEntry = true;
   };
 
   security.pam.services.hyprlock = {};
@@ -49,7 +59,15 @@
     enable = true;
 
     settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+      command = ''
+        ${pkgs.tuigreet}/bin/tuigreet \
+          --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions \
+          --xsessions ${config.services.displayManager.sessionData.desktops}/share/xsessions \
+          --time \
+          --remember \
+          --remember-user-session
+      '';
+
       user = username;
     };
   };
@@ -69,18 +87,15 @@
     pulse.enable = true;
   };
 
-    # Virtualization: QEMU/KVM + libvirt + virt-manager
+  # Virtualization: QEMU/KVM and libvirt
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
-  boot.kernelModules = [ "kvm-amd" ];
 
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ username ];
 
-  virtualisation.xen.enable = true;
- 
-  # Mullvad VPN: use matching packages from the locked unstable input.
-    services.mullvad-vpn = {
+  # Mullvad VPN
+  services.mullvad-vpn = {
     enable = true;
     package = unstable.mullvad;
   };
@@ -89,7 +104,6 @@
 
   services.hardware.openrgb.enable = true;
   services.udisks2.enable = true;
-
   services.printing.enable = true;
 
   users.users.${username} = {
@@ -100,8 +114,8 @@
       "wheel"
       "uinput"
       "input"
-      "libvirtd" 
-      ];
+      "libvirtd"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -113,7 +127,6 @@
     _7zz
     zip
     wget
-
     tree
     btop
     mpvpaper
@@ -132,7 +145,7 @@
     rofi
     pavucontrol
     networkmanagerapplet
-  ] ++ [
+
     unstable.mullvad-vpn
   ];
 

@@ -5,6 +5,7 @@
     ./bash.nix
     ./coding.nix
     ../../modules/distrobox.nix
+    ./mango.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -184,11 +185,7 @@
     '';
   };
 
-
-  # ─────────────────────────────────────────────
-  # Neovim
-  # ─────────────────────────────────────────────
-
+  #Nvim 
   home.file = {
     ".config/nvim/init.lua".source =
       ../../configs/nvim/init.lua;
@@ -207,7 +204,7 @@
 
     ".config/hypr/hyprlock.conf".source =
       ../../configs/hyprlock/hyprlock.conf;
-
+ 
     # Quickshell
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;

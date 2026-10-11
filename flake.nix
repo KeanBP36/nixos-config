@@ -5,6 +5,11 @@ inputs = {
 nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+mango = {
+  url = "github:mangowm/mango";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
+
 home-manager = {
   url = "github:nix-community/home-manager/release-26.05";
   inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +43,7 @@ catppuccin,
 nix-snapd,
 vice,
 helium,
+mango,
 ...
 }:
 
@@ -82,6 +88,8 @@ mkSystem =
         # Vice game clipping
         vice.nixosModules.default
 
+        mango.nixosModules.mango
+
         {
           networking.hostName = hostname;
 
@@ -93,6 +101,7 @@ mkSystem =
             imports = [
               ./home/user/home.nix
               catppuccin.homeModules.catppuccin
+              mango.hmModules.mango
             ];
             home.packages = [ helium.packages.${system}.default ];
           };
