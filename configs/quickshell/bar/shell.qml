@@ -14,7 +14,7 @@ Variants {
         screen: modelData
 
         // =========================
-        // Nvim-style Theme
+        // THEME
         // =========================
 
         readonly property color background: "#1f1f1f"
@@ -23,14 +23,20 @@ Variants {
         readonly property color urgent: "#f38ba8"
 
         // =========================
-        // Compositor Detection
+        // COMPOSITOR DETECTION
         // =========================
 
         property string compositor: ""
 
         function activateCompositor(name) {
             root.compositor = name
-            console.log("WORKSPACES:", root.screen.name, "using compositor =", name)
+
+            console.log(
+                "WORKSPACES:",
+                root.screen.name,
+                "using compositor =",
+                name
+            )
 
             if (name === "hyprland") {
                 mangoWatcher.running = false
@@ -45,21 +51,30 @@ Variants {
         Process {
             id: hyprlandDetect
 
-            command: ["sh", "-c", "printf '%s' \"$HYPRLAND_INSTANCE_SIGNATURE\""]
+            command: [
+                "sh",
+                "-c",
+                "printf '%s' \"$HYPRLAND_INSTANCE_SIGNATURE\""
+            ]
+
             running: true
 
             stdout: StdioCollector {
                 onStreamFinished: {
-                    root.activateCompositor(this.text.trim().length > 0 ? "hyprland" : "mango")
+                    root.activateCompositor(
+                        this.text.trim().length > 0
+                            ? "hyprland"
+                            : "mango"
+                    )
                 }
             }
         }
 
+       
         // =========================
-        // Workspaces (unified model)
+        // WORKSPACES
         // =========================
 
-        // Entries: { workspaceId, focused, occupied, urgent }
         ListModel {
             id: workspaceModel
         }
@@ -67,13 +82,16 @@ Variants {
         function switchWorkspace(id) {
             if (root.compositor === "hyprland") {
                 Hyprland.dispatch("workspace " + id)
-            } else {
-                // Verify this dispatch name/args against `mmsg dispatch` docs.
-                Quickshell.execDetached(["mmsg", "dispatch", "view," + id])
+            } else if (root.compositor === "mango") {
+                Quickshell.execDetached([
+                    "mmsg",
+                    "dispatch",
+                    "view," + id
+                ])
             }
         }
 
-        // ---- Hyprland backend ----
+        // ---- Hyprland ----
 
         function refreshHyprlandWorkspaces() {
             if (root.compositor !== "hyprland")
@@ -81,12 +99,13 @@ Variants {
 
             workspaceModel.clear()
 
-            var list = Hyprland.workspaces.values.filter(
+            var workspaces = Hyprland.workspaces.values.filter(
                 ws => !ws.name.startsWith("special:")
             )
 
-            for (var i = 0; i < list.length; ++i) {
-                var ws = list[i]
+            for (var i = 0; i < workspaces.length; ++i) {
+                var ws = workspaces[i]
+
                 workspaceModel.append({
                     workspaceId: ws.name,
                     focused: !!ws.focused,
@@ -105,14 +124,14 @@ Variants {
             }
         }
 
-        // ---- MangoWC backend (via mmsg) ----
+        // ---- MangoWC ----
 
-        // Placeholder tags 1-9 so the strip is visible before the first real update.
         function seedMangoPlaceholders() {
             workspaceModel.clear()
-            for (var k = 1; k <= 9; ++k) {
+
+            for (var i = 1; i <= 9; ++i) {
                 workspaceModel.append({
-                    workspaceId: k,
+                    workspaceId: i,
                     focused: false,
                     occupied: false,
                     urgent: false
@@ -120,52 +139,43 @@ Variants {
             }
         }
 
-        // Parses JSON from `mmsg get all-tags` or one line of `mmsg watch all-tags`.
-        //
-        // NOTE: the keys (name/output, tags, id/index, active, occupied, urgent)
-        // are assumptions about mmsg's JSON. Compare against `mmsg get all-tags`
-        // output (logged below) and adjust if they differ.
         function handleMangoUpdate(text) {
-            console.log("MMSG RAW:", root.screen.name, text)
-
             var parsed
+
             try {
                 parsed = JSON.parse(text)
             } catch (e) {
-                console.log("MMSG PARSE FAILED:", e)
+                console.log("MangoWC workspace parse failed:", e)
                 return
             }
 
-            var monitors = Array.isArray(parsed) ? parsed : [parsed]
+            var monitors = parsed.all_tags
+
+            if (!Array.isArray(monitors))
+                return
+
             var mine = null
 
             for (var i = 0; i < monitors.length; ++i) {
-                var m = monitors[i]
-                if ((m.name ?? m.output) === root.screen.name) {
-                    mine = m
+                if (monitors[i].monitor === root.screen.name) {
+                    mine = monitors[i]
                     break
                 }
             }
 
-            if (!mine) {
-                console.log("MMSG: no monitor matched", root.screen.name)
+            if (!mine || !Array.isArray(mine.tags))
                 return
-            }
-
-            if (!Array.isArray(mine.tags)) {
-                console.log("MMSG: monitor has no tags array")
-                return
-            }
 
             workspaceModel.clear()
 
             for (var j = 0; j < mine.tags.length; ++j) {
-                var t = mine.tags[j]
+                var tag = mine.tags[j]
+
                 workspaceModel.append({
-                    workspaceId: t.id ?? t.index ?? (j + 1),
-                    focused: !!t.active,
-                    occupied: !!t.occupied,
-                    urgent: !!t.urgent
+                    workspaceId: tag.index,
+                    focused: !!tag.is_active,
+                    occupied: tag.client_count > 0,
+                    urgent: !!tag.is_urgent
                 })
             }
         }
@@ -177,7 +187,12 @@ Variants {
             running: false
 
             stdout: StdioCollector {
-                onStreamFinished: root.handleMangoUpdate(this.text)
+                onStreamFinished: {
+                    root.handleMangoUpdate(this.text)
+
+                    if (root.compositor === "mango")
+                        mangoWatcher.running = true
+                }
             }
         }
 
@@ -190,10 +205,18 @@ Variants {
             stdout: SplitParser {
                 splitMarker: "\n"
 
-                onRead: data => root.handleMangoUpdate(data)
+                onRead: data => {
+                    var line = data.trim()
+
+                    if (line.length > 0)
+                        root.handleMangoUpdate(line)
+                }
             }
 
-            onExited: (exitCode, exitStatus) => mangoRestartTimer.start()
+            onExited: (exitCode, exitStatus) => {
+                if (root.compositor === "mango")
+                    mangoRestartTimer.start()
+            }
         }
 
         Timer {
@@ -202,11 +225,16 @@ Variants {
             interval: 2000
             repeat: false
 
-            onTriggered: mangoWatcher.running = true
+            onTriggered: {
+                if (root.compositor === "mango"
+                        && !mangoWatcher.running) {
+                    mangoWatcher.running = true
+                }
+            }
         }
 
         // =========================
-        // Mullvad VPN State
+        // MULLVAD VPN
         // =========================
 
         property bool mullvadConnected: false
@@ -252,7 +280,7 @@ Variants {
         }
 
         // =========================
-        // Bar
+        // BAR WINDOW
         // =========================
 
         anchors {
@@ -265,7 +293,7 @@ Variants {
         color: root.background
 
         // =========================
-        // Workspaces
+        // WORKSPACE BUTTONS
         // =========================
 
         Row {
@@ -288,18 +316,27 @@ Variants {
                     required property bool occupied
                     required property bool urgent
 
+                    property bool hovered: false
+
                     width: 32
                     height: 28
                     radius: 4
 
-                    color: focused
+                    color: focused || hovered
                         ? root.highlight
                         : root.background
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
 
                     Text {
                         anchors.centerIn: parent
 
                         text: workspaceButton.workspaceId
+
                         color: workspaceButton.urgent
                             ? root.urgent
                             : workspaceButton.occupied
@@ -308,9 +345,11 @@ Variants {
 
                         font.pixelSize: 14
                         font.bold: workspaceButton.focused
+                            || workspaceButton.hovered
                     }
 
-                    // Active indicator: small bar along the bottom edge
+                    // Active workspace indicator
+
                     Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
@@ -326,16 +365,30 @@ Variants {
 
                     MouseArea {
                         anchors.fill: parent
+
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: root.switchWorkspace(workspaceButton.workspaceId)
+                        onEntered: {
+                            workspaceButton.hovered = true
+                        }
+
+                        onExited: {
+                            workspaceButton.hovered = false
+                        }
+
+                        onClicked: {
+                            root.switchWorkspace(
+                                workspaceButton.workspaceId
+                            )
+                        }
                     }
                 }
             }
         }
 
         // =========================
-        // REAL AUDIO VISUALIZER
+        // AUDIO VISUALIZER
         // =========================
 
         Row {
@@ -405,7 +458,10 @@ Variants {
                                 value = 0
 
                             newLevels.push(
-                                Math.max(0, Math.min(1, value / 100))
+                                Math.max(
+                                    0,
+                                    Math.min(1, value / 100)
+                                )
                             )
                         }
 
@@ -416,13 +472,10 @@ Variants {
                 stderr: SplitParser {
                     splitMarker: "\n"
 
-                    onRead: data => console.log("CAVA:", data)
+                    onRead: data => {
+                        console.log("CAVA:", data)
+                    }
                 }
-            }
-
-            onVisibleChanged: {
-                if (visible && !cava.running)
-                    cava.running = true
             }
 
             Repeater {
@@ -458,7 +511,7 @@ Variants {
         }
 
         // =========================
-        // MULLVAD STATUS INDICATOR
+        // MULLVAD INDICATOR
         // =========================
 
         Rectangle {
@@ -478,7 +531,6 @@ Variants {
                 anchors.centerIn: parent
 
                 text: "󰦝"
-
                 font.pixelSize: 19
 
                 color: !root.mullvadStatusKnown
@@ -513,7 +565,6 @@ Variants {
             anchors.centerIn: parent
 
             color: root.foreground
-
             font.pixelSize: 16
             font.bold: true
 
@@ -521,19 +572,20 @@ Variants {
 
             Timer {
                 interval: 1000
-
                 running: true
                 repeat: true
 
                 onTriggered: {
-                    clockText.text =
-                        Qt.formatTime(new Date(), "HH:mm")
+                    clockText.text = Qt.formatTime(
+                        new Date(),
+                        "HH:mm"
+                    )
                 }
             }
         }
 
         // =========================
-        // CONTROL PANEL BUTTON
+        // CONTROL BUTTON
         // =========================
 
         Rectangle {
@@ -548,24 +600,34 @@ Variants {
             radius: 6
 
             property bool panelOpen: false
+            property bool hovered: false
 
-            color: panelOpen
+            color: panelOpen || hovered
                 ? root.highlight
                 : root.background
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰍜"
                 color: root.foreground
-
                 font.pixelSize: 20
             }
 
             MouseArea {
                 anchors.fill: parent
 
+                hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+
+                onEntered: controlButton.hovered = true
+                onExited: controlButton.hovered = false
 
                 onClicked: {
                     controlButton.panelOpen =
@@ -587,7 +649,6 @@ Variants {
             id: controlPanel
 
             anchorItem: controlButton
-
             visible: controlButton.panelOpen
 
             onVisibleChanged: {
