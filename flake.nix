@@ -85,8 +85,35 @@ mkSystem =
         home-manager.nixosModules.home-manager
         nix-snapd.nixosModules.default
 
-        # Vice game clipping
+                # Vice game clipping
         vice.nixosModules.default
+
+        ({ pkgs, ... }: {
+          services.vice.package =
+            pkgs.vice-clipper.overridePythonAttrs (old: {
+              dependencies = old.dependencies ++ (with pkgs.python3Packages; [
+                pygobject3
+                pycairo
+              ]);
+
+              buildInputs = (old.buildInputs or []) ++ [
+                pkgs.gtk3
+                pkgs.gtk-layer-shell
+              ];
+
+              nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
+                pkgs.gobject-introspection
+                pkgs.wrapGAppsHook3
+              ];
+
+              postFixup = (old.postFixup or "") + ''
+                for bin in $out/bin/vice $out/bin/vice-app; do
+                  wrapProgram "$bin" \
+                    --prefix PYTHONPATH : "$PYTHONPATH"
+                done
+              '';
+            });
+        })
 
         mango.nixosModules.mango
 

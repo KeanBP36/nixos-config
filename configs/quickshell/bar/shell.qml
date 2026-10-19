@@ -91,29 +91,52 @@ Variants {
             }
         }
 
-        // ---- Hyprland ----
+    // ---- Hyprland ----
 
-        function refreshHyprlandWorkspaces() {
-            if (root.compositor !== "hyprland")
-                return
+    Repeater {
+        model: ScriptModel {
+            values: root.compositor === "hyprland"
+                ? Hyprland.workspaces.values.filter(
+                    ws => !ws.name.startsWith("special:")
+                )
+                : []
+        }
 
-            workspaceModel.clear()
+        delegate: Rectangle {
+            required property var modelData
 
-            var workspaces = Hyprland.workspaces.values.filter(
-                ws => !ws.name.startsWith("special:")
-            )
+            width: 32
+            height: 28
+            radius: 4
 
-            for (var i = 0; i < workspaces.length; ++i) {
-                var ws = workspaces[i]
+            property bool hovered: false
 
-                workspaceModel.append({
-                    workspaceId: ws.name,
-                    focused: !!ws.focused,
-                    occupied: true,
-                    urgent: false
-                })
+            color: modelData.focused || hovered
+                ? root.highlight
+                : root.background
+
+            Text {
+                anchors.centerIn: parent
+
+                text: modelData.name
+                color: root.foreground
+
+                font.pixelSize: 14
+                font.bold: modelData.focused || parent.parent.hovered
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onEntered: parent.hovered = true
+                onExited: parent.hovered = false
+
+                onClicked: modelData.activate()
             }
         }
+    }
 
         Connections {
             target: Hyprland.workspaces

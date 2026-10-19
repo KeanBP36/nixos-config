@@ -7,6 +7,8 @@
     sortKey = "nixos";
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm-amd" ];
 
@@ -132,6 +134,7 @@ services.greetd = {
     btop
     mpvpaper
     gcc
+    wlr-randr
 
     quickshell
     mako
@@ -146,6 +149,8 @@ services.greetd = {
     rofi
     pavucontrol
     networkmanagerapplet
+    parted
+    ntfs3g
 
     unstable.mullvad-vpn
   ];
