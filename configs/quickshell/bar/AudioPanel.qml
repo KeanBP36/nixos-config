@@ -8,15 +8,23 @@ Column {
 
     signal backRequested()
 
-    spacing: 14
+    spacing: 12
 
     property var players: Mpris.players.values
     property var player: null
 
+    readonly property color bg: "#151B16"
+    readonly property color panel: "#202921"
+    readonly property color hover: "#303D2F"
+    readonly property color green: "#9BAF75"
+    readonly property color fg: "#D5DEC8"
+    readonly property color muted: "#849078"
+    readonly property color borderColor: "#46563C"
+    readonly property color amber: "#E9AD4C"
+
     function updatePlayer() {
         root.players = Mpris.players.values
 
-        // Prefer the player that is currently playing
         for (let i = 0; i < root.players.length; i++) {
             if (root.players[i].isPlaying) {
                 root.player = root.players[i]
@@ -24,21 +32,15 @@ Column {
             }
         }
 
-        // If nothing is playing, keep the current player if it still exists
         if (root.player && root.players.indexOf(root.player) !== -1)
             return
 
-        // Otherwise use the first available player
-        root.player = root.players.length > 0
-            ? root.players[0]
-            : null
+        root.player = root.players.length > 0 ? root.players[0] : null
     }
 
     function playPause() {
-        if (!root.player)
-            return
-
-        root.player.togglePlaying()
+        if (root.player)
+            root.player.togglePlaying()
     }
 
     function previous() {
@@ -51,63 +53,92 @@ Column {
             root.player.next()
     }
 
-    // System-wide PipeWire volume controls
     function volumeUp() {
-        Quickshell.execDetached([
-            "wpctl",
-            "set-volume",
-            "@DEFAULT_AUDIO_SINK@",
-            "5%+"
-        ])
+        Quickshell.execDetached(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"])
     }
 
     function volumeDown() {
-        Quickshell.execDetached([
-            "wpctl",
-            "set-volume",
-            "@DEFAULT_AUDIO_SINK@",
-            "5%-"
-        ])
+        Quickshell.execDetached(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"])
     }
 
     function toggleMute() {
-        Quickshell.execDetached([
-            "wpctl",
-            "set-mute",
-            "@DEFAULT_AUDIO_SINK@",
-            "toggle"
-        ])
+        Quickshell.execDetached(["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"])
     }
 
     Component.onCompleted: updatePlayer()
 
     Connections {
         target: Mpris.players
-
         function onValuesChanged() {
             root.updatePlayer()
         }
     }
 
-    // Header
+    // UNSC header
     Row {
         width: parent.width
         height: 38
         spacing: 10
 
         Rectangle {
-            width: 38
-            height: 38
-            radius: 10
-            color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+            width: 36
+            height: 36
+            radius: 2
+            color: "#303D2F"
+            border.width: 1
+            border.color: root.green
+
+            Text {
+                anchors.centerIn: parent
+                text: "U"
+                color: root.green
+                font.pixelSize: 22
+                font.bold: true
+                font.family: "monospace"
+            }
+        }
+
+        Column {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 2
+
+            Text {
+                text: "UNSC // AUDIO"
+                color: root.fg
+                font.pixelSize: 15
+                font.bold: true
+                font.family: "monospace"
+            }
+
+            Text {
+                text: root.player
+                    ? (root.player.identity || "MEDIA SYSTEM")
+                    : "NO MEDIA SOURCE"
+                color: root.muted
+                font.pixelSize: 9
+                font.family: "monospace"
+                elide: Text.ElideRight
+            }
+        }
+
+        Item {
+            width: Math.max(0, parent.width - 220)
+            height: 1
+        }
+
+        Rectangle {
+            width: 34
+            height: 34
+            radius: 2
+            color: backMouse.containsMouse ? root.hover : root.panel
+            border.width: 1
+            border.color: root.borderColor
 
             Text {
                 anchors.centerIn: parent
                 text: "‹"
-                color: "#d4d4d4"
-                font.pixelSize: 27
+                color: root.green
+                font.pixelSize: 25
             }
 
             MouseArea {
@@ -115,339 +146,250 @@ Column {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
                 onClicked: root.backRequested()
-            }
-        }
-
-        Column {
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: 1
-
-            Text {
-                text: "Music"
-                color: "#d4d4d4"
-                font.pixelSize: 19
-                font.bold: true
-            }
-
-            Text {
-                text: root.player
-                    ? (root.player.identity || "Media")
-                    : "No player"
-
-                color: "#666666"
-                font.pixelSize: 11
             }
         }
     }
 
-    // Album artwork
     Rectangle {
-        width: 230
-        height: 230
+        width: parent.width
+        height: 1
+        color: root.borderColor
+    }
+
+    // Album artwork / fallback
+    Rectangle {
+        width: 208
+        height: 208
         anchors.horizontalCenter: parent.horizontalCenter
-        radius: 18
-        color: "#292929"
+        radius: 2
+        color: root.panel
+        border.width: 1
+        border.color: root.borderColor
         clip: true
 
         Image {
             id: artwork
             anchors.fill: parent
+            anchors.margins: 3
 
-            source: root.player
-                ? root.player.trackArtUrl
-                : ""
-
+            source: root.player ? root.player.trackArtUrl : ""
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             cache: true
             smooth: true
-
             visible: status === Image.Ready
         }
 
-        Text {
+        Column {
             anchors.centerIn: parent
-
-            text: "♫"
-            color: "#555555"
-            font.pixelSize: 64
-
+            spacing: 8
             visible: !artwork.visible
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "♫"
+                color: root.green
+                font.pixelSize: 54
+            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "NO SIGNAL"
+                color: root.muted
+                font.pixelSize: 10
+                font.family: "monospace"
+            }
+        }
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.top: parent.top
+            width: 4
+            height: 28
+            color: root.green
+        }
+
+        Rectangle {
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            width: 4
+            height: 28
+            color: root.green
         }
     }
 
-    // Track information
+    // Track metadata
     Column {
         width: parent.width
-        spacing: 3
+        spacing: 4
 
         Text {
             width: parent.width
-
             text: root.player
-                ? (root.player.trackTitle || "Nothing playing")
-                : "Nothing playing"
-
-            color: "#d4d4d4"
-            font.pixelSize: 17
+                ? (root.player.trackTitle || "NOTHING PLAYING")
+                : "NOTHING PLAYING"
+            color: root.fg
+            font.pixelSize: 15
             font.bold: true
-
+            font.family: "monospace"
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
         }
 
         Text {
             width: parent.width
-
             text: root.player
-                ? (root.player.trackArtist || "Unknown artist")
-                : ""
-
-            color: "#999999"
-            font.pixelSize: 13
-
+                ? (root.player.trackArtist || "UNKNOWN ARTIST")
+                : "AWAITING MEDIA SOURCE"
+            color: root.green
+            font.pixelSize: 12
+            font.family: "monospace"
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
         }
 
         Text {
             width: parent.width
-
-            text: root.player
-                ? (root.player.trackAlbum || "")
-                : ""
-
-            color: "#666666"
-            font.pixelSize: 11
-
+            text: root.player ? (root.player.trackAlbum || "") : ""
+            color: root.muted
+            font.pixelSize: 10
+            font.family: "monospace"
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
         }
     }
 
-    // Media controls
+    Rectangle {
+        width: parent.width
+        height: 1
+        color: root.borderColor
+    }
+
+    Text {
+        text: "PLAYBACK CONTROLS"
+        color: root.amber
+        font.pixelSize: 9
+        font.bold: true
+        font.family: "monospace"
+    }
+
+    // Playback controls
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 7
+        spacing: 8
 
-        // Previous
-        Rectangle {
-            width: 42
-            height: 42
-            radius: 11
-
-            color: previousMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            opacity: root.player ? 1.0 : 0.45
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "⏮"
-                color: "#d4d4d4"
-                font.pixelSize: 17
-            }
-
-            MouseArea {
-                id: previousMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-
-                enabled: root.player !== null
-                    && root.player.canGoPrevious
-
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.previous()
-            }
-        }
-
-        // Play / Pause
-        Rectangle {
+        MediaButton {
             width: 46
-            height: 46
-            radius: 8
-
-            anchors.verticalCenter: parent.verticalCenter
-
-            color: playMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            border.width: 1
-            border.color: "#444444"
-
-            opacity: root.player ? 1.0 : 0.45
-
-            Text {
-                anchors.centerIn: parent
-
-                text: root.player && root.player.isPlaying
-                    ? "󰏤"
-                    : "󰐊"
-
-                color: "#d4d4d4"
-                font.pixelSize: 20
-            }
-
-            MouseArea {
-                id: playMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    if (root.player)
-                        root.player.togglePlaying()
-                }
-            }
-        }
-
-        // Next
-        Rectangle {
-            width: 42
             height: 42
-            radius: 11
+            icon: "⏮"
+            enabled: root.player !== null && root.player.canGoPrevious
+            onClicked: root.previous()
+        }
 
-            color: nextMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+        MediaButton {
+            width: 54
+            height: 46
+            icon: root.player && root.player.isPlaying ? "󰏤" : "󰐊"
+            accent: true
+            enabled: root.player !== null
+            onClicked: root.playPause()
+        }
 
-            opacity: root.player ? 1.0 : 0.45
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "⏭"
-                color: "#d4d4d4"
-                font.pixelSize: 17
-            }
-
-            MouseArea {
-                id: nextMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-
-                enabled: root.player !== null
-                    && root.player.canGoNext
-
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.next()
-            }
+        MediaButton {
+            width: 46
+            height: 42
+            icon: "⏭"
+            enabled: root.player !== null && root.player.canGoNext
+            onClicked: root.next()
         }
     }
 
-    // System volume controls
-    Row {
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 7
-
-        // Volume Down
-        Rectangle {
-            width: 42
-            height: 38
-            radius: 10
-
-            color: volumeDownMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "󰕿"
-                color: "#d4d4d4"
-                font.pixelSize: 18
-            }
-
-            MouseArea {
-                id: volumeDownMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.volumeDown()
-            }
-        }
-
-        // Mute
-        Rectangle {
-            width: 42
-            height: 38
-            radius: 10
-
-            color: muteMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "󰖁"
-                color: "#d4d4d4"
-                font.pixelSize: 18
-            }
-
-            MouseArea {
-                id: muteMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.toggleMute()
-            }
-        }
-
-        // Volume Up
-        Rectangle {
-            width: 42
-            height: 38
-            radius: 10
-
-            color: volumeUpMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            Text {
-                anchors.centerIn: parent
-
-                text: "󰕾"
-                color: "#d4d4d4"
-                font.pixelSize: 18
-            }
-
-            MouseArea {
-                id: volumeUpMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.volumeUp()
-            }
-        }
-    }
-
-    // Status
     Text {
         width: parent.width
-
         text: root.player
-            ? (root.player.isPlaying ? "Playing" : "Paused")
-            : "Nothing playing"
-
-        color: "#666666"
-        font.pixelSize: 11
-
+            ? (root.player.isPlaying ? "▶  TRANSMISSION ACTIVE" : "Ⅱ  PLAYBACK STANDBY")
+            : "●  NO ACTIVE TRANSMISSION"
+        color: root.player && root.player.isPlaying ? root.green : root.muted
+        font.pixelSize: 9
+        font.family: "monospace"
         horizontalAlignment: Text.AlignHCenter
+    }
+
+    Rectangle {
+        width: parent.width
+        height: 1
+        color: root.borderColor
+    }
+
+    Text {
+        text: "SYSTEM VOLUME // PIPEWIRE"
+        color: root.amber
+        font.pixelSize: 9
+        font.bold: true
+        font.family: "monospace"
+    }
+
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 8
+
+        MediaButton {
+            width: 48
+            height: 38
+            icon: "󰕿"
+            onClicked: root.volumeDown()
+        }
+
+        MediaButton {
+            width: 48
+            height: 38
+            icon: "󰖁"
+            onClicked: root.toggleMute()
+        }
+
+        MediaButton {
+            width: 48
+            height: 38
+            icon: "󰕾"
+            onClicked: root.volumeUp()
+        }
+    }
+
+    component MediaButton: Rectangle {
+        id: button
+
+        property string icon
+        property bool accent: false
+        property bool enabled: true
+
+        signal clicked()
+
+        radius: 2
+        color: !enabled
+            ? "#1A201B"
+            : mouse.containsMouse
+                ? root.hover
+                : (accent ? "#303D2F" : root.panel)
+
+        border.width: 1
+        border.color: accent ? root.green : root.borderColor
+        opacity: enabled ? 1.0 : 0.4
+
+        Text {
+            anchors.centerIn: parent
+            text: button.icon
+            color: button.accent ? root.green : root.fg
+            font.pixelSize: 19
+        }
+
+        MouseArea {
+            id: mouse
+            anchors.fill: parent
+            hoverEnabled: true
+            enabled: button.enabled
+            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked: button.clicked()
+        }
     }
 }

@@ -11,130 +11,166 @@ Column {
 
     property var adapter: Bluetooth.defaultAdapter
 
-    // =================================
-    // Header
-    // =================================
+    readonly property color panel: "#202921"
+    readonly property color hover: "#303D2F"
+    readonly property color green: "#9BAF75"
+    readonly property color fg: "#D5DEC8"
+    readonly property color muted: "#849078"
+    readonly property color borderColor: "#46563C"
+    readonly property color amber: "#E9AD4C"
 
+    // UNSC header
     Row {
         width: parent.width
-        height: 32
-        spacing: 8
+        height: 36
+        spacing: 10
 
         Rectangle {
-            width: 32
-            height: 32
-            radius: 6
-
-            color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+            width: 34
+            height: 34
+            radius: 2
+            color: root.panel
+            border.width: 1
+            border.color: root.borderColor
 
             Text {
                 anchors.centerIn: parent
-
-                text: "󰁍"
-                color: "#ffffff"
-
-                font.pixelSize: 18
+                text: "‹"
+                color: root.green
+                font.pixelSize: 26
             }
 
             MouseArea {
                 id: backMouse
-
                 anchors.fill: parent
-
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    root.backRequested()
-                }
+                onClicked: root.backRequested()
             }
         }
 
-        Text {
-            text: "Bluetooth"
+        Column {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 2
 
-            color: "#ffffff"
+            Text {
+                text: "UNSC // BLUETOOTH"
+                color: root.fg
+                font.pixelSize: 15
+                font.bold: true
+                font.family: "monospace"
+            }
 
-            font.pixelSize: 20
-            font.bold: true
-
-            anchors.verticalCenter:
-                parent.verticalCenter
+            Text {
+                text: "WIRELESS DEVICE MANAGEMENT"
+                color: root.muted
+                font.pixelSize: 9
+                font.family: "monospace"
+            }
         }
     }
 
     Rectangle {
         width: parent.width
         height: 1
-
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: root.borderColor
     }
 
-    // =================================
+    Text {
+        text: "ADAPTER STATUS"
+        color: root.amber
+        font.pixelSize: 10
+        font.bold: true
+        font.family: "monospace"
+    }
+
     // Bluetooth power
-    // =================================
-
-    Row {
+    Rectangle {
         width: parent.width
-        height: 40
-
-        Text {
-            width: parent.width - 80
-
-            text: root.adapter
-                ? (
-                    root.adapter.enabled
-                        ? "Bluetooth On"
-                        : "Bluetooth Off"
-                  )
-                : "No Bluetooth adapter"
-
-            color: "#ffffff"
-
-            font.pixelSize: 13
-
-            anchors.verticalCenter:
-                parent.verticalCenter
-        }
+        height: 52
+        color: root.panel
+        border.width: 1
+        border.color: root.borderColor
+        radius: 2
 
         Rectangle {
-            width: 70
-            height: 32
+            width: 3
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            color: root.adapter && root.adapter.enabled
+                ? root.green
+                : root.muted
+        }
 
-            radius: 6
+        Row {
+            anchors.fill: parent
+            anchors.leftMargin: 12
+            anchors.rightMargin: 8
+            spacing: 8
 
-            color: toggleMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+            Column {
+                width: parent.width - 88
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 3
 
-            Text {
-                anchors.centerIn: parent
+                Text {
+                    width: parent.width
+                    text: root.adapter
+                        ? (root.adapter.enabled
+                            ? "Bluetooth Online"
+                            : "Bluetooth Offline")
+                        : "No Adapter Detected"
+                    color: root.fg
+                    font.pixelSize: 12
+                    font.bold: true
+                    font.family: "monospace"
+                    elide: Text.ElideRight
+                }
 
-                text: root.adapter
-                    && root.adapter.enabled
-                    ? "ON"
-                    : "OFF"
-
-                color: "#ffffff"
-
-                font.pixelSize: 11
-                font.bold: true
+                Text {
+                    text: root.adapter && root.adapter.enabled
+                        ? "RADIO SYSTEM READY"
+                        : "RADIO SYSTEM STANDBY"
+                    color: root.muted
+                    font.pixelSize: 9
+                    font.family: "monospace"
+                }
             }
 
-            MouseArea {
-                id: toggleMouse
+            Rectangle {
+                width: 70
+                height: 30
+                anchors.verticalCenter: parent.verticalCenter
+                radius: 2
+                color: toggleMouse.containsMouse
+                    ? root.hover
+                    : "#171D18"
+                border.width: 1
+                border.color: root.adapter && root.adapter.enabled
+                    ? root.green
+                    : root.borderColor
 
-                anchors.fill: parent
+                Text {
+                    anchors.centerIn: parent
+                    text: root.adapter && root.adapter.enabled ? "ON" : "OFF"
+                    color: root.adapter && root.adapter.enabled
+                        ? root.green
+                        : root.muted
+                    font.pixelSize: 11
+                    font.bold: true
+                    font.family: "monospace"
+                }
 
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    if (root.adapter) {
-                        root.adapter.enabled =
-                            !root.adapter.enabled
+                MouseArea {
+                    id: toggleMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    enabled: root.adapter !== null
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        if (root.adapter)
+                            root.adapter.enabled = !root.adapter.enabled
                     }
                 }
             }
@@ -144,27 +180,36 @@ Column {
     Rectangle {
         width: parent.width
         height: 1
-
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: root.borderColor
     }
 
-    // =================================
-    // Devices
-    // =================================
+    Row {
+        width: parent.width
+        spacing: 8
 
-    Text {
-        text: "Devices"
+        Text {
+            text: "REGISTERED DEVICES"
+            color: root.amber
+            font.pixelSize: 10
+            font.bold: true
+            font.family: "monospace"
+        }
 
-        color: "#ffffff"
+        Item {
+            width: Math.max(0, parent.width - 155)
+            height: 1
+        }
 
-        font.pixelSize: 14
-        font.bold: true
+        Text {
+            text: root.adapter ? String(root.adapter.devices.length) + " FOUND" : "0 FOUND"
+            color: root.muted
+            font.pixelSize: 9
+            font.family: "monospace"
+        }
     }
 
     Repeater {
-        model: root.adapter
-            ? root.adapter.devices
-            : []
+        model: root.adapter ? root.adapter.devices : []
 
         delegate: BluetoothItem {
             width: root.width
@@ -172,137 +217,156 @@ Column {
         }
     }
 
-    Text {
-        visible:
-            root.adapter
-            && root.adapter.devices.length === 0
+    Rectangle {
+        width: parent.width
+        height: 54
+        visible: !root.adapter || !root.adapter.enabled
+        color: root.panel
+        border.width: 1
+        border.color: root.borderColor
+        radius: 2
 
-        text: root.adapter && root.adapter.enabled
-            ? "No paired devices"
-            : "Bluetooth is off"
-
-        color: "#888888"
-
-        font.pixelSize: 12
+        Text {
+            anchors.centerIn: parent
+            text: "RADIO DISABLED"
+            color: root.muted
+            font.pixelSize: 11
+            font.family: "monospace"
+        }
     }
 
-    // =================================
-    // Bluetooth device
-    // =================================
+    Text {
+        visible: root.adapter && root.adapter.enabled
+            && root.adapter.devices.length === 0
+        text: "NO PAIRED DEVICES DETECTED"
+        color: root.muted
+        font.pixelSize: 10
+        font.family: "monospace"
+    }
+
+    Item {
+        width: parent.width
+        height: 1
+    }
+
+    Text {
+        width: parent.width
+        text: "UNSC // WIRELESS COMMUNICATIONS"
+        color: root.muted
+        font.pixelSize: 9
+        font.family: "monospace"
+        horizontalAlignment: Text.AlignHCenter
+    }
 
     component BluetoothItem: Rectangle {
         id: deviceItem
 
         property var device
 
-        height: 48
+        height: 54
+        radius: 2
 
-        radius: 6
-
-        color: deviceMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
+        color: deviceMouse.containsMouse ? root.hover : root.panel
+        border.width: 1
+        border.color: deviceMouse.containsMouse
+            ? root.green
+            : root.borderColor
 
         Row {
             anchors.fill: parent
-
-            anchors.leftMargin: 10
+            anchors.leftMargin: 12
             anchors.rightMargin: 8
-
             spacing: 8
 
             Text {
+                anchors.verticalCenter: parent.verticalCenter
                 text: "󰂯"
-
-                color: "#ffffff"
-
-                font.pixelSize: 18
-
-                anchors.verticalCenter:
-                    parent.verticalCenter
+                color: root.green
+                font.pixelSize: 19
             }
 
             Column {
-                width: parent.width - 110
-
-                anchors.verticalCenter:
-                    parent.verticalCenter
-
-                spacing: 2
+                width: Math.max(40, parent.width - 112)
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 3
 
                 Text {
                     width: parent.width
-
-                    text: device
-                        ? device.name
-                        : "Unknown device"
-
-                    color: "#ffffff"
-
-                    font.pixelSize: 12
-
+                    text: deviceItem.device
+                        ? deviceItem.device.name
+                        : "Unknown Device"
+                    color: root.fg
+                    font.pixelSize: 11
+                    font.bold: true
+                    font.family: "monospace"
                     elide: Text.ElideRight
                 }
 
                 Text {
-                    text:
-                        device && device.connected
-                            ? "Connected"
-                            : device && device.paired
-                                ? "Paired"
-                                : "Not paired"
-
-                    color:
-                        device && device.connected
-                            ? "#4ec9b0"
-                            : "#888888"
-
-                    font.pixelSize: 10
+                    width: parent.width
+                    text: {
+                        if (!deviceItem.device)
+                            return "DEVICE UNAVAILABLE"
+                        if (deviceItem.device.connected)
+                            return "● CONNECTED"
+                        if (deviceItem.device.paired)
+                            return "PAIRED // STANDBY"
+                        return "UNPAIRED"
+                    }
+                    color: deviceItem.device && deviceItem.device.connected
+                        ? root.green
+                        : root.muted
+                    font.pixelSize: 9
+                    font.family: "monospace"
+                    elide: Text.ElideRight
                 }
             }
 
             Rectangle {
                 width: 70
                 height: 30
-
-                radius: 5
-
-                anchors.verticalCenter:
-                    parent.verticalCenter
-
-                color: "#202020"
+                anchors.verticalCenter: parent.verticalCenter
+                radius: 2
+                color: actionMouse.containsMouse ? root.hover : "#171D18"
+                border.width: 1
+                border.color: actionMouse.containsMouse
+                    ? root.green
+                    : root.borderColor
 
                 Text {
                     anchors.centerIn: parent
-
-                    text:
-                        device && device.connected
-                            ? "Disconnect"
-                            : device && device.paired
-                                ? "Connect"
-                                : "Pair"
-
-                    color: "#ffffff"
-
-                    font.pixelSize: 10
+                    text: {
+                        if (!deviceItem.device)
+                            return "N/A"
+                        if (deviceItem.device.connected)
+                            return "DISCONNECT"
+                        if (deviceItem.device.paired)
+                            return "CONNECT"
+                        return "PAIR"
+                    }
+                    color: root.fg
+                    font.pixelSize: 9
+                    font.bold: true
+                    font.family: "monospace"
                 }
 
                 MouseArea {
+                    id: actionMouse
                     anchors.fill: parent
-
-                    cursorShape:
-                        Qt.PointingHandCursor
+                    hoverEnabled: true
+                    enabled: deviceItem.device !== null
+                    cursorShape: Qt.PointingHandCursor
 
                     onClicked: {
-                        if (!device)
+                        if (!deviceItem.device)
                             return
 
-                        if (device.connected) {
-                            device.disconnect()
-                        } else if (device.paired) {
-                            device.connect()
+                        if (deviceItem.device.connected) {
+                            deviceItem.device.disconnect()
+                        } else if (deviceItem.device.paired) {
+                            deviceItem.device.connect()
                         } else {
-                            device.pair()
+                            deviceItem.device.pair()
                         }
                     }
                 }
@@ -311,14 +375,8 @@ Column {
 
         MouseArea {
             id: deviceMouse
-
             anchors.fill: parent
-
             hoverEnabled: true
-
-            cursorShape:
-                Qt.PointingHandCursor
-
             z: -1
         }
     }

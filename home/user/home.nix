@@ -190,9 +190,6 @@
       force = true;
     };
 
-    # Fastfetch
-    ".config/fastfetch/config.jsonc".source =
-      ../../configs/fastfetch/config.jsonc; 
 };
 
 
@@ -218,6 +215,9 @@
     force = true;
   };
 
+  xdg.configFile."btop/themes/UNSC.theme".source =
+  ../../configs/btop/themes/UNSC.theme;
+
   xdg.configFile."rofi/config.rasi".source =
     ../../configs/rofi/config.rasi;
 
@@ -225,6 +225,12 @@
     source = ../../configs/mako/config;
     force = true;
   };
+
+  xdg.configFile."fastfetch/config.jsonc".source =
+  ../../configs/fastfetch/config.jsonc;
+
+  xdg.configFile."fastfetch/halo.txt".source =
+  ../../configs/fastfetch/halo.txt;
 
 
   # ─────────────────────────────────────────────

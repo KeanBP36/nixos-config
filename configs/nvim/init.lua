@@ -227,16 +227,16 @@ require("lazy").setup({
 -- =========================================
 
 local colors = {
-    bg       = "#1f1f1f",
-    fg       = "#d4d4d4",
-    red      = "#f44747",
-    green    = "#608b4e",
-    yellow   = "#dcdcaa",
-    blue     = "#569cd6",
-    purple   = "#c586c0",
-    cyan     = "#4ec9b0",
-    gray     = "#666666",
-    white    = "#ffffff",
+    bg       = "#171d18",
+    fg       = "#c5cfb5",
+    red      = "#d97862",
+    green    = "#91a96b",
+    yellow   = "#d9a441",
+    blue     = "#788d5a",
+    purple   = "#a3ad8b",
+    cyan     = "#a0b58a",
+    gray     = "#687362",
+    white    = "#e0e5d8",
 }
 
 

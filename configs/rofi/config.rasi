@@ -1,20 +1,21 @@
- configuration {
+configuration {
     modi: "drun";
     show-icons: true;
     drun-display-format: "{name}";
-    display-drun: "Apps";
+    display-drun: "APPS // PERSONNEL SYSTEMS";
 }
 
 * {
-    bg:              rgba(31, 31, 31, 75%);
-    fg:              #b8b8b8;
-    selected-bg:     rgba(58, 58, 58, 80%);
-    selected-fg:     #d4d4d4;
+    bg:              rgba(21, 27, 22, 94%);
+    fg:              #D5DEC8;
+    selected-bg:     rgba(57, 72, 47, 92%);
+    selected-fg:     #E5EBD9;
 
-    border-gray:     #777777;
-    muted-gray:      #888888;
-    blue:            #569cd6;
-    offwhite:        #f5f5f5;
+    border-gray:     #46563C;
+    muted-gray:      #849078;
+    unsc-green:      #9BAF75;
+    offwhite:        #E5EBD9;
+    amber:           #E9AD4C;
 
     background-color: @bg;
     text-color: @fg;
@@ -40,13 +41,13 @@ window {
     width: 600px;
     border: 2px;
     border-color: @border-gray;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 3px;
+    padding: 18px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    spacing: 15px;
+    spacing: 14px;
     background-color: transparent;
 }
 
@@ -54,28 +55,29 @@ inputbar {
     children: [ prompt, entry ];
     spacing: 10px;
     background-color: transparent;
+    padding: 4px;
 }
 
 prompt {
-    text-color: @offwhite;
+    text-color: @unsc-green;
 }
 
 entry {
     text-color: @fg;
-    placeholder: "Search applications...";
+    placeholder: "SEARCH PERSONNEL / APPLICATIONS...";
     placeholder-color: @muted-gray;
 }
 
 listview {
     lines: 8;
-    spacing: 4px;
+    spacing: 3px;
     scrollbar: false;
     background-color: transparent;
 }
 
 element {
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 2px;
     background-color: transparent;
     text-color: @fg;
 }
