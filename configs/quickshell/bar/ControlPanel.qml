@@ -22,7 +22,7 @@ PopupWindow {
         anchors.fill: parent
 
         // Dark transparent glass
-        color: Qt.rgba(0.08, 0.08, 0.08, 0.88)
+        color: Qt.rgba(0.08, 0.08, 0.08, 0.75)
 
         radius: 10
 

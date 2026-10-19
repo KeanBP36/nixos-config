@@ -17,11 +17,11 @@ Variants {
         // THEME
         // =========================
 
-        readonly property color background: "#1f1f1f"
-        readonly property color foreground: "#d4d4d4"
-        readonly property color highlight: "#3a3a3a"
-        readonly property color urgent: "#f38ba8"
-
+       readonly property color background: Qt.rgba(31/255, 31/255, 31/255, 1.0)
+       readonly property color barBackground: Qt.rgba(31/255, 31/255, 31/255, 0.75)
+       readonly property color foreground: "#d4d4d4"
+       readonly property color highlight: "#3a3a3a"
+       readonly property color urgent: "#f38ba8"
         // =========================
         // COMPOSITOR DETECTION
         // =========================
@@ -313,7 +313,7 @@ Variants {
         }
 
         implicitHeight: 40
-        color: root.background
+        color: root.barBackground
 
         // =========================
         // WORKSPACE BUTTONS
