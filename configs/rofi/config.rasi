@@ -8,7 +8,7 @@
 * {
     bg:              rgba(31, 31, 31, 75%);
     fg:              #b8b8b8;
-    selected-bg:     rgba(58, 58, 58, 80%);
+    selected-bg:     rgba(58, 58, 58, 75%);
     selected-fg:     #d4d4d4;
 
     border-gray:     #777777;
