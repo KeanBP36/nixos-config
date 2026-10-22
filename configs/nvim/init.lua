@@ -30,7 +30,7 @@ vim.opt.clipboard = "unnamedplus"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -43,12 +43,13 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+
 -- =========================================
 -- Plugins
 -- =========================================
 
 require("lazy").setup({
-     -- =====================================
+    -- =====================================
     -- Fuzzy finder
     -- =====================================
 
@@ -144,6 +145,7 @@ require("lazy").setup({
 
     {
         "numToStr/Comment.nvim",
+        opts = {},
     },
 
     -- =====================================
@@ -204,7 +206,7 @@ require("lazy").setup({
     },
 
     -- =====================================
-    -- Diagnostics
+    -- Diagnostics list
     -- =====================================
 
     {
@@ -212,16 +214,34 @@ require("lazy").setup({
     },
 
     -- =====================================
-    -- LSP
+    -- Language Server Protocol
     -- =====================================
 
-        {
+    {
         "neovim/nvim-lspconfig",
+    },
+
+    -- =====================================
+    -- Automatic code formatting
+    -- =====================================
+
+    {
+        "stevearc/conform.nvim",
+    },
+
+
+    -- =====================================
+    -- Linting
+    -- =====================================
+
+    {
+        "mfussenegger/nvim-lint",
     },
 }, {
     lockfile = "/etc/nixos-config/home/keanbp/nvim/lazy-lock.json",
 })
-    
+
+
 -- =========================================
 -- Colors
 -- =========================================
@@ -334,6 +354,47 @@ vim.api.nvim_set_hl(0, "Error", {
 vim.api.nvim_set_hl(0, "Todo", {
     fg = colors.yellow,
     bold = true,
+})
+
+
+-- =========================================
+-- Diagnostic colors
+-- =========================================
+
+vim.api.nvim_set_hl(0, "DiagnosticError", {
+    fg = colors.red,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticWarn", {
+    fg = colors.yellow,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticInfo", {
+    fg = colors.blue,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticHint", {
+    fg = colors.cyan,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", {
+    undercurl = true,
+    sp = colors.red,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
+    undercurl = true,
+    sp = colors.yellow,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", {
+    undercurl = true,
+    sp = colors.blue,
+})
+
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
+    undercurl = true,
+    sp = colors.cyan,
 })
 
 
@@ -487,3 +548,93 @@ vim.api.nvim_set_hl(0, "@comment", {
     fg = colors.gray,
     italic = true,
 })
+
+
+-- =========================================
+-- Diagnostics
+-- =========================================
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    severity_sort = true,
+    update_in_insert = false,
+
+    float = {
+        border = "rounded",
+        source = "if_many",
+    },
+})
+
+
+-- =========================================
+-- Automatic linting
+-- =========================================
+
+local lint = require("lint")
+
+lint.linters_by_ft = {
+    nix = { "statix" },
+    lua = { "luacheck" },
+    python = { "ruff" },
+    sh = { "shellcheck" },
+    bash = { "shellcheck" },
+}
+
+local lint_group = vim.api.nvim_create_augroup(
+    "AutomaticLinting",
+    { clear = true }
+)
+
+vim.api.nvim_create_autocmd({
+    "BufEnter",
+    "BufWritePost",
+    "InsertLeave",
+}, {
+    group = lint_group,
+
+    callback = function()
+        lint.try_lint()
+    end,
+})
+
+
+-- =========================================
+-- Automatic Code Formatting
+-- =========================================
+
+require("conform").setup({
+    formatters_by_ft = {
+        lua = { "stylua" },
+        nix = { "nixfmt" },
+        python = { "ruff_format" },
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        jsonc = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
+        markdown = { "prettier" },
+        yaml = { "prettier" },
+        sh = { "shfmt" },
+        bash = { "shfmt" },
+    },
+
+    format_on_save = {
+        timeout_ms = 2000,
+        lsp_format = "fallback",
+    },
+})
+
+-- Format manually with <leader>f
+vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({
+        async = true,
+        lsp_format = "fallback",
+    })
+end, { desc = "Format current file" })
+
+

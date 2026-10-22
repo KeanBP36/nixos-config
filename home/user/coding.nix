@@ -22,14 +22,16 @@
     # ─────────────────────────────────────────────
     # Python
     # ─────────────────────────────────────────────
-    (python3.withPackages (ps: with ps; [
-      pip
-      virtualenv
-      pytest
-      black
-      ruff
-      pyautogui
-    ]))
+    (python3.withPackages (
+      ps: with ps; [
+        pip
+        virtualenv
+        pytest
+        black
+        ruff
+        pyautogui
+      ]
+    ))
 
     # ─────────────────────────────────────────────
     # Rust
@@ -81,13 +83,25 @@
     # ─────────────────────────────────────────────
     ydotool
 
+    #nvim tools
+    pkgs.stylua
+    pkgs.nixfmt
+    #pkgs.black
+    pkgs.prettier
+    pkgs.luajitPackages.luacheck
+    pkgs.lua-language-server
+    pkgs.nil
+    pkgs.pyright
+    pkgs.nodejs
+    pkgs.git
+    pkgs.statix
+
   ];
 
   # ─────────────────────────────────────────────
   # Ranger
   # ─────────────────────────────────────────────
-  xdg.configFile."ranger/rc.conf".source =
-    ../../configs/ranger/rc.conf;
+  xdg.configFile."ranger/rc.conf".source = ../../configs/ranger/rc.conf;
 
   xdg.configFile."ranger/scope.sh" = {
     source = ../../configs/ranger/scope.sh;
