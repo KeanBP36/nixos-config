@@ -83,18 +83,26 @@
     # ─────────────────────────────────────────────
     ydotool
 
-    #nvim tools
-    pkgs.stylua
-    pkgs.nixfmt
-    #pkgs.black
-    pkgs.prettier
-    pkgs.luajitPackages.luacheck
-    pkgs.lua-language-server
-    pkgs.nil
-    pkgs.pyright
-    pkgs.nodejs
-    pkgs.git
-    pkgs.statix
+    # ─────────────────────────────────────────────
+    # Neovim Tools
+    # ─────────────────────────────────────────────
+    stylua
+    nixfmt
+    prettier
+    lua-language-server
+    nil
+    pyright
+    statix
+    luajitPackages.luacheck
+
+    # Neovim syntax checking
+    yamllint
+    markdownlint-cli
+    eslint_d
+    sqlfluff
+    hadolint
+    checkmake
+    ansible-lint
 
   ];
 

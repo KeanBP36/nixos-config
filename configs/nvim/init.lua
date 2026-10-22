@@ -23,7 +23,6 @@ vim.opt.mouse = "a"
 -- Use system clipboard
 vim.opt.clipboard = "unnamedplus"
 
-
 -- =========================================
 -- Bootstrap lazy.nvim
 -- =========================================
@@ -31,234 +30,230 @@ vim.opt.clipboard = "unnamedplus"
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
 end
 
 vim.opt.rtp:prepend(lazypath)
-
 
 -- =========================================
 -- Plugins
 -- =========================================
 
 require("lazy").setup({
-    -- =====================================
-    -- Fuzzy finder
-    -- =====================================
+	-- =====================================
+	-- Fuzzy finder
+	-- =====================================
 
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
 
-    -- =====================================
-    -- File tree
-    -- =====================================
+	-- =====================================
+	-- File tree
+	-- =====================================
 
-    {
-        "nvim-tree/nvim-tree.lua",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
-    },
+	{
+		"nvim-tree/nvim-tree.lua",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 
-    -- =====================================
-    -- Treesitter
-    -- =====================================
+	-- =====================================
+	-- Treesitter
+	-- =====================================
 
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+	},
 
-    -- =====================================
-    -- Statusline
-    -- =====================================
+	-- =====================================
+	-- Statusline
+	-- =====================================
 
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
-    },
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 
-    -- =====================================
-    -- Buffer tabs
-    -- =====================================
+	-- =====================================
+	-- Buffer tabs
+	-- =====================================
 
-    {
-        "akinsho/bufferline.nvim",
-        version = "*",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
-    },
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 
-    -- =====================================
-    -- Dashboard
-    -- =====================================
+	-- =====================================
+	-- Dashboard
+	-- =====================================
 
-    {
-        "goolord/alpha-nvim",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons",
-        },
-    },
+	{
+		"goolord/alpha-nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 
-    -- =====================================
-    -- Which-key
-    -- =====================================
+	-- =====================================
+	-- Which-key
+	-- =====================================
 
-    {
-        "folke/which-key.nvim",
-    },
+	{
+		"folke/which-key.nvim",
+	},
 
-    -- =====================================
-    -- Git
-    -- =====================================
+	-- =====================================
+	-- Git
+	-- =====================================
 
-    {
-        "lewis6991/gitsigns.nvim",
-    },
+	{
+		"lewis6991/gitsigns.nvim",
+	},
 
-    -- =====================================
-    -- Surround
-    -- =====================================
+	-- =====================================
+	-- Surround
+	-- =====================================
 
-    {
-        "kylechui/nvim-surround",
-        version = "*",
-    },
+	{
+		"kylechui/nvim-surround",
+		version = "*",
+	},
 
-    -- =====================================
-    -- Comments
-    -- =====================================
+	-- =====================================
+	-- Comments
+	-- =====================================
 
-    {
-        "numToStr/Comment.nvim",
-        opts = {},
-    },
+	{
+		"numToStr/Comment.nvim",
+		opts = {},
+	},
 
-    -- =====================================
-    -- TODO / FIXME
-    -- =====================================
+	-- =====================================
+	-- TODO / FIXME
+	-- =====================================
 
-    {
-        "folke/todo-comments.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
+	{
+		"folke/todo-comments.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
 
-    -- =====================================
-    -- Indentation guides
-    -- =====================================
+	-- =====================================
+	-- Indentation guides
+	-- =====================================
 
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-    },
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+	},
 
-    -- =====================================
-    -- Animations
-    -- =====================================
+	-- =====================================
+	-- Animations
+	-- =====================================
 
-    {
-        "echasnovski/mini.animate",
-        version = false,
-    },
+	{
+		"echasnovski/mini.animate",
+		version = false,
+	},
 
-    -- =====================================
-    -- Highlight references
-    -- =====================================
+	-- =====================================
+	-- Highlight references
+	-- =====================================
 
-    {
-        "RRethy/vim-illuminate",
-    },
+	{
+		"RRethy/vim-illuminate",
+	},
 
-    -- =====================================
-    -- Notifications
-    -- =====================================
+	-- =====================================
+	-- Notifications
+	-- =====================================
 
-    {
-        "rcarriga/nvim-notify",
-    },
+	{
+		"rcarriga/nvim-notify",
+	},
 
-    -- =====================================
-    -- UI
-    -- =====================================
+	-- =====================================
+	-- UI
+	-- =====================================
 
-    {
-        "folke/noice.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-        },
-    },
+	{
+		"folke/noice.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
 
-    -- =====================================
-    -- Diagnostics list
-    -- =====================================
+	-- =====================================
+	-- Diagnostics list
+	-- =====================================
 
-    {
-        "folke/trouble.nvim",
-    },
+	{
+		"folke/trouble.nvim",
+	},
 
-    -- =====================================
-    -- Language Server Protocol
-    -- =====================================
+	-- =====================================
+	-- Language Server Protocol
+	-- =====================================
 
-    {
-        "neovim/nvim-lspconfig",
-    },
+	{
+		"neovim/nvim-lspconfig",
+	},
 
-    -- =====================================
-    -- Automatic code formatting
-    -- =====================================
+	-- =====================================
+	-- Automatic code formatting
+	-- =====================================
 
-    {
-        "stevearc/conform.nvim",
-    },
+	{
+		"stevearc/conform.nvim",
+	},
 
+	-- =====================================
+	-- Linting
+	-- =====================================
 
-    -- =====================================
-    -- Linting
-    -- =====================================
-
-    {
-        "mfussenegger/nvim-lint",
-    },
+	{
+		"mfussenegger/nvim-lint",
+	},
 }, {
-    lockfile = "/etc/nixos-config/home/keanbp/nvim/lazy-lock.json",
+	lockfile = "/etc/nixos-config/home/keanbp/nvim/lazy-lock.json",
 })
-
 
 -- =========================================
 -- Colors
 -- =========================================
 
 local colors = {
-    bg       = "#1f1f1f",
-    fg       = "#d4d4d4",
-    red      = "#f44747",
-    green    = "#608b4e",
-    yellow   = "#dcdcaa",
-    blue     = "#569cd6",
-    purple   = "#c586c0",
-    cyan     = "#4ec9b0",
-    gray     = "#666666",
-    white    = "#ffffff",
+	bg = "#1f1f1f",
+	fg = "#d4d4d4",
+	red = "#f44747",
+	green = "#608b4e",
+	yellow = "#dcdcaa",
+	blue = "#569cd6",
+	purple = "#c586c0",
+	cyan = "#4ec9b0",
+	gray = "#666666",
+	white = "#ffffff",
 }
-
 
 -- =========================================
 -- Editor colors
@@ -268,305 +263,298 @@ vim.cmd("highlight clear")
 vim.cmd("set background=dark")
 
 vim.api.nvim_set_hl(0, "Normal", {
-    fg = colors.fg,
-    bg = colors.bg,
+	fg = colors.fg,
+	bg = colors.bg,
 })
 
 vim.api.nvim_set_hl(0, "NormalFloat", {
-    fg = colors.fg,
-    bg = colors.bg,
+	fg = colors.fg,
+	bg = colors.bg,
 })
 
 vim.api.nvim_set_hl(0, "CursorLine", {
-    bg = "#292929",
+	bg = "#292929",
 })
 
 vim.api.nvim_set_hl(0, "CursorLineNr", {
-    fg = colors.blue,
-    bold = true,
+	fg = colors.blue,
+	bold = true,
 })
 
 vim.api.nvim_set_hl(0, "LineNr", {
-    fg = colors.gray,
+	fg = colors.gray,
 })
 
 vim.api.nvim_set_hl(0, "Comment", {
-    fg = colors.gray,
-    italic = true,
+	fg = colors.gray,
+	italic = true,
 })
 
 vim.api.nvim_set_hl(0, "Constant", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "String", {
-    fg = colors.green,
+	fg = colors.green,
 })
 
 vim.api.nvim_set_hl(0, "Character", {
-    fg = colors.green,
+	fg = colors.green,
 })
 
 vim.api.nvim_set_hl(0, "Number", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "Boolean", {
-    fg = colors.blue,
+	fg = colors.blue,
 })
 
 vim.api.nvim_set_hl(0, "Identifier", {
-    fg = colors.fg,
+	fg = colors.fg,
 })
 
 vim.api.nvim_set_hl(0, "Function", {
-    fg = colors.yellow,
+	fg = colors.yellow,
 })
 
 vim.api.nvim_set_hl(0, "Statement", {
-    fg = colors.purple,
+	fg = colors.purple,
 })
 
 vim.api.nvim_set_hl(0, "Keyword", {
-    fg = colors.purple,
+	fg = colors.purple,
 })
 
 vim.api.nvim_set_hl(0, "Type", {
-    fg = colors.blue,
+	fg = colors.blue,
 })
 
 vim.api.nvim_set_hl(0, "Operator", {
-    fg = colors.fg,
+	fg = colors.fg,
 })
 
 vim.api.nvim_set_hl(0, "Delimiter", {
-    fg = colors.fg,
+	fg = colors.fg,
 })
 
 vim.api.nvim_set_hl(0, "Special", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "Error", {
-    fg = colors.red,
+	fg = colors.red,
 })
 
 vim.api.nvim_set_hl(0, "Todo", {
-    fg = colors.yellow,
-    bold = true,
+	fg = colors.yellow,
+	bold = true,
 })
-
 
 -- =========================================
 -- Diagnostic colors
 -- =========================================
 
 vim.api.nvim_set_hl(0, "DiagnosticError", {
-    fg = colors.red,
+	fg = colors.red,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticWarn", {
-    fg = colors.yellow,
+	fg = colors.yellow,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticInfo", {
-    fg = colors.blue,
+	fg = colors.blue,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticHint", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", {
-    undercurl = true,
-    sp = colors.red,
+	undercurl = true,
+	sp = colors.red,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
-    undercurl = true,
-    sp = colors.yellow,
+	undercurl = true,
+	sp = colors.yellow,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", {
-    undercurl = true,
-    sp = colors.blue,
+	undercurl = true,
+	sp = colors.blue,
 })
 
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
-    undercurl = true,
-    sp = colors.cyan,
+	undercurl = true,
+	sp = colors.cyan,
 })
-
 
 -- =========================================
 -- Telescope
 -- =========================================
 
 vim.api.nvim_set_hl(0, "TelescopeNormal", {
-    fg = colors.fg,
-    bg = colors.bg,
+	fg = colors.fg,
+	bg = colors.bg,
 })
 
 vim.api.nvim_set_hl(0, "TelescopeBorder", {
-    fg = colors.gray,
-    bg = colors.bg,
+	fg = colors.gray,
+	bg = colors.bg,
 })
 
 vim.api.nvim_set_hl(0, "TelescopeSelection", {
-    fg = colors.white,
-    bg = "#333333",
+	fg = colors.white,
+	bg = "#333333",
 })
 
 vim.api.nvim_set_hl(0, "TelescopeMatching", {
-    fg = colors.blue,
-    bold = true,
+	fg = colors.blue,
+	bold = true,
 })
-
 
 -- =========================================
 -- Lualine
 -- =========================================
 
 require("lualine").setup({
-    options = {
-        theme = {
-            normal = {
-                a = {
-                    fg = colors.bg,
-                    bg = colors.blue,
-                    gui = "bold",
-                },
-                b = {
-                    fg = colors.fg,
-                    bg = "#292929",
-                },
-                c = {
-                    fg = colors.fg,
-                    bg = colors.bg,
-                },
-            },
+	options = {
+		theme = {
+			normal = {
+				a = {
+					fg = colors.bg,
+					bg = colors.blue,
+					gui = "bold",
+				},
+				b = {
+					fg = colors.fg,
+					bg = "#292929",
+				},
+				c = {
+					fg = colors.fg,
+					bg = colors.bg,
+				},
+			},
 
-            insert = {
-                a = {
-                    fg = colors.bg,
-                    bg = colors.green,
-                    gui = "bold",
-                },
-            },
+			insert = {
+				a = {
+					fg = colors.bg,
+					bg = colors.green,
+					gui = "bold",
+				},
+			},
 
-            visual = {
-                a = {
-                    fg = colors.bg,
-                    bg = colors.purple,
-                    gui = "bold",
-                },
-            },
+			visual = {
+				a = {
+					fg = colors.bg,
+					bg = colors.purple,
+					gui = "bold",
+				},
+			},
 
-            replace = {
-                a = {
-                    fg = colors.bg,
-                    bg = colors.red,
-                    gui = "bold",
-                },
-            },
+			replace = {
+				a = {
+					fg = colors.bg,
+					bg = colors.red,
+					gui = "bold",
+				},
+			},
 
-            inactive = {
-                a = {
-                    fg = colors.gray,
-                    bg = colors.bg,
-                },
-                b = {
-                    fg = colors.gray,
-                    bg = colors.bg,
-                },
-                c = {
-                    fg = colors.gray,
-                    bg = colors.bg,
-                },
-            },
-        },
+			inactive = {
+				a = {
+					fg = colors.gray,
+					bg = colors.bg,
+				},
+				b = {
+					fg = colors.gray,
+					bg = colors.bg,
+				},
+				c = {
+					fg = colors.gray,
+					bg = colors.bg,
+				},
+			},
+		},
 
-        globalstatus = true,
-        component_separators = "",
-        section_separators = "",
-    },
+		globalstatus = true,
+		component_separators = "",
+		section_separators = "",
+	},
 })
-
 
 -- =========================================
 -- Nvim-tree
 -- =========================================
 
 require("nvim-tree").setup({
-    view = {
-        width = 30,
-    },
+	view = {
+		width = 30,
+	},
 
-    renderer = {
-        group_empty = true,
-    },
+	renderer = {
+		group_empty = true,
+	},
 
-    filters = {
-        dotfiles = false,
-    },
+	filters = {
+		dotfiles = false,
+	},
 })
-
 
 -- =========================================
 -- Treesitter
 -- =========================================
 
 vim.api.nvim_set_hl(0, "@variable", {
-    fg = colors.fg,
+	fg = colors.fg,
 })
 
 vim.api.nvim_set_hl(0, "@function", {
-    fg = colors.yellow,
+	fg = colors.yellow,
 })
 
 vim.api.nvim_set_hl(0, "@keyword", {
-    fg = colors.purple,
+	fg = colors.purple,
 })
 
 vim.api.nvim_set_hl(0, "@type", {
-    fg = colors.blue,
+	fg = colors.blue,
 })
 
 vim.api.nvim_set_hl(0, "@string", {
-    fg = colors.green,
+	fg = colors.green,
 })
 
 vim.api.nvim_set_hl(0, "@constant", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "@number", {
-    fg = colors.cyan,
+	fg = colors.cyan,
 })
 
 vim.api.nvim_set_hl(0, "@comment", {
-    fg = colors.gray,
-    italic = true,
+	fg = colors.gray,
+	italic = true,
 })
-
 
 -- =========================================
 -- Diagnostics
 -- =========================================
 
 vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    severity_sort = true,
-    update_in_insert = false,
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	severity_sort = true,
+	update_in_insert = false,
 
-    float = {
-        border = "rounded",
-        source = "if_many",
-    },
+	float = {
+		border = "rounded",
+		source = "if_many",
+	},
 })
-
 
 -- =========================================
 -- Automatic linting
@@ -575,66 +563,90 @@ vim.diagnostic.config({
 local lint = require("lint")
 
 lint.linters_by_ft = {
-    nix = { "statix" },
-    lua = { "luacheck" },
-    python = { "ruff" },
-    sh = { "shellcheck" },
-    bash = { "shellcheck" },
+	-- NixOS
+	nix = { "statix" },
+
+	-- Lua
+	lua = { "luacheck" },
+
+	-- Python
+	python = { "ruff" },
+
+	-- Shell
+	sh = { "shellcheck" },
+	bash = { "shellcheck" },
+	zsh = { "shellcheck" },
+
+	-- Web development
+	javascript = { "eslint_d" },
+	javascriptreact = { "eslint_d" },
+	typescript = { "eslint_d" },
+	typescriptreact = { "eslint_d" },
+	vue = { "eslint_d" },
+	svelte = { "eslint_d" },
+	css = { "stylelint" },
+	scss = { "stylelint" },
+
+	-- Data and configuration
+	yaml = { "yamllint" },
+	toml = { "taplo" },
+	json = { "jsonlint" },
+	markdown = { "markdownlint" },
+
+	-- Other languages
+	sql = { "sqlfluff" },
+	dockerfile = { "hadolint" },
+	make = { "checkmake" },
+	ruby = { "rubocop" },
+	go = { "golangci_lint" },
 }
 
-local lint_group = vim.api.nvim_create_augroup(
-    "AutomaticLinting",
-    { clear = true }
-)
+local lint_group = vim.api.nvim_create_augroup("AutomaticLinting", { clear = true })
 
 vim.api.nvim_create_autocmd({
-    "BufEnter",
-    "BufWritePost",
-    "InsertLeave",
+	"BufEnter",
+	"BufWritePost",
+	"InsertLeave",
 }, {
-    group = lint_group,
-
-    callback = function()
-        lint.try_lint()
-    end,
+	group = lint_group,
+	callback = function()
+		lint.try_lint()
+	end,
 })
-
 
 -- =========================================
 -- Automatic Code Formatting
 -- =========================================
 
 require("conform").setup({
-    formatters_by_ft = {
-        lua = { "stylua" },
-        nix = { "nixfmt" },
-        python = { "ruff_format" },
-        javascript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescript = { "prettier" },
-        typescriptreact = { "prettier" },
-        json = { "prettier" },
-        jsonc = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-        markdown = { "prettier" },
-        yaml = { "prettier" },
-        sh = { "shfmt" },
-        bash = { "shfmt" },
-    },
+	formatters_by_ft = {
+		lua = { "stylua" },
+		nix = { "nixfmt" },
+		python = { "ruff_format" },
+		javascript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescript = { "prettier" },
+		typescriptreact = { "prettier" },
+		json = { "prettier" },
+		jsonc = { "prettier" },
+		html = { "prettier" },
+		css = { "prettier" },
+		markdown = { "prettier" },
+		yaml = { "prettier" },
+		sh = { "shfmt" },
+		bash = { "shfmt" },
+	},
 
-    format_on_save = {
-        timeout_ms = 2000,
-        lsp_format = "fallback",
-    },
+	format_on_save = {
+		timeout_ms = 2000,
+		lsp_format = "fallback",
+	},
 })
 
 -- Format manually with <leader>f
 vim.keymap.set("n", "<leader>f", function()
-    require("conform").format({
-        async = true,
-        lsp_format = "fallback",
-    })
+	require("conform").format({
+		async = true,
+		lsp_format = "fallback",
+	})
 end, { desc = "Format current file" })
-
-
