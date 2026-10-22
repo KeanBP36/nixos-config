@@ -577,6 +577,16 @@ lint.linters_by_ft = {
 	bash = { "shellcheck" },
 	zsh = { "shellcheck" },
 
+	-- C / C++
+	c = { "cpplint" },
+	cpp = { "cpplint" },
+
+	-- Assembly
+	asm = { "gcc" },
+
+	-- Rust
+	rust = { "clippy" },
+
 	-- Web development
 	javascript = { "eslint_d" },
 	javascriptreact = { "eslint_d" },
