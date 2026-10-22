@@ -1,10 +1,18 @@
-{ config, pkgs, inputs, unstable, username, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  unstable,
+  username,
+  ...
+}:
 
 {
   imports = [
     ./bash.nix
     ./coding.nix
     ../../modules/distrobox.nix
+    ../../modules/appimage.nix
     ./mango.nix
   ];
 
@@ -16,16 +24,13 @@
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "26.05";
 
-
   # ─────────────────────────────────────────────
   # Environment
   # ─────────────────────────────────────────────
 
   home.sessionVariables = {
-    XDG_DATA_DIRS =
-      "/home/${username}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+    XDG_DATA_DIRS = "/home/${username}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
   };
-
 
   # ─────────────────────────────────────────────
   # Packages
@@ -38,7 +43,7 @@
     extraConfig = builtins.readFile ../../configs/kitty/kitty.conf;
   };
 
-  home.packages = with pkgs; [     
+  home.packages = with pkgs; [
     # Terminals and editors
     kitty
     neovim
@@ -52,7 +57,7 @@
     # Communication and collaboration
     discord
     thunderbird
-    
+
     # Web browsing
     qutebrowser
     #helium as flake
@@ -76,7 +81,7 @@
     vlc
     ardour
     lmms
-    
+
     # Video editing and recording
     kdePackages.kdenlive
     gpu-screen-recorder
@@ -105,19 +110,19 @@
     pdfarranger
     kdePackages.okular
     xournalpp
-   
+
     # Downloads and file transfer
     qbittorrent
     aria2
     rclone
     localsend
-    rpi-imager 
+    rpi-imager
 
     # Password management and privacy
     bitwarden-desktop
     pkgs.john
     pkgs.crunch
-    (pkgs.callPackage ../../packages/cupp {})
+    (pkgs.callPackage ../../packages/cupp { })
 
     # Development and technical utilities
     openrgb
@@ -135,7 +140,7 @@
     # Engineering: mesh generation, simulation and visualisation
     gmsh
     elmerfem
-    paraview  
+    paraview
 
     # Rocketry
     openrocket
@@ -143,14 +148,12 @@
     # Fonts
     nerd-fonts.symbols-only
   ];
-  
-  #Nvim 
-  home.file = {
-    ".config/nvim/init.lua".source =
-      ../../configs/nvim/init.lua;
 
-    ".config/nvim/lazy-lock.json".source =
-      ../../configs/nvim/lazy-lock.json;
+  #Nvim
+  home.file = {
+    ".config/nvim/init.lua".source = ../../configs/nvim/init.lua;
+
+    ".config/nvim/lazy-lock.json".source = ../../configs/nvim/lazy-lock.json;
 
     # Hyprland
     ".config/hypr/hyprland.lua" = {
@@ -158,12 +161,10 @@
       force = true;
     };
 
-    ".config/hypr/hyprtoolkit.conf".source =
-      ../../configs/hypr/hyprtoolkit.conf;
+    ".config/hypr/hyprtoolkit.conf".source = ../../configs/hypr/hyprtoolkit.conf;
 
-    ".config/hypr/hyprlock.conf".source =
-      ../../configs/hyprlock/hyprlock.conf;
- 
+    ".config/hypr/hyprlock.conf".source = ../../configs/hyprlock/hyprlock.conf;
+
     # Quickshell
     ".config/quickshell/bar/shell.qml" = {
       source = ../../configs/quickshell/bar/shell.qml;
@@ -191,23 +192,19 @@
     };
 
     # Fastfetch
-    ".config/fastfetch/config.jsonc".source =
-      ../../configs/fastfetch/config.jsonc; 
-};
-
+    ".config/fastfetch/config.jsonc".source = ../../configs/fastfetch/config.jsonc;
+  };
 
   # ─────────────────────────────────────────────
   # Qutebrowser
   # ─────────────────────────────────────────────
 
-  xdg.configFile."qutebrowser/config.py".source =
-    ../../configs/qutebrowser/config.py;
+  xdg.configFile."qutebrowser/config.py".source = ../../configs/qutebrowser/config.py;
 
   xdg.configFile."qutebrowser/bookmarks/urls" = {
     source = ../../configs/qutebrowser/bookmarks;
     force = true;
   };
-
 
   # ─────────────────────────────────────────────
   # Other application configs
@@ -218,14 +215,20 @@
     force = true;
   };
 
-  xdg.configFile."rofi/config.rasi".source =
-    ../../configs/rofi/config.rasi;
+  xdg.configFile."rofi/config.rasi".source = ../../configs/rofi/config.rasi;
 
   xdg.configFile."mako/config" = {
     source = ../../configs/mako/config;
     force = true;
   };
 
+  xdg.desktopEntries.xodus-nexus = {
+    name = "Xodus Nexus";
+    comment = "Your PC games, brought together";
+    exec = "xodus-nexus";
+    terminal = false;
+    categories = [ "Game" ];
+  };
 
   # ─────────────────────────────────────────────
   # Neovim desktop entry
@@ -238,7 +241,10 @@
     comment = "Edit text and code files in Neovim";
     exec = "kitty nvim %F";
     terminal = false;
-    categories = [ "Utility" "TextEditor" ];
+    categories = [
+      "Utility"
+      "TextEditor"
+    ];
 
     mimeType = [
       "text/plain"
@@ -308,7 +314,7 @@
     gtk-theme = "Adwaita-dark";
   };
 
-    qt = {
+  qt = {
     enable = true;
     platformTheme.name = "gtk";
     style.name = "kvantum";
@@ -328,7 +334,6 @@
     kitty.enable = true;
     nvim.enable = true;
   };
-
 
   # ─────────────────────────────────────────────
   # Default applications
@@ -409,8 +414,7 @@
       "audio/wav" = "vlc.desktop";
 
       # Torrents
-      "application/x-bittorrent" =
-        "org.qbittorrent.qBittorrent.desktop";
+      "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
 
       # Email
       "x-scheme-handler/mailto" = "thunderbird.desktop";

@@ -1,4 +1,11 @@
-{ config, pkgs, lib, username, unstable, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  username,
+  unstable,
+  ...
+}:
 
 {
   boot.loader.systemd-boot = {
@@ -55,25 +62,23 @@
     addLoginEntry = true;
   };
 
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
 
+  services.greetd = {
+    enable = true;
 
+    settings.default_session = {
+      command = ''
+        ${pkgs.tuigreet}/bin/tuigreet \
+          --cmd mango \
+          --time \
+          --remember \
+          --remember-user-session
+      '';
 
-services.greetd = {
-  enable = true;
-
-  settings.default_session = {
-    command = ''
-      ${pkgs.tuigreet}/bin/tuigreet \
-        --cmd mango \
-        --time \
-        --remember \
-        --remember-user-session
-    '';
-
-    user = username;
+      user = username;
+    };
   };
-};
 
   services.pulseaudio.enable = false;
 
@@ -103,7 +108,27 @@ services.greetd = {
     package = unstable.mullvad;
   };
 
- 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
+  # KDE Wallet for Secret Service
+  services.gnome.gnome-keyring.enable = lib.mkForce false;
+
+  services.dbus.packages = [
+    pkgs.kdePackages.kwallet
+  ];
+
+  xdg.portal.extraPortals = [
+    pkgs.kdePackages.kwallet
+  ];
+
+  security.pam.services.greetd.kwallet = {
+    enable = true;
+    forceRun = true;
+  };
+
   services.vice.enable = true;
   services.hardware.openrgb.enable = true;
   services.udisks2.enable = true;
@@ -151,6 +176,8 @@ services.greetd = {
     networkmanagerapplet
     parted
     ntfs3g
+    kdePackages.kwallet
+    kdePackages.kwalletmanager
 
     unstable.mullvad-vpn
   ];
@@ -159,7 +186,7 @@ services.greetd = {
 
   system.stateVersion = "26.05";
 
-  users.groups.uinput = {};
+  users.groups.uinput = { };
 
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="uinput", MODE="0660"
