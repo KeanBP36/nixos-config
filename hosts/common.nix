@@ -32,6 +32,9 @@
     "1.0.0.1"
   ];
 
+  # Allow your user account to run snapper commands without password prompts (via polkit)
+  security.polkit.enable = true;
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -179,6 +182,11 @@
     kdePackages.kwallet
     kdePackages.kwalletmanager
 
+    btrfs-assistant
+    btrfs-progs
+    snapper
+    snapper-gui
+
     unstable.mullvad-vpn
   ];
 
@@ -197,4 +205,5 @@
   virtualisation.containers.registries.search = [
     "docker.io"
   ];
+
 }
