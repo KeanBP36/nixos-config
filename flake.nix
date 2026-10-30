@@ -1,181 +1,189 @@
 {
-description = "Reusable NixOS configuration";
+  description = "Reusable NixOS configuration";
 
-inputs = {
-nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-mango = {
-  url = "github:mangowm/mango";
-  inputs.nixpkgs.follows = "nixpkgs";
-};
-
-home-manager = {
-  url = "github:nix-community/home-manager/release-26.05";
-  inputs.nixpkgs.follows = "nixpkgs";
-};
-
-nix-flatpak.url = "github:gmodena/nix-flatpak";
-catppuccin.url = "github:catppuccin/nix";
-
-nix-snapd = {
-  url = "github:nix-community/nix-snapd";
-  inputs.nixpkgs.follows = "nixpkgs";
-};
-
-helium = {
-  url = "github:oxcl/nix-flake-helium-browser";
-  inputs.nixpkgs.follows = "nixpkgs";
-};
-
-# Game clipping
-vice.url = "github:eklonofficial/Vice";
-
-};
-
-outputs = inputs @ {
-self,
-nixpkgs,
-nixpkgs-unstable,
-home-manager,
-nix-flatpak,
-catppuccin,
-nix-snapd,
-vice,
-helium,
-mango,
-...
-}:
-
-let
-hardwareConfig =
-let
-path = builtins.getEnv "NIXOS_HARDWARE_CONFIG";
-in
-if path != "" then
-[ path ]
-else
-[ ];
-
-mkSystem =
-  {
-    system ? "x86_64-linux",
-    hostname,
-    username,
-    hostModule,
-  }:
-
-  let
-    unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in
-  nixpkgs.lib.nixosSystem {
-    inherit system;
-
-    specialArgs = {
-      inherit inputs unstable username hostname;
+    mango = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    modules =
-      [
-        hostModule
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-        home-manager.nixosModules.home-manager
-        nix-snapd.nixosModules.default
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    catppuccin.url = "github:catppuccin/nix";
 
-                # Vice game clipping
-        vice.nixosModules.default
+    nix-snapd = {
+      url = "github:nix-community/nix-snapd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-        ({ pkgs, ... }: {
-          services.vice.package =
-            pkgs.vice-clipper.overridePythonAttrs (old: {
-              dependencies = old.dependencies ++ (with pkgs.python3Packages; [
-                pygobject3
-                pycairo
-              ]);
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-              buildInputs = (old.buildInputs or []) ++ [
-                pkgs.gtk3
-                pkgs.gtk-layer-shell
-              ];
+    # Game clipping
+    vice.url = "github:eklonofficial/Vice";
 
-              nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
-                pkgs.gobject-introspection
-                pkgs.wrapGAppsHook3
-              ];
+    # CachyOS Proton
+    proton-cachyos = {
+      url = "github:Daaboulex/proton-cachyos-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-              postFixup = (old.postFixup or "") + ''
-                for bin in $out/bin/vice $out/bin/vice-app; do
-                  wrapProgram "$bin" \
-                    --prefix PYTHONPATH : "$PYTHONPATH"
-                done
-              '';
-            });
-        })
+  };
 
-        mango.nixosModules.mango
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nix-flatpak,
+      catppuccin,
+      nix-snapd,
+      vice,
+      helium,
+      mango,
+      ...
+    }:
 
+    let
+      hardwareConfig =
+        let
+          path = builtins.getEnv "NIXOS_HARDWARE_CONFIG";
+        in
+        if path != "" then [ path ] else [ ];
+
+      mkSystem =
         {
-          networking.hostName = hostname;
+          system ? "x86_64-linux",
+          hostname,
+          username,
+          hostModule,
+        }:
 
-          # Home Manager
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+        let
+          unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
 
-          home-manager.users.${username} = {
-            imports = [
-              ./home/user/home.nix
-              catppuccin.homeModules.catppuccin
-              mango.hmModules.mango
-            ];
-            home.packages = [ helium.packages.${system}.default ];
+          specialArgs = {
+            inherit
+              inputs
+              unstable
+              username
+              hostname
+              ;
           };
 
-          home-manager.extraSpecialArgs = {
-            inherit inputs unstable username;
-          };
+          modules = [
+            hostModule
 
-          home-manager.sharedModules = [
-            nix-flatpak.homeManagerModules.nix-flatpak
-          ];
-        }
-      ]
-      ++ hardwareConfig;
-  };
+            home-manager.nixosModules.home-manager
+            nix-snapd.nixosModules.default
 
-in
-{
-nixosConfigurations = {
-desktop = mkSystem {
-hostname = "desktop";
-username = "keanbp";
-hostModule = ./hosts/desktop/configuration.nix;
-};
+            # Vice game clipping
+            vice.nixosModules.default
 
-  laptop = mkSystem {
-    hostname = "laptop";
-    username = "keanbp";
-    hostModule = ./hosts/laptop/configuration.nix;
-  };
-};
+            ({ pkgs, ... }: {
+              services.vice.package = pkgs.vice-clipper.overridePythonAttrs (old: {
+                dependencies =
+                  old.dependencies
+                  ++ (with pkgs.python3Packages; [
+                    pygobject3
+                    pycairo
+                  ]);
 
-lib = {
-  inherit mkSystem;
+                buildInputs = (old.buildInputs or [ ]) ++ [
+                  pkgs.gtk3
+                  pkgs.gtk-layer-shell
+                ];
 
-  profiles = {
-    nvidia-gpu = ./profiles/nvidia-gpu.nix;
-    amd-gpu = ./profiles/amd-gpu.nix;
-    intel-gpu = ./profiles/intel-gpu.nix;
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                  pkgs.gobject-introspection
+                  pkgs.wrapGAppsHook3
+                ];
 
-    amd-cpu = ./profiles/amd-cpu.nix;
-    intel-cpu = ./profiles/intel-cpu.nix;
+                postFixup = (old.postFixup or "") + ''
+                  for bin in $out/bin/vice $out/bin/vice-app; do
+                    wrapProgram "$bin" \
+                      --prefix PYTHONPATH : "$PYTHONPATH"
+                  done
+                '';
+              });
+            })
 
-    gaming = ./profiles/gaming.nix;
-  };
-};
+            mango.nixosModules.mango
 
-};
+            {
+              networking.hostName = hostname;
+
+              # Home Manager
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.users.${username} = {
+                imports = [
+                  ./home/user/home.nix
+                  catppuccin.homeModules.catppuccin
+                  mango.hmModules.mango
+                ];
+                home.packages = [ helium.packages.${system}.default ];
+              };
+
+              home-manager.extraSpecialArgs = {
+                inherit inputs unstable username;
+              };
+
+              home-manager.sharedModules = [
+                nix-flatpak.homeManagerModules.nix-flatpak
+              ];
+            }
+          ]
+          ++ hardwareConfig;
+        };
+
+    in
+    {
+      nixosConfigurations = {
+        desktop = mkSystem {
+          hostname = "desktop";
+          username = "keanbp";
+          hostModule = ./hosts/desktop/configuration.nix;
+        };
+
+        laptop = mkSystem {
+          hostname = "laptop";
+          username = "keanbp";
+          hostModule = ./hosts/laptop/configuration.nix;
+        };
+      };
+
+      lib = {
+        inherit mkSystem;
+
+        profiles = {
+          nvidia-gpu = ./profiles/nvidia-gpu.nix;
+          amd-gpu = ./profiles/amd-gpu.nix;
+          intel-gpu = ./profiles/intel-gpu.nix;
+
+          amd-cpu = ./profiles/amd-cpu.nix;
+          intel-cpu = ./profiles/intel-cpu.nix;
+
+          gaming = ./profiles/gaming.nix;
+        };
+      };
+
+    };
 }
-

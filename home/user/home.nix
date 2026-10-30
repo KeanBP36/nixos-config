@@ -50,7 +50,7 @@
     fastfetch
 
     # Gaming
-    steam
+    #steam
     prismlauncher
     heroic
 
