@@ -186,6 +186,7 @@
     btrfs-progs
     snapper
     snapper-gui
+    polkit_gnome
 
     unstable.mullvad-vpn
   ];
