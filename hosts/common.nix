@@ -10,7 +10,7 @@
 {
   boot.loader.systemd-boot = {
     enable = true;
-    configurationLimit = 10;
+    configurationLimit = 5;
     sortKey = "nixos";
   };
 
@@ -110,6 +110,9 @@
     enable = true;
     package = unstable.mullvad;
   };
+  services.tailscale = {
+    enable = true;
+  };
 
   programs.appimage = {
     enable = true;
@@ -163,6 +166,7 @@
     mpvpaper
     gcc
     wlr-randr
+    trayscale
 
     quickshell
     mako
@@ -207,4 +211,40 @@
     "docker.io"
   ];
 
+  # Nix garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "every 3 days";
+    options = "-d";
+  };
+
+  # Nix store optimisation
+  nix.optimise = {
+    automatic = true;
+    dates = [ "every 5 days" ];
+  };
+
+  # Journal cleanup
+  services.journald.extraConfig = ''
+    SystemMaxUse=200M
+    SystemKeepFree=500M
+    MaxRetentionSec=3day
+  '';
+
+  # Remove unused Flatpak runtimes
+  systemd.services.flatpak-cleanup = {
+    description = "Remove unused Flatpak runtimes";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.flatpak}/bin/flatpak uninstall --system --unused --noninteractive";
+    };
+  };
+
+  systemd.timers.flatpak-cleanup = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-1,4,7,10,13,16,19,22,25,28,31 04:00:00";
+      Persistent = true;
+    };
+  };
 }

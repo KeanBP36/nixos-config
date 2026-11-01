@@ -28,8 +28,8 @@
       ${pkgs.flatpak}/bin/flatpak install -y flathub \
         io.gitlab.librewolf-community \
         org.kde.kalzium \
-        com.stremio.Stremio
-
+        com.stremio.Stremio \
+        org.vinegarhq.Sober \
     '';
   };
 }
