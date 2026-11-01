@@ -57,6 +57,7 @@
     # Communication and collaboration
     discord
     thunderbird
+    zapzap
 
     # Web browsing
     qutebrowser
