@@ -49,11 +49,6 @@
     neovim
     fastfetch
 
-    # Gaming
-    #steam
-    prismlauncher
-    heroic
-
     # Communication and collaboration
     discord
     thunderbird
@@ -78,39 +73,6 @@
 
     # Audio, music and sound
     cava
-    audacity
-    vlc
-    ardour
-    lmms
-
-    # Video editing and recording
-    kdePackages.kdenlive
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
-    yt-dlp
-
-    # Image editing and illustration
-    gimp
-    krita
-    inkscape
-    imagemagick
-
-    # Photography
-    darktable
-    rawtherapee
-
-    # 3D modelling, animation and printing
-    blender
-    freecad
-    openscad
-    orca-slicer
-
-    # Publishing, documents and PDFs
-    scribus
-    libreoffice
-    pdfarranger
-    kdePackages.okular
-    xournalpp
 
     # Downloads and file transfer
     qbittorrent
@@ -133,18 +95,6 @@
     # Media utilities
     ffmpeg
     ffmpegthumbnailer
-
-    # Electronics and circuit simulation
-    kicad
-    ngspice
-
-    # Engineering: mesh generation, simulation and visualisation
-    gmsh
-    elmerfem
-    paraview
-
-    # Rocketry
-    openrocket
 
     # Fonts
     nerd-fonts.symbols-only

@@ -20,5 +20,8 @@
     jdk25
     protontricks
     winetricks
+    prismlauncher
+    heroic
+
   ];
 }
