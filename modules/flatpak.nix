@@ -30,6 +30,9 @@
         org.kde.kalzium \
         com.stremio.Stremio \
         org.vinegarhq.Sober \
+        org.prismlauncher.PrismLauncher \
+        com.github.tchx84.Flatseal \
+
     '';
   };
 }

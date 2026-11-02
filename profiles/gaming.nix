@@ -13,15 +13,15 @@
   };
 
   environment.systemPackages = with pkgs; [
+    umu-launcher
+    gamemode
     vulkan-tools
     mesa-demos
     mangohud
     gamescope
-    jdk25
     protontricks
     winetricks
-    prismlauncher
     heroic
-
+    #prism
   ];
 }

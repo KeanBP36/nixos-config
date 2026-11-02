@@ -191,6 +191,7 @@
     snapper
     snapper-gui
     polkit_gnome
+    wezterm
 
     unstable.mullvad-vpn
   ];

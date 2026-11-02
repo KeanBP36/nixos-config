@@ -98,6 +98,8 @@
 
     # Fonts
     nerd-fonts.symbols-only
+
+    prism
   ];
 
   #Nvim
