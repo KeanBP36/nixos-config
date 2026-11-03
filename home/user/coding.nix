@@ -1,5 +1,25 @@
 { pkgs, ... }:
 
+let
+  # Python environment with debugging support
+  pythonWithDebugpy = pkgs.python3.withPackages (
+    ps: with ps; [
+      pip
+      virtualenv
+      pytest
+      black
+      ruff
+      pyautogui
+      debugpy
+    ]
+  );
+
+  # Expose codelldb from the VS Code extension on PATH
+  codelldbWrapper = pkgs.writeShellScriptBin "codelldb" ''
+    exec ${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb "$@"
+  '';
+
+in
 {
   home.packages = with pkgs; [
 
@@ -18,20 +38,12 @@
     # ─────────────────────────────────────────────
     clang
     clang-tools
+    cpplint
 
     # ─────────────────────────────────────────────
     # Python
     # ─────────────────────────────────────────────
-    (python3.withPackages (
-      ps: with ps; [
-        pip
-        virtualenv
-        pytest
-        black
-        ruff
-        pyautogui
-      ]
-    ))
+    pythonWithDebugpy
 
     # ─────────────────────────────────────────────
     # Rust
@@ -40,18 +52,23 @@
     cargo
     rustfmt
     clippy
+    rust-analyzer
 
     # ─────────────────────────────────────────────
     # Go
     # ─────────────────────────────────────────────
     go
     gopls
+    golangci-lint
 
     # ─────────────────────────────────────────────
     # JavaScript / TypeScript
     # ─────────────────────────────────────────────
     nodejs
     typescript
+    typescript-language-server
+    eslint_d
+    stylelint
 
     # ─────────────────────────────────────────────
     # Lua
@@ -64,6 +81,7 @@
     # ─────────────────────────────────────────────
     shellcheck
     shfmt
+    bash-language-server
 
     # ─────────────────────────────────────────────
     # Assembly
@@ -91,19 +109,30 @@
     nixfmt
     prettier
     lua-language-server
+    nixd
     nil
     pyright
     statix
     luajitPackages.luacheck
 
-    # Neovim syntax checking
+    # ─────────────────────────────────────────────
+    # Neovim Debugging
+    # ─────────────────────────────────────────────
+    codelldbWrapper
+
+    # ─────────────────────────────────────────────
+    # Neovim Syntax Checking
+    # ─────────────────────────────────────────────
     yamllint
     markdownlint-cli
-    eslint_d
-    sqlfluff
     hadolint
     checkmake
     ansible-lint
+
+    # ─────────────────────────────────────────────
+    # Additional Development Tools
+    # ─────────────────────────────────────────────
+    sqlfluff
 
   ];
 
