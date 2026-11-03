@@ -48,6 +48,7 @@
     kitty
     neovim
     fastfetch
+    ghostty
 
     # Communication and collaboration
     discord
