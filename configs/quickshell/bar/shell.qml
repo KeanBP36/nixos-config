@@ -22,7 +22,8 @@ Variants {
        readonly property color foreground: "#d4d4d4"
        readonly property color highlight: "#3a3a3a"
        readonly property color urgent: "#f38ba8"
-        // =========================
+
+              // =========================
         // COMPOSITOR DETECTION
         // =========================
 
@@ -40,7 +41,6 @@ Variants {
 
             if (name === "hyprland") {
                 mangoWatcher.running = false
-                refreshHyprlandWorkspaces()
             } else {
                 seedMangoPlaceholders()
                 mangoInit.running = true
@@ -70,7 +70,6 @@ Variants {
             }
         }
 
-       
         // =========================
         // WORKSPACES
         // =========================
@@ -91,59 +90,79 @@ Variants {
             }
         }
 
-    // ---- Hyprland ----
+        // ---- Hyprland ----
 
-    Repeater {
-        model: ScriptModel {
-            values: root.compositor === "hyprland"
-                ? Hyprland.workspaces.values.filter(
-                    ws => !ws.name.startsWith("special:")
-                )
-                : []
-        }
+        ScriptModel {
+            id: hyprWorkspaceModel
 
-        delegate: Rectangle {
-            required property var modelData
+            values: {
+                if (root.compositor !== "hyprland")
+                    return []
 
-            width: 32
-            height: 28
-            radius: 4
+                var mon = Hyprland.monitorFor(root.screen)
+                var all = Hyprland.workspaces.values
+                var result = []
 
-            property bool hovered: false
+                for (var i = 0; i < all.length; ++i) {
+                    var ws = all[i]
 
-            color: modelData.focused || hovered
-                ? root.highlight
-                : root.background
+                    if (ws.id <= 0)
+                        continue
 
-            Text {
-                anchors.centerIn: parent
+                    var sameMonitor = ws.monitor
+                        && (ws.monitor === mon
+                            || ws.monitor.name === root.screen.name)
 
-                text: modelData.name
-                color: root.foreground
+                    if (sameMonitor)
+                        result.push(ws)
+                }
 
-                font.pixelSize: 14
-                font.bold: modelData.focused || parent.parent.hovered
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onEntered: parent.hovered = true
-                onExited: parent.hovered = false
-
-                onClicked: modelData.activate()
+                result.sort((a, b) => a.id - b.id)
+                return result
             }
         }
-    }
 
-        Connections {
-            target: Hyprland.workspaces
-            enabled: root.compositor === "hyprland"
+        Row {
+            id: hyprWorkspaces
 
-            function onValuesChanged() {
-                root.refreshHyprlandWorkspaces()
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.verticalCenter: parent.verticalCenter
+
+            spacing: 6
+            visible: root.compositor === "hyprland"
+
+            Repeater {
+                model: hyprWorkspaceModel
+
+                delegate: Rectangle {
+                    required property var modelData
+
+                    width: 32
+                    height: 28
+                    radius: 4
+
+                    readonly property bool active:
+                        modelData.monitor
+                        && modelData.monitor.activeWorkspace === modelData
+
+                    color: active ? root.highlight : root.background
+
+                    Text {
+                        anchors.centerIn: parent
+
+                        text: modelData.name
+                        color: root.foreground
+
+                        font.pixelSize: 14
+                        font.bold: parent.active
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: modelData.activate()
+                    }
+                }
             }
         }
 

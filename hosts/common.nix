@@ -78,16 +78,14 @@
     settings.default_session = {
       command = ''
         ${pkgs.tuigreet}/bin/tuigreet \
-          --cmd mango \
           --time \
           --remember \
           --remember-user-session
       '';
 
-      user = username;
+      user = "greeter";
     };
   };
-
   services.pulseaudio.enable = false;
 
   security.rtkit.enable = true;
