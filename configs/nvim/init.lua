@@ -108,7 +108,11 @@ require("lazy").setup({
 		version = "1.*",
 		dependencies = { "rafamadriz/friendly-snippets" },
 		opts = {
-			keymap = { preset = "enter" },
+			keymap = {
+				preset = "default",
+				["<Tab>"] = { "select_next", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
+			},
 			appearance = { nerd_font_variant = "mono" },
 			completion = {
 				documentation = { auto_show = true, auto_show_delay_ms = 200 },
@@ -289,6 +293,14 @@ require("lazy").setup({
 					},
 				},
 			})
+		end,
+	},
+	-- Search and replace
+	{
+		"nvim-pack/nvim-spectre",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("spectre").setup()
 		end,
 	},
 	{ "akinsho/bufferline.nvim", version = "*", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
@@ -497,6 +509,9 @@ map("n", "<leader>fb", cmd("Telescope buffers"), "Buffers")
 map("n", "<leader>xx", cmd("Trouble diagnostics toggle"), "Diagnostics")
 map("n", "<S-l>", cmd("BufferLineCycleNext"), "Next buffer")
 map("n", "<S-h>", cmd("BufferLineCyclePrev"), "Previous buffer")
+
+-- Search and replace
+map("n", "<leader>sr", cmd("Spectre"), "Search and replace")
 
 -- LSP
 map("n", "gd", vim.lsp.buf.definition, "Go to definition")
