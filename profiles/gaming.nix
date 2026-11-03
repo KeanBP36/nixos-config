@@ -22,6 +22,6 @@
     protontricks
     winetricks
     heroic
-    #prism
+    prismlauncher
   ];
 }

@@ -32,6 +32,11 @@
     "1.0.0.1"
   ];
 
+  networking.firewall = {
+    allowedTCPPorts = [ 53317 ];
+    allowedUDPPorts = [ 53317 ];
+  };
+
   # Allow your user account to run snapper commands without password prompts (via polkit)
   security.polkit.enable = true;
 
