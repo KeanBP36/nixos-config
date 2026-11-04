@@ -134,6 +134,14 @@ in
     # ─────────────────────────────────────────────
     sqlfluff
 
+    #zsh
+    zsh
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    fzf
+    zoxide
+    eza
+    bat
   ];
 
   # ─────────────────────────────────────────────

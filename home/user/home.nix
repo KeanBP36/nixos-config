@@ -161,6 +161,25 @@
   };
 
   # ─────────────────────────────────────────────
+  # Zsh
+  # ─────────────────────────────────────────────
+
+  home.file.".zshrc".source = ../../configs/zsh/zshrc;
+
+  programs.zsh = {
+    enable = true;
+
+    autosuggestion = {
+      enable = true;
+      strategy = [
+        "history"
+        "completion"
+      ];
+      highlight = "fg=244";
+    };
+  };
+
+  # ─────────────────────────────────────────────
   # Other application configs
   # ─────────────────────────────────────────────
 

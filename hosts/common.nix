@@ -72,6 +72,9 @@
 
   security.pam.services.hyprlock = { };
 
+  programs.zsh.enable = true;
+  # users.defaultUserShell = pkgs.zsh;
+
   services.greetd = {
     enable = true;
 
@@ -195,6 +198,7 @@
     snapper-gui
     polkit_gnome
     wezterm
+    zoxide
 
     unstable.mullvad-vpn
   ];

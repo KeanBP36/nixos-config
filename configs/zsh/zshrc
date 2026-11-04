@@ -1,0 +1,165 @@
+command -v fastfetch >/dev/null && fastfetch
+# ───────────── Environment ─────────────
+export EDITOR=nvim
+
+# ───────────── Shell behavior ─────────────
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt CORRECT
+setopt AUTO_MENU
+setopt INTERACTIVE_COMMENTS
+
+SPROMPT="zsh: correct '%R' to '%r'? [y]es [n]o [a]bort [e]dit: "
+
+# ───────────── Completion ─────────────
+autoload -Uz compinit
+compinit
+
+zmodload zsh/complist
+zstyle ':completion:*' menu select
+
+zstyle ':completion:*' matcher-list \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|[._-]=* r:|=*' \
+  'l:|=* r:|=*'
+
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{cyan}-- %d --%f'
+zstyle ':completion:*' use-cache yes
+
+# ───────────── Autosuggestions ─────────────
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+
+# Only bind if the autosuggestions plugin is loaded (avoids a startup error)
+(( $+widgets[autosuggest-accept] )) && bindkey '^ ' autosuggest-accept
+bindkey '^[[Z' reverse-menu-complete
+
+# ───────────── History ─────────────
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+
+# History search with arrows
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# ───────────── Aliases ─────────────
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias ll="eza -lah --group-directories-first"
+alias ls="eza --group-directories-first"
+alias la="eza -a"
+alias cat="bat"
+alias grep="rg"
+alias c="clear"
+alias cls="clear"
+
+# ───────────── Zoxide aliases ─────────────
+# `z <dir>` and `zi` (interactive) are defined by `zoxide init` below
+alias zz="z -"                        # jump back to previous directory
+alias zq="zoxide query"               # print best match without cd
+alias zqi="zoxide query --interactive"
+alias zl="zoxide query --list --score" # list known dirs with scores
+alias za="zoxide add"                 # add a directory to the database
+alias zr="zoxide remove"              # remove a directory from the database
+alias zedit="zoxide edit"             # open the database for editing
+
+# ───────────── NixOS configuration ─────────────
+alias nixshowtree="find /etc/nixos-config -type f | sort"
+alias nixconfigs="find /etc/nixos-config/configs -type f | sort"
+alias nixhome="find /etc/nixos-config/home -type f | sort"
+alias nixhosts="find /etc/nixos-config/hosts -type f | sort"
+alias nixmodules="find /etc/nixos-config/modules -type f | sort"
+alias nixtree="tree /etc/nixos-config"
+
+alias nixrebsw='sudo NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nixos-rebuild switch --flake /etc/nixos-config#$HOST --impure'
+alias nixcheck='NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nix flake check /etc/nixos-config --impure'
+
+# ───────────── Git branches ─────────────
+alias nixmain="cd /etc/nixos-config && git switch main"
+alias nixtesting="cd /etc/nixos-config && git switch testing"
+alias nixshow="cd /etc/nixos-config && git branch --show-current"
+alias nixbranchlist="cd /etc/nixos-config && git branch -vv"
+
+# ───────────── Git logs ─────────────
+alias nixlogmain="cd /etc/nixos-config && git log --oneline main"
+alias nixlogtesting="cd /etc/nixos-config && git log --oneline testing"
+alias nixlogtestingto="cd /etc/nixos-config && git log --oneline unstable..testing"
+alias nixpackagecommits="cd /etc/nixos-config && git log --oneline -- flake.nix flake.lock"
+
+# ───────────── Git comparisons ─────────────
+alias nixdiffmain="cd /etc/nixos-config && git diff main..HEAD"
+alias nixdifftesting="cd /etc/nixos-config && git diff testing..HEAD"
+
+# ───────────── Git sync ─────────────
+alias nixsync="cd /etc/nixos-config && git cherry-pick"
+alias nixshowcommit="cd /etc/nixos-config && git show --stat --oneline"
+
+alias nixsynctesting="cd /etc/nixos-config && git switch testing && git reset --hard main && git push --force-with-lease origin testing"
+alias nixmerge="cd /etc/nixos-config && git switch main && git merge testing && git push origin main"
+
+# ───────────── Hardware / networking ─────────────
+alias ethup="sudo nmcli device connect enp4s0"
+
+# ───────────── Nix helper functions ─────────────
+nixwelp() {
+  nvim /etc/nixos-config/hosts/common.nix
+}
+
+nixpush() {
+  cd /etc/nixos-config || return
+  git status
+  git add .
+  read -r "msg?Commit message: "
+  git commit -m "$msg" && git push
+}
+
+nixpushtesting() {
+  cd /etc/nixos-config || return
+  git switch testing || return
+  git status
+  git add .
+  read -r "msg?Commit message: "
+  git commit -m "$msg" && git push origin testing
+}
+
+# ───────────── Extra ─────────────
+decrypt() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: decrypt <partition>"
+    echo "Example: decrypt sdc2"
+    return 1
+  fi
+
+  udisksctl unlock -b "/dev/$1"
+}
+
+# ───────────── Zoxide ─────────────
+# Must run after compinit
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+# ───────────── Terminal ─────────────
+ctrl_l_fastfetch() {
+  zle -I
+  clear
+  command -v fastfetch >/dev/null && fastfetch
+  zle reset-prompt
+}
+
+zle -N ctrl_l_fastfetch
+bindkey '^L' ctrl_l_fastfetch
