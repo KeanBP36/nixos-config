@@ -37,6 +37,8 @@
     allowedUDPPorts = [ 53317 ];
   };
 
+  networking.interfaces.enp3s0.wakeOnLan.enable = true;
+
   # Allow your user account to run snapper commands without password prompts (via polkit)
   security.polkit.enable = true;
 
@@ -104,6 +106,11 @@
     pulse.enable = true;
   };
 
+  environment.variables = {
+    EDITOR = "nvim";
+    SUDO_EDITOR = "nvim";
+  };
+
   # Virtualization: QEMU/KVM and libvirt
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
@@ -140,6 +147,8 @@
     enable = true;
     forceRun = true;
   };
+
+  programs.kdeconnect.enable = true;
 
   services.vice.enable = true;
   services.hardware.openrgb.enable = true;

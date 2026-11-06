@@ -66,7 +66,6 @@
     xarchiver
 
     # Desktop workflow
-    kdePackages.kdeconnect-kde
     playerctl
     cliphist
     flameshot
@@ -101,6 +100,7 @@
     nerd-fonts.symbols-only
 
     prism
+    pkgs.libation
   ];
 
   #Nvim
