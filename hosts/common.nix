@@ -29,8 +29,14 @@
   networking.networkmanager.enable = true;
   networking.nameservers = [
     "1.1.1.1"
-    "1.0.0.1"
   ];
+
+  networking.firewall = {
+    allowedTCPPorts = [ 53317 ];
+    allowedUDPPorts = [ 53317 ];
+  };
+
+  networking.interfaces.enp3s0.wakeOnLan.enable = true;
 
   # Allow your user account to run snapper commands without password prompts (via polkit)
   security.polkit.enable = true;
@@ -67,22 +73,23 @@
 
   security.pam.services.hyprlock = { };
 
+  programs.zsh.enable = true;
+  # users.defaultUserShell = pkgs.zsh;
+
   services.greetd = {
     enable = true;
 
     settings.default_session = {
       command = ''
         ${pkgs.tuigreet}/bin/tuigreet \
-          --cmd mango \
           --time \
           --remember \
           --remember-user-session
       '';
 
-      user = username;
+      user = "greeter";
     };
   };
-
   services.pulseaudio.enable = false;
 
   security.rtkit.enable = true;
@@ -96,6 +103,11 @@
     };
 
     pulse.enable = true;
+  };
+
+  environment.variables = {
+    EDITOR = "nvim";
+    SUDO_EDITOR = "nvim";
   };
 
   # Virtualization: QEMU/KVM and libvirt
@@ -134,6 +146,8 @@
     enable = true;
     forceRun = true;
   };
+
+  programs.kdeconnect.enable = true;
 
   services.vice.enable = true;
   services.hardware.openrgb.enable = true;
@@ -191,6 +205,8 @@
     snapper
     snapper-gui
     polkit_gnome
+    wezterm
+    zoxide
 
     unstable.mullvad-vpn
   ];

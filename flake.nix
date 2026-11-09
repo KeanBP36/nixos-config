@@ -181,6 +181,13 @@
           amd-cpu = ./profiles/amd-cpu.nix;
           intel-cpu = ./profiles/intel-cpu.nix;
 
+          # Application profiles
+          video = ./profiles/video.nix;
+          audio = ./profiles/audio.nix;
+          "3D" = ./profiles/3D.nix;
+          documents = ./profiles/documents.nix;
+          engineering = ./profiles/engineering.nix;
+          photo = ./profiles/photo.nix;
           gaming = ./profiles/gaming.nix;
         };
       };
