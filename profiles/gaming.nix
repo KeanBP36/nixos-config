@@ -21,7 +21,6 @@
     gamescope
     protontricks
     winetricks
-    heroic
     prismlauncher
   ];
 }

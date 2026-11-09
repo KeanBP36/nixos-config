@@ -1,6 +1,5 @@
--- =========================================
 -- Options
--- =========================================
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -19,15 +18,16 @@ o.smartcase = true
 o.mouse = "a"
 o.clipboard = "unnamedplus"
 o.updatetime = 250
+o.splitbelow = true
+o.splitright = true
 
 local undodir = vim.fn.stdpath("state") .. "/undo"
 vim.fn.mkdir(undodir, "p")
 o.undofile = true
 o.undodir = undodir
 
--- =========================================
--- Bootstrap lazy.nvim
--- =========================================
+-- lazy.nvim bootstrap
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
@@ -41,9 +41,10 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- =========================================
--- DAP adapters (top-level so keymaps can always call it)
--- =========================================
+-- DAP adapters
+-- Top-level so keymaps can call it. Adapters only register if the
+-- executable is on PATH (debugpy for Python, codelldb for C/C++/Rust).
+
 local function setup_dap_adapters()
 	local dap = require("dap")
 
@@ -54,7 +55,6 @@ local function setup_dap_adapters()
 			command = python,
 			args = { "-Xfrozen_modules=off", "-m", "debugpy.adapter" },
 		}
-
 		dap.configurations.python = {
 			{
 				type = "python",
@@ -98,9 +98,8 @@ local function setup_dap_adapters()
 	end
 end
 
--- =========================================
 -- Plugins
--- =========================================
+
 require("lazy").setup({
 	-- Completion
 	{
@@ -125,7 +124,18 @@ require("lazy").setup({
 		},
 	},
 
-	-- LSP (servers are installed through Nix)
+	-- Auto-close brackets and quotes (Alt+e wraps the next text in a pair)
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {
+			check_ts = true,
+			fast_wrap = {},
+			disable_filetype = { "TelescopePrompt", "vim" },
+		},
+	},
+
+	-- LSP (servers come from Nix)
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "saghen/blink.cmp" },
@@ -171,7 +181,7 @@ require("lazy").setup({
 		},
 	},
 
-	-- Linting (only runs linters that are on PATH)
+	-- Linting (skips linters that aren't on PATH)
 	{
 		"mfussenegger/nvim-lint",
 		config = function()
@@ -198,11 +208,11 @@ require("lazy").setup({
 			local function installed(names)
 				return vim.tbl_filter(function(name)
 					local linter = lint.linters[name]
-					local cmd = linter and linter.cmd
-					if type(cmd) == "function" then
-						cmd = cmd()
+					local exe = linter and linter.cmd
+					if type(exe) == "function" then
+						exe = exe()
 					end
-					return cmd and vim.fn.executable(cmd) == 1
+					return exe and vim.fn.executable(exe) == 1
 				end, names)
 			end
 
@@ -253,7 +263,7 @@ require("lazy").setup({
 		end,
 	},
 
-	-- UI
+	-- Navigation
 	{ "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 	{
 		"nvim-tree/nvim-tree.lua",
@@ -264,6 +274,43 @@ require("lazy").setup({
 			filters = { dotfiles = false },
 		},
 	},
+	{
+		"nvim-pack/nvim-spectre",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("spectre").setup()
+		end,
+	},
+
+	-- Terminal
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		opts = {
+			open_mapping = [[<C-\>]],
+			direction = "float",
+			start_in_insert = true,
+			persist_mode = false,
+			close_on_exit = true,
+			shade_terminals = false,
+			float_opts = {
+				border = "rounded",
+				width = function()
+					return math.floor(vim.o.columns * 0.6)
+				end,
+				height = function()
+					return math.floor(vim.o.lines * 0.4)
+				end,
+			},
+			highlights = {
+				Normal = { guibg = "#1f1f1f" },
+				NormalFloat = { guibg = "#1f1f1f" },
+				FloatBorder = { guifg = "#666666", guibg = "#1f1f1f" },
+			},
+		},
+	},
+
+	-- UI
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -295,40 +342,31 @@ require("lazy").setup({
 			})
 		end,
 	},
-	-- Search and replace
-	{
-		"nvim-pack/nvim-spectre",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("spectre").setup()
-		end,
-	},
 	{ "akinsho/bufferline.nvim", version = "*", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
 	{ "folke/which-key.nvim", event = "VeryLazy", opts = {} },
 	{ "folke/trouble.nvim", opts = {} },
-	{ "lewis6991/gitsigns.nvim", opts = {} },
-	{ "kylechui/nvim-surround", version = "*", event = "VeryLazy", opts = {} },
-	{ "numToStr/Comment.nvim", opts = {} },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-
-	-- Notifications (used by noice)
-	{ "rcarriga/nvim-notify", opts = {} },
-
-	-- Replaces the command line, messages and popup menus
-	{
-		"folke/noice.nvim",
-		dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
-		opts = {},
-	},
-
-	-- Smooth cursor and window movement (disabled for now)
-	-- { "echasnovski/mini.animate", version = false, opts = {} },
-
-	-- Highlights other uses of the word under the cursor
 	{ "RRethy/vim-illuminate" },
 
-	-- Start screen shown when you open Neovim with no file
+	-- Notifications (replaces vim.notify)
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			local notify = require("notify")
+			notify.setup({
+				render = "wrapped-compact",
+				stages = "fade",
+				timeout = 2500,
+				max_width = 60,
+				fps = 60,
+				background_colour = "#1f1f1f",
+			})
+			vim.notify = notify
+		end,
+	},
+
+	-- Start screen
 	{
 		"goolord/alpha-nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -337,7 +375,11 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Debugging (nvim-dap)
+	-- Editing helpers
+	{ "kylechui/nvim-surround", version = "*", event = "VeryLazy", opts = {} },
+	{ "numToStr/Comment.nvim", opts = {} },
+
+	-- Debugging
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
@@ -362,7 +404,8 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Git / history
+	-- Git and history
+	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "sindrets/diffview.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	{
 		"mbbill/undotree",
@@ -385,14 +428,12 @@ require("lazy").setup({
 		},
 	},
 }, {
-	-- Lives in your Neovim config dir, which is writable.
 	lockfile = vim.fn.stdpath("state") .. "/lazy-lock.json",
 })
 
--- =========================================
 -- Colors (re-applied after any colorscheme change)
--- =========================================
-local c = {
+
+local colors = {
 	bg = "#1f1f1f",
 	fg = "#d4d4d4",
 	red = "#f44747",
@@ -406,19 +447,27 @@ local c = {
 }
 
 local function apply_colors()
+	local c = colors
 	local function hl(group, spec)
 		vim.api.nvim_set_hl(0, group, spec)
 	end
+	local function hl_all(groups)
+		for group, spec in pairs(groups) do
+			hl(group, spec)
+		end
+	end
 
 	-- Editor
-	hl("Normal", { fg = c.fg, bg = c.bg })
-	hl("NormalFloat", { fg = c.fg, bg = c.bg })
-	hl("CursorLine", { bg = "#292929" })
-	hl("CursorLineNr", { fg = c.blue, bold = true })
-	hl("LineNr", { fg = c.gray })
+	hl_all({
+		Normal = { fg = c.fg, bg = c.bg },
+		NormalFloat = { fg = c.fg, bg = c.bg },
+		CursorLine = { bg = "#292929" },
+		CursorLineNr = { fg = c.blue, bold = true },
+		LineNr = { fg = c.gray },
+	})
 
-	-- Syntax (classic groups)
-	local syntax = {
+	-- Syntax
+	hl_all({
 		Comment = { fg = c.gray, italic = true },
 		Constant = { fg = c.cyan },
 		String = { fg = c.green },
@@ -435,13 +484,10 @@ local function apply_colors()
 		Special = { fg = c.cyan },
 		Error = { fg = c.red },
 		Todo = { fg = c.yellow, bold = true },
-	}
-	for group, spec in pairs(syntax) do
-		hl(group, spec)
-	end
+	})
 
-	-- Treesitter groups
-	local ts = {
+	-- Treesitter
+	hl_all({
 		["@variable"] = { fg = c.fg },
 		["@function"] = { fg = c.yellow },
 		["@keyword"] = { fg = c.purple },
@@ -450,10 +496,7 @@ local function apply_colors()
 		["@constant"] = { fg = c.cyan },
 		["@number"] = { fg = c.cyan },
 		["@comment"] = { fg = c.gray, italic = true },
-	}
-	for group, spec in pairs(ts) do
-		hl(group, spec)
-	end
+	})
 
 	-- Diagnostics
 	local diag = { Error = c.red, Warn = c.yellow, Info = c.blue, Hint = c.cyan }
@@ -463,10 +506,12 @@ local function apply_colors()
 	end
 
 	-- Telescope
-	hl("TelescopeNormal", { fg = c.fg, bg = c.bg })
-	hl("TelescopeBorder", { fg = c.gray, bg = c.bg })
-	hl("TelescopeSelection", { fg = c.white, bg = "#333333" })
-	hl("TelescopeMatching", { fg = c.blue, bold = true })
+	hl_all({
+		TelescopeNormal = { fg = c.fg, bg = c.bg },
+		TelescopeBorder = { fg = c.gray, bg = c.bg },
+		TelescopeSelection = { fg = c.white, bg = "#333333" },
+		TelescopeMatching = { fg = c.blue, bold = true },
+	})
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_colors })
@@ -474,9 +519,8 @@ vim.cmd("highlight clear")
 vim.opt.background = "dark"
 apply_colors()
 
--- =========================================
 -- Diagnostics
--- =========================================
+
 vim.diagnostic.config({
 	virtual_text = true,
 	signs = true,
@@ -486,14 +530,114 @@ vim.diagnostic.config({
 	float = { border = "rounded", source = "if_many" },
 })
 
--- =========================================
+-- Autocmds
+
+-- Tidy terminal buffers (:terminal, toggleterm, DAP)
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true }),
+	callback = function()
+		vim.opt_local.number = false
+		vim.opt_local.signcolumn = "no"
+	end,
+})
+
+-- Popups for things Neovim only prints to the command line.
+-- Only multi-line changes (more than 'report', default 2) are announced.
+
+-- Yanks, deletes and changes
+local skip_line_delta = false
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = vim.api.nvim_create_augroup("RegisterNotify", { clear = true }),
+	callback = function()
+		local event = vim.v.event
+		local verbs = { y = "yanked", d = "deleted", c = "changed" }
+		local verb = verbs[event.operator]
+		local count = #event.regcontents
+		if verb and count > vim.o.report then
+			-- text is locked inside this event, so show the popup right after it
+			vim.schedule(function()
+				vim.notify(count .. " lines " .. verb)
+			end)
+		end
+		-- the delete is already announced, so don't announce its line change again
+		if event.operator == "d" then
+			skip_line_delta = true
+		end
+	end,
+})
+
+-- Undo and redo: wrappers that label the change and report hitting either end of history
+local pending_action
+
+local function history_move(key, label, at_end)
+	return function()
+		if not vim.bo.modifiable then
+			return
+		end
+		local tick = vim.b.changedtick
+		pending_action = label
+		vim.cmd("silent! normal! " .. vim.v.count1 .. vim.keycode(key))
+		if vim.b.changedtick == tick then
+			pending_action = nil
+			vim.notify(at_end, vim.log.levels.WARN)
+		end
+	end
+end
+
+-- Line count changes from undo, redo, paste and similar
+local line_counts = {}
+
+local function remember_line_count(args)
+	if vim.bo[args.buf].buftype == "" then
+		line_counts[args.buf] = vim.api.nvim_buf_line_count(args.buf)
+	end
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost", "InsertEnter", "InsertLeave", "BufWritePost" }, {
+	group = vim.api.nvim_create_augroup("LineCountBaseline", { clear = true }),
+	callback = function(args)
+		skip_line_delta = false
+		remember_line_count(args)
+	end,
+})
+
+vim.api.nvim_create_autocmd("TextChanged", {
+	group = vim.api.nvim_create_augroup("LineCountNotify", { clear = true }),
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+		local now = vim.api.nvim_buf_line_count(args.buf)
+		local before = line_counts[args.buf] or now
+		line_counts[args.buf] = now
+
+		local action = pending_action
+		pending_action = nil
+		if skip_line_delta then
+			skip_line_delta = false
+			return
+		end
+
+		local delta = now - before
+		if math.abs(delta) <= vim.o.report then
+			return
+		end
+		local what = delta > 0 and "added" or "removed"
+		local text = string.format("%d lines %s", math.abs(delta), what)
+		local message = action and (action .. ": " .. text) or text
+		vim.schedule(function()
+			vim.notify(message)
+		end)
+	end,
+})
+
 -- Keymaps
--- =========================================
+
 local function map(mode, lhs, rhs, desc)
 	vim.keymap.set(mode, lhs, rhs, { desc = desc })
 end
-local function cmd(c)
-	return "<cmd>" .. c .. "<cr>"
+local function ex(command)
+	return "<cmd>" .. command .. "<cr>"
 end
 local function dap_call(fn)
 	return function()
@@ -502,16 +646,24 @@ local function dap_call(fn)
 end
 
 -- Files and buffers
-map("n", "<leader>e", cmd("NvimTreeToggle"), "File tree")
-map("n", "<leader>ff", cmd("Telescope find_files"), "Find files")
-map("n", "<leader>fg", cmd("Telescope live_grep"), "Grep")
-map("n", "<leader>fb", cmd("Telescope buffers"), "Buffers")
-map("n", "<leader>xx", cmd("Trouble diagnostics toggle"), "Diagnostics")
-map("n", "<S-l>", cmd("BufferLineCycleNext"), "Next buffer")
-map("n", "<S-h>", cmd("BufferLineCyclePrev"), "Previous buffer")
+map("n", "<leader>e", ex("NvimTreeToggle"), "File tree")
+map("n", "<leader>ff", ex("Telescope find_files"), "Find files")
+map("n", "<leader>fg", ex("Telescope live_grep"), "Grep")
+map("n", "<leader>fb", ex("Telescope buffers"), "Buffers")
+map("n", "<leader>xx", ex("Trouble diagnostics toggle"), "Diagnostics")
+map("n", "<S-l>", ex("BufferLineCycleNext"), "Next buffer")
+map("n", "<S-h>", ex("BufferLineCyclePrev"), "Previous buffer")
+
+-- Undo and redo (with popups)
+map("n", "u", history_move("u", "Undo", "Already at oldest change"), "Undo")
+map("n", "<C-r>", history_move("<C-r>", "Redo", "Already at newest change"), "Redo")
 
 -- Search and replace
-map("n", "<leader>sr", cmd("Spectre"), "Search and replace")
+map("n", "<leader>sr", ex("Spectre"), "Search and replace")
+
+-- Terminal (Ctrl+\ also toggles it)
+map("n", "<leader>tt", ex("ToggleTerm"), "Toggle terminal")
+map("t", "<Esc><Esc>", [[<C-\><C-n>]], "Terminal: normal mode")
 
 -- LSP
 map("n", "gd", vim.lsp.buf.definition, "Go to definition")
@@ -550,13 +702,13 @@ end, "Debug UI")
 map("n", "<leader>dt", dap_call("terminate"), "Terminate")
 
 -- Git
-map("n", "<leader>gd", cmd("DiffviewOpen"), "Git diff")
-map("n", "<leader>gh", cmd("DiffviewFileHistory"), "Git file history")
-map("n", "<leader>gH", cmd("DiffviewFileHistory %"), "Current file history")
-map("n", "<leader>gD", cmd("DiffviewClose"), "Close git diff")
+map("n", "<leader>gd", ex("DiffviewOpen"), "Git diff")
+map("n", "<leader>gh", ex("DiffviewFileHistory"), "Git file history")
+map("n", "<leader>gH", ex("DiffviewFileHistory %"), "Current file history")
+map("n", "<leader>gD", ex("DiffviewClose"), "Close git diff")
 
 -- Undo tree
-map("n", "<leader>u", cmd("UndotreeToggle"), "Undo tree")
+map("n", "<leader>u", ex("UndotreeToggle"), "Undo tree")
 
 -- Sessions
 map("n", "<leader>qs", function()
