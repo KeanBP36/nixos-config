@@ -427,6 +427,22 @@ require("lazy").setup({
 			branch = true,
 		},
 	},
+
+	-- Discord presence (privacy-friendly: hides file and project names)
+	{
+		"andweeb/presence.nvim",
+		event = "VeryLazy",
+		opts = {
+			auto_update = true,
+			neovim_image_text = "Neovim",
+			main_image = "neovim",
+			buttons = false,
+			enable_line_number = false,
+			show_time = true,
+			editing_text = "Editing a file",
+			workspace_text = "Working on a project",
+		},
+	},
 }, {
 	lockfile = vim.fn.stdpath("state") .. "/lazy-lock.json",
 })

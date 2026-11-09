@@ -181,6 +181,7 @@
     gcc
     wlr-randr
     trayscale
+    pkgs.vesktop
 
     quickshell
     mako
