@@ -31,8 +31,12 @@
         com.stremio.Stremio \
         org.vinegarhq.Sober \
         com.github.tchx84.Flatseal \
-        com.heroicgameslauncher.hgl \
+        com.heroicgameslauncher.hgl
 
+      # Mortar isn't on Flathub yet; install it from the developer's own repo
+      ${pkgs.flatpak}/bin/flatpak install -y --system \
+        https://mortar.rethunk.tech/packages/flatpak/tech.rethunk.Mortar.flatpakref \
+        || echo "Mortar install failed"
     '';
   };
 }
