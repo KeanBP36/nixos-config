@@ -56,7 +56,7 @@
     zapzap
 
     # Web browsing
-    qutebrowser
+    #qutebrowser
     #helium as flake
     #librewolf and flatpak
 

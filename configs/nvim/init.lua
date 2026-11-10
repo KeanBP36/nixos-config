@@ -451,18 +451,117 @@ require("lazy").setup({
 	},
 
 	-- Discord presence (privacy-friendly: hides file and project names)
+
+	-- Discord Rich Presence
 	{
 		"andweeb/presence.nvim",
 		event = "VeryLazy",
 		opts = {
 			auto_update = true,
+
+			-- Neovim branding
 			neovim_image_text = "Neovim",
 			main_image = "neovim",
-			buttons = false,
+
+			-- Discord buttons
+			buttons = {
+				{
+					label = "GitHub",
+					url = "https://github.com/YOUR_USERNAME",
+				},
+			},
+
+			-- Display settings
 			enable_line_number = false,
 			show_time = true,
-			editing_text = "Editing a file",
-			workspace_text = "Working on a project",
+
+			-- Activity messages
+			editing_text = "Editing %s",
+			reading_text = "Reading %s",
+			file_explorer_text = "Browsing %s",
+			git_commit_text = "Committing changes",
+			plugin_manager_text = "Managing plugins",
+			workspace_text = "Working on %s",
+
+			-- File type icons
+			file_assets = {
+				lua = { "Lua", "lua" },
+				py = { "Python", "python" },
+				js = { "JavaScript", "javascript" },
+				ts = { "TypeScript", "typescript" },
+				html = { "HTML", "html" },
+				css = { "CSS", "css" },
+				rs = { "Rust", "rust" },
+
+				-- Nix
+				nix = { "Nix", "nix" },
+
+				-- Shell
+				sh = { "Shell", "shell" },
+				bash = { "Bash", "shell" },
+				zsh = { "Zsh", "shell" },
+				fish = { "Fish", "fish" },
+
+				-- Configuration
+				conf = { "Config", "config" },
+				cfg = { "Config", "config" },
+				ini = { "INI", "config" },
+				toml = { "TOML", "toml" },
+				yaml = { "YAML", "yaml" },
+				yml = { "YAML", "yaml" },
+				json = { "JSON", "json" },
+				jsonc = { "JSONC", "json" },
+				xml = { "XML", "xml" },
+
+				-- Web
+				jsx = { "React", "react" },
+				tsx = { "React TypeScript", "react" },
+				scss = { "SCSS", "scss" },
+				sass = { "Sass", "sass" },
+				vue = { "Vue", "vue" },
+				svelte = { "Svelte", "svelte" },
+
+				-- Programming
+				c = { "C", "c" },
+				h = { "C Header", "c" },
+				cpp = { "C++", "cpp" },
+				hpp = { "C++ Header", "cpp" },
+				go = { "Go", "go" },
+				java = { "Java", "java" },
+				kt = { "Kotlin", "kotlin" },
+				rb = { "Ruby", "ruby" },
+				php = { "PHP", "php" },
+				swift = { "Swift", "swift" },
+				cs = { "C#", "csharp" },
+				dart = { "Dart", "dart" },
+				ex = { "Elixir", "elixir" },
+				hs = { "Haskell", "haskell" },
+				r = { "R", "r" },
+
+				-- DevOps
+				tf = { "Terraform", "terraform" },
+				hcl = { "HCL", "terraform" },
+				sql = { "SQL", "sql" },
+				dockerfile = { "Docker", "docker" },
+
+				-- Documentation
+				md = { "Markdown", "markdown" },
+				mdx = { "MDX", "markdown" },
+				txt = { "Text", "text" },
+				pdf = { "PDF", "pdf" },
+
+				-- Editors
+				vim = { "Vim", "vim" },
+				viml = { "Vim Script", "vim" },
+			},
+
+			-- Hide sensitive files
+			blacklist = {
+				"%.env",
+				"secrets",
+				"password",
+				"private",
+			},
 		},
 	},
 }, {
