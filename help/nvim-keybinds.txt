@@ -1,0 +1,229 @@
+1. Keys you set yourself
+
+General
+
+Keys	Action
+Esc	Clear search highlight
+Space e	File tree
+Space u	Undo tree
+u / Ctrl+r	Undo / redo, with popups for multi-line changes and when you hit either end of history
+
+Windows
+
+Keys	Action
+Ctrl+h/j/k/l	Move left / down / up / right
+Space w v / w s	Split right / below
+Space w q	Close window
+Space w o	Keep only this window
+Space w =	Equalize sizes
+
+Tabs (buffers)
+
+Keys	Action
+Shift+l / Shift+h	Next / previous tab
+Tab then 1-9	Jump to that tab
+Tab then 0	Jump to last tab
+Space b n	New empty tab
+Space b d	Close tab
+Space b o	Close all other tabs
+Space b p	Pick a tab by letter
+Space b P	Pin / unpin tab
+
+Find and search
+
+Keys	Action
+Space f f	Find files
+Space f g	Grep text
+Space f w	Grep word under cursor
+Space f b	Open buffers
+Space f r	Recent files
+Space f h	Help tags
+Space s r	Search and replace (Spectre)
+Space x x	Project diagnostics
+Space x X	Current buffer diagnostics
+
+Terminal
+
+Keys	Action
+Space t t or Ctrl+\	Toggle floating terminal
+Esc Esc (in terminal)	Back to normal mode
+
+Code and LSP
+
+Keys	Action
+gd / gD	Definition / declaration
+gi	Implementation
+gr	References
+K	Hover docs
+Space c a	Code action
+Space c r	Rename symbol
+Space c t	Type definition
+Space c s	Document symbols
+Space c d	Line diagnostics popup
+Space c f	Format file
+
+Debugging
+
+Keys	Action
+Space d c	Start / continue
+Space d b / d B	Breakpoint / conditional breakpoint
+Space d i / d o / d O	Step into / over / out
+Space d r	Debug REPL
+Space d u	Debug UI
+Space d t	Terminate
+
+Git and sessions
+
+Keys	Action
+Space g d	Git diff
+Space g h / g H	History: project / this file
+Space g c	Close diff view
+Space q s	Restore project session
+Space q l	Restore last session
+Space q S	Pick a session
+Space q d	Stop saving session
+2. Keys your plugins add
+
+Completion popup (insert mode, blink.cmp)
+
+Keys	Action
+Tab / Shift+Tab	Next / previous item (your override)
+Ctrl+n / Ctrl+p or Down / Up	Next / previous item
+Ctrl+y	Accept the selected item
+Ctrl+Space	Open menu / toggle docs
+Ctrl+e	Close menu
+Ctrl+b / Ctrl+f	Scroll docs up / down
+Ctrl+k	Toggle signature help
+
+Brackets and quotes (nvim-autopairs)
+
+Keys	Action
+Alt+e (insert)	Fast wrap: wrap the next text in a pair
+
+Surround (nvim-surround)
+
+Keys	Action
+ys{motion}{char}	Add surround, e.g. ysiw"
+yss{char}	Surround the whole line
+yS / ySS	Same, with the text on its own lines
+ds{char}	Delete surround
+cs{old}{new}	Change surround
+S{char} (visual)	Surround the selection
+gS (visual)	Surround, on separate lines
+Ctrl+g s (insert)	Surround at cursor
+
+Comments (Comment.nvim)
+
+Keys	Action
+gcc	Toggle line comment
+gc{motion}	Comment a motion, e.g. gcap
+gc (visual)	Comment the selection
+gbc / gb{motion}	Block comment on the line / motion
+gco / gcO / gcA	Add a comment below / above / at end of line
+
+Word highlighting (vim-illuminate)
+
+Keys	Action
+Alt+n / Alt+p	Next / previous use of the word under cursor
+Alt+i	Select the word’s usage as a text object
+
+Menu (which-key)
+
+Press Space and wait for the popup. Backspace goes up a level and Esc closes it.
+3. Keys inside plugin windows
+
+I’m going from plugin defaults here. Press g? or ? in each window to see the exact list.
+
+File tree (nvim-tree)
+
+Keys	Action
+Enter / o	Open
+Tab	Preview
+a	New file (end with / for a folder)
+d	Delete
+r	Rename
+x / c / p	Cut / copy / paste
+y / Y / gy	Copy name / relative path / absolute path
+H	Toggle dotfiles
+I	Toggle git-ignored files
+f / F	Live filter / clear filter
+W / E	Collapse all / expand all
+-	Up a directory
+Ctrl+v / Ctrl+x / Ctrl+t	Open in vsplit / split / native tab
+R	Refresh
+q	Close
+g?	Show all keys
+
+Telescope (in the prompt)
+
+Keys	Action
+Ctrl+n / Ctrl+p	Next / previous result
+Enter	Open
+Ctrl+x / Ctrl+v / Ctrl+t	Open in split / vsplit / native tab
+Ctrl+u / Ctrl+d	Scroll preview
+Tab / Shift+Tab	Mark result and move
+Ctrl+q	Send results to quickfix
+Ctrl+/	Show all keys
+Ctrl+c	Close
+
+Spectre
+
+Keys	Action
+dd	Toggle this match
+Enter	Go to the match
+Space R	Replace all
+Space r c	Replace the current one
+Space o	Options menu
+Space v	Change view
+Space q	Send to quickfix
+
+Undo tree
+
+Keys	Action
+Enter	Revert to that state
+J / K	Next / previous saved state
+T	Toggle timestamps
+C	Clear history
+?	Help
+q	Close
+
+Git diff view (Diffview)
+
+Keys	Action
+Tab / Shift+Tab	Next / previous file
+-	Stage / unstage file
+S / U	Stage all / unstage all
+X	Restore the file
+R	Refresh
+Space e / Space b	Focus / toggle the file panel
+g?	Help
+
+Smaller windows
+
+Window	Keys
+Trouble	Enter jump, o jump and close, q close, ? help
+Debug UI	Enter expand, o open, d remove watch, e edit, r send to REPL
+Start screen	e new file, q quit, the number or letter next to a recent file opens it
+4. Neovim’s own keys you now have
+
+Your setup uses vim.lsp.enable, so you’re on Neovim 0.11 or newer, which adds these:
+
+Keys	Action
+grn / gra / grr / gri / grt	LSP: rename / code action / references / implementation / type definition
+gO	Document symbols outline
+Ctrl+s (insert)	Signature help
+]d / [d	Next / previous diagnostic
+]D / [D	Last / first diagnostic
+Ctrl+w d	Diagnostic popup
+]b / [b	Next / previous buffer
+]q / [q	Next / previous quickfix item
+]t / [t	Next / previous tag
+]Space / [Space	Add an empty line below / above
+Ctrl+\ Ctrl+n	Leave terminal mode
+5. Clashes to know about
+File tree: Ctrl+k shows file info there instead of moving up. Shift+h toggles dotfiles and Tab previews. Click into a code window before using your window and tab keys.
+gr delay: your gr map (references) makes Neovim pause briefly when you type gr, because it’s also the start of grn, gra and grr.
+Tab delay: Tab waits for the next key, so Vim’s own Ctrl+i jump-forward is delayed. Ctrl+o (jump back) is unaffected.
+Snippets: your Tab override means Tab no longer jumps between snippet fields. Gitsigns also has no hunk keys set.
+Terminals: some terminals treat Ctrl+h as Backspace, which would break the window move.
+
