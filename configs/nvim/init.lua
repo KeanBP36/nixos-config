@@ -342,8 +342,30 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "akinsho/bufferline.nvim", version = "*", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {} },
-	{ "folke/which-key.nvim", event = "VeryLazy", opts = {} },
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = { options = { numbers = "ordinal" } },
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			spec = {
+				{ "<leader>b", group = "buffer" },
+				{ "<leader>c", group = "code" },
+				{ "<leader>d", group = "debug" },
+				{ "<leader>f", group = "find" },
+				{ "<leader>g", group = "git" },
+				{ "<leader>q", group = "session" },
+				{ "<leader>s", group = "search" },
+				{ "<leader>t", group = "terminal" },
+				{ "<leader>w", group = "window" },
+				{ "<leader>x", group = "diagnostics" },
+			},
+		},
+	},
 	{ "folke/trouble.nvim", opts = {} },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
@@ -425,6 +447,22 @@ require("lazy").setup({
 			dir = vim.fn.stdpath("state") .. "/sessions/",
 			need = 1,
 			branch = true,
+		},
+	},
+
+	-- Discord presence (privacy-friendly: hides file and project names)
+	{
+		"andweeb/presence.nvim",
+		event = "VeryLazy",
+		opts = {
+			auto_update = true,
+			neovim_image_text = "Neovim",
+			main_image = "neovim",
+			buttons = false,
+			enable_line_number = false,
+			show_time = true,
+			editing_text = "Editing a file",
+			workspace_text = "Working on a project",
 		},
 	},
 }, {
@@ -645,38 +683,69 @@ local function dap_call(fn)
 	end
 end
 
--- Files and buffers
+-- General
+map("n", "<Esc>", ex("nohlsearch"), "Clear search highlight")
 map("n", "<leader>e", ex("NvimTreeToggle"), "File tree")
-map("n", "<leader>ff", ex("Telescope find_files"), "Find files")
-map("n", "<leader>fg", ex("Telescope live_grep"), "Grep")
-map("n", "<leader>fb", ex("Telescope buffers"), "Buffers")
-map("n", "<leader>xx", ex("Trouble diagnostics toggle"), "Diagnostics")
-map("n", "<S-l>", ex("BufferLineCycleNext"), "Next buffer")
-map("n", "<S-h>", ex("BufferLineCyclePrev"), "Previous buffer")
+map("n", "<leader>u", ex("UndotreeToggle"), "Undo tree")
 
 -- Undo and redo (with popups)
 map("n", "u", history_move("u", "Undo", "Already at oldest change"), "Undo")
 map("n", "<C-r>", history_move("<C-r>", "Redo", "Already at newest change"), "Redo")
 
+-- Windows: Ctrl+h/j/k/l to move, Space w for splits
+map("n", "<C-h>", "<C-w>h", "Window left")
+map("n", "<C-j>", "<C-w>j", "Window down")
+map("n", "<C-k>", "<C-w>k", "Window up")
+map("n", "<C-l>", "<C-w>l", "Window right")
+map("n", "<leader>wv", ex("vsplit"), "Split right")
+map("n", "<leader>ws", ex("split"), "Split below")
+map("n", "<leader>wq", ex("close"), "Close window")
+map("n", "<leader>wo", ex("only"), "Only this window")
+map("n", "<leader>w=", "<C-w>=", "Equalize windows")
+
+-- Buffers (tabs): Shift+h/l to step, Tab then a number to jump
+map("n", "<S-l>", ex("BufferLineCycleNext"), "Next buffer")
+map("n", "<S-h>", ex("BufferLineCyclePrev"), "Previous buffer")
+for i = 1, 9 do
+	map("n", "<Tab>" .. i, ex("BufferLineGoToBuffer " .. i), "Go to buffer " .. i)
+end
+map("n", "<Tab>0", ex("BufferLineGoToBuffer -1"), "Go to last buffer")
+map("n", "<leader>bn", ex("enew"), "New empty buffer")
+map("n", "<leader>bd", ex("bdelete"), "Close buffer")
+map("n", "<leader>bo", ex("BufferLineCloseOthers"), "Close other buffers")
+map("n", "<leader>bp", ex("BufferLinePick"), "Pick buffer")
+map("n", "<leader>bP", ex("BufferLineTogglePin"), "Pin buffer")
+
+-- Find (Telescope)
+map("n", "<leader>ff", ex("Telescope find_files"), "Find files")
+map("n", "<leader>fg", ex("Telescope live_grep"), "Grep text")
+map("n", "<leader>fw", ex("Telescope grep_string"), "Grep word under cursor")
+map("n", "<leader>fb", ex("Telescope buffers"), "Open buffers")
+map("n", "<leader>fr", ex("Telescope oldfiles"), "Recent files")
+map("n", "<leader>fh", ex("Telescope help_tags"), "Help")
+
 -- Search and replace
 map("n", "<leader>sr", ex("Spectre"), "Search and replace")
+
+-- Diagnostics
+map("n", "<leader>xx", ex("Trouble diagnostics toggle"), "Project diagnostics")
+map("n", "<leader>xX", ex("Trouble diagnostics toggle filter.buf=0"), "Buffer diagnostics")
 
 -- Terminal (Ctrl+\ also toggles it)
 map("n", "<leader>tt", ex("ToggleTerm"), "Toggle terminal")
 map("t", "<Esc><Esc>", [[<C-\><C-n>]], "Terminal: normal mode")
 
--- LSP
+-- Code and LSP
 map("n", "gd", vim.lsp.buf.definition, "Go to definition")
 map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
 map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
 map("n", "gr", vim.lsp.buf.references, "References")
-map("n", "K", vim.lsp.buf.hover, "Hover")
-map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+map("n", "K", vim.lsp.buf.hover, "Hover docs")
 map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-map("n", "<leader>D", vim.lsp.buf.type_definition, "Type definition")
-map("n", "<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
-
--- Formatting
+map("n", "<leader>cr", vim.lsp.buf.rename, "Rename symbol")
+map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type definition")
+map("n", "<leader>cs", vim.lsp.buf.document_symbol, "Document symbols")
+map("n", "<leader>cd", vim.diagnostic.open_float, "Line diagnostics")
 map("n", "<leader>cf", function()
 	require("conform").format({ async = true, lsp_format = "fallback" })
 end, "Format file")
@@ -689,7 +758,7 @@ end, "Conditional breakpoint")
 map("n", "<leader>dc", function()
 	setup_dap_adapters()
 	require("dap").continue()
-end, "Continue")
+end, "Start / continue")
 map("n", "<leader>di", dap_call("step_into"), "Step into")
 map("n", "<leader>do", dap_call("step_over"), "Step over")
 map("n", "<leader>dO", dap_call("step_out"), "Step out")
@@ -703,23 +772,20 @@ map("n", "<leader>dt", dap_call("terminate"), "Terminate")
 
 -- Git
 map("n", "<leader>gd", ex("DiffviewOpen"), "Git diff")
-map("n", "<leader>gh", ex("DiffviewFileHistory"), "Git file history")
-map("n", "<leader>gH", ex("DiffviewFileHistory %"), "Current file history")
-map("n", "<leader>gD", ex("DiffviewClose"), "Close git diff")
-
--- Undo tree
-map("n", "<leader>u", ex("UndotreeToggle"), "Undo tree")
+map("n", "<leader>gh", ex("DiffviewFileHistory"), "Git history (project)")
+map("n", "<leader>gH", ex("DiffviewFileHistory %"), "Git history (this file)")
+map("n", "<leader>gc", ex("DiffviewClose"), "Close git diff")
 
 -- Sessions
 map("n", "<leader>qs", function()
 	require("persistence").load()
 end, "Restore project session")
-map("n", "<leader>qS", function()
-	require("persistence").select()
-end, "Select session")
 map("n", "<leader>ql", function()
 	require("persistence").load({ last = true })
 end, "Restore last session")
+map("n", "<leader>qS", function()
+	require("persistence").select()
+end, "Select session")
 map("n", "<leader>qd", function()
 	require("persistence").stop()
 end, "Stop session saving")
