@@ -14,6 +14,7 @@
     ../../modules/distrobox.nix
     ../../modules/appimage.nix
     ./mango.nix
+    ../../configs/vscodium/vscodium.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -46,7 +47,6 @@
   home.packages = with pkgs; [
     # Terminals and editors
     kitty
-    neovim
     fastfetch
     ghostty
 
@@ -311,6 +311,8 @@
 
     kitty.enable = true;
     nvim.enable = true;
+
+    vscode.profiles.default.enable = false;
   };
 
   # ─────────────────────────────────────────────
