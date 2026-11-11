@@ -6,16 +6,30 @@
   "vim.hlsearch": true,
   "vim.incsearch": true,
   "vim.normalModeKeyBindingsNonRecursive": [
-    { "before": ["<Esc>"], "commands": [":nohl"] },
+    {
+      "before": ["<Esc>"],
+      "commands": [":nohl"]
+    },
     {
       "before": ["<leader>", "e"],
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
-
-    { "before": ["<C-h>"], "commands": ["workbench.action.navigateLeft"] },
-    { "before": ["<C-j>"], "commands": ["workbench.action.navigateDown"] },
-    { "before": ["<C-k>"], "commands": ["workbench.action.navigateUp"] },
-    { "before": ["<C-l>"], "commands": ["workbench.action.navigateRight"] },
+    {
+      "before": ["<C-h>"],
+      "commands": ["workbench.action.navigateLeft"]
+    },
+    {
+      "before": ["<C-j>"],
+      "commands": ["workbench.action.navigateDown"]
+    },
+    {
+      "before": ["<C-k>"],
+      "commands": ["workbench.action.navigateUp"]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": ["workbench.action.navigateRight"]
+    },
     {
       "before": ["<leader>", "w", "v"],
       "commands": ["workbench.action.splitEditorRight"]
@@ -36,9 +50,14 @@
       "before": ["<leader>", "w", "="],
       "commands": ["workbench.action.evenEditorWidths"]
     },
-
-    { "before": ["<S-l>"], "commands": ["workbench.action.nextEditor"] },
-    { "before": ["<S-h>"], "commands": ["workbench.action.previousEditor"] },
+    {
+      "before": ["<S-l>"],
+      "commands": ["workbench.action.nextEditor"]
+    },
+    {
+      "before": ["<S-h>"],
+      "commands": ["workbench.action.previousEditor"]
+    },
     {
       "before": ["<Tab>", "1"],
       "commands": ["workbench.action.openEditorAtIndex1"]
@@ -99,7 +118,6 @@
       "before": ["<leader>", "b", "P"],
       "commands": ["workbench.action.pinEditor"]
     },
-
     {
       "before": ["<leader>", "f", "f"],
       "commands": ["workbench.action.quickOpen"]
@@ -136,16 +154,30 @@
       "before": ["<leader>", "t", "t"],
       "commands": ["workbench.action.terminal.toggleTerminal"]
     },
-
-    { "before": ["g", "D"], "commands": ["editor.action.revealDeclaration"] },
-    { "before": ["g", "i"], "commands": ["editor.action.goToImplementation"] },
-    { "before": ["g", "r"], "commands": ["editor.action.goToReferences"] },
-    { "before": ["K"], "commands": ["editor.action.showHover"] },
+    {
+      "before": ["g", "D"],
+      "commands": ["editor.action.revealDeclaration"]
+    },
+    {
+      "before": ["g", "i"],
+      "commands": ["editor.action.goToImplementation"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.goToReferences"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showHover"]
+    },
     {
       "before": ["<leader>", "c", "a"],
       "commands": ["editor.action.quickFix"]
     },
-    { "before": ["<leader>", "c", "r"], "commands": ["editor.action.rename"] },
+    {
+      "before": ["<leader>", "c", "r"],
+      "commands": ["editor.action.rename"]
+    },
     {
       "before": ["<leader>", "c", "t"],
       "commands": ["editor.action.goToTypeDefinition"]
@@ -162,7 +194,6 @@
       "before": ["<leader>", "c", "f"],
       "commands": ["editor.action.formatDocument"]
     },
-
     {
       "before": ["<leader>", "d", "b"],
       "commands": ["editor.debug.action.toggleBreakpoint"]
@@ -191,15 +222,26 @@
       "before": ["<leader>", "d", "r"],
       "commands": ["workbench.debug.action.toggleRepl"]
     },
-    { "before": ["<leader>", "d", "u"], "commands": ["workbench.view.debug"] },
+    {
+      "before": ["<leader>", "d", "u"],
+      "commands": ["workbench.view.debug"]
+    },
     {
       "before": ["<leader>", "d", "t"],
       "commands": ["workbench.action.debug.stop"]
     },
-
-    { "before": ["<leader>", "g", "d"], "commands": ["workbench.view.scm"] },
-    { "before": ["<leader>", "g", "h"], "commands": ["timeline.focus"] },
-    { "before": ["<leader>", "g", "H"], "commands": ["timeline.focus"] }
+    {
+      "before": ["<leader>", "g", "d"],
+      "commands": ["workbench.view.scm"]
+    },
+    {
+      "before": ["<leader>", "g", "h"],
+      "commands": ["timeline.focus"]
+    },
+    {
+      "before": ["<leader>", "g", "H"],
+      "commands": ["timeline.focus"]
+    }
   ],
 
   "editor.tabSize": 4,
@@ -216,23 +258,42 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.indentation": true,
   "editor.occurrencesHighlight": "singleFile",
+
   "search.seedWithNearestWord": true,
   "workbench.editor.openSideBySideDirection": "right",
   "window.restoreWindows": "all",
 
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nixd",
-  "nix.serverSettings": { "nixd": { "formatting": { "command": ["nixfmt"] } } },
+  "nix.serverSettings": {
+    "nixd": {
+      "formatting": {
+        "command": ["nixfmt"]
+      }
+    }
+  },
 
-  "[nix]": { "editor.defaultFormatter": "jnoortheen.nix-ide" },
-  "[lua]": { "editor.defaultFormatter": "sumneko.lua" },
-  "[python]": { "editor.defaultFormatter": "charliermarsh.ruff" },
-  "[shellscript]": { "editor.defaultFormatter": "foxundermoon.shell-format" },
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundoon.shell-format"
+  },
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc][html][css][markdown][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   "workbench.colorTheme": "Default Dark Modern",
+
+  "vscord.app.name": "VSCodium",
+  "vscord.app.privacyMode.enable": true,
+
   "workbench.colorCustomizations": {
     "editor.background": "#1f1f1f",
     "editor.foreground": "#d4d4d4",
@@ -255,30 +316,52 @@
     "editorInfo.foreground": "#569cd6",
     "editorHint.foreground": "#4ec9b0"
   },
+
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
         "scope": ["comment"],
-        "settings": { "foreground": "#666666", "fontStyle": "italic" }
+        "settings": {
+          "foreground": "#666666",
+          "fontStyle": "italic"
+        }
       },
-      { "scope": ["string"], "settings": { "foreground": "#608b4e" } },
+      {
+        "scope": ["string"],
+        "settings": {
+          "foreground": "#608b4e"
+        }
+      },
       {
         "scope": ["constant", "constant.numeric"],
-        "settings": { "foreground": "#4ec9b0" }
+        "settings": {
+          "foreground": "#4ec9b0"
+        }
       },
       {
         "scope": ["keyword", "storage"],
-        "settings": { "foreground": "#c586c0" }
+        "settings": {
+          "foreground": "#c586c0"
+        }
       },
       {
         "scope": ["entity.name.function", "support.function"],
-        "settings": { "foreground": "#dcdcaa" }
+        "settings": {
+          "foreground": "#dcdcaa"
+        }
       },
       {
         "scope": ["entity.name.type", "support.type"],
-        "settings": { "foreground": "#569cd6" }
+        "settings": {
+          "foreground": "#569cd6"
+        }
       },
-      { "scope": ["variable"], "settings": { "foreground": "#d4d4d4" } }
+      {
+        "scope": ["variable"],
+        "settings": {
+          "foreground": "#d4d4d4"
+        }
+      }
     ]
   }
 }

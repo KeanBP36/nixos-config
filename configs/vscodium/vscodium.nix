@@ -8,29 +8,40 @@
       enableExtensionUpdateCheck = false;
 
       extensions = with pkgs.vscode-extensions; [
-        vscodevim.vim # modal editing, leader keys, surround, gc comments
-        jnoortheen.nix-ide # nixd
+        # Editor
+        vscodevim.vim
+        jnoortheen.nix-ide
         mkhl.direnv
-        sumneko.lua # lua_ls
+
+        # Languages
+        sumneko.lua
         ms-pyright.pyright
         llvm-vs-code-extensions.vscode-clangd
         rust-lang.rust-analyzer
-        golang.go # gopls
+        golang.go
         mads-hartmann.bash-ide-vscode
-        # formatters
+
+        # Python
         charliermarsh.ruff
+        ms-python.python
+
+        # Formatters
         foxundermoon.shell-format
         esbenp.prettier-vscode
-        # linters
+
+        # Linters
         timonwong.shellcheck
         dbaeumer.vscode-eslint
         davidanson.vscode-markdownlint
-        # extras
-        gruntfuggly.todo-tree # todo-comments
+
+        # Extras
+        gruntfuggly.todo-tree
         redhat.vscode-yaml
+
+        # Discord Rich Presence
+        leonardssh.vscord
       ];
 
-      # lib.mkForce on the theme key beats catppuccin's "Catppuccin Mocha"
       userSettings = lib.recursiveUpdate (builtins.fromJSON (builtins.readFile ./settings.json)) {
         "workbench.colorTheme" = lib.mkForce "Default Dark Modern";
       };
