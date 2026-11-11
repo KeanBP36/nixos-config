@@ -14,7 +14,6 @@
     ../../modules/distrobox.nix
     ../../modules/appimage.nix
     ./mango.nix
-    ../../configs/vscodium/vscodium.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -313,6 +312,7 @@
     nvim.enable = true;
 
     vscode.profiles.default.enable = false;
+
   };
 
   # ─────────────────────────────────────────────

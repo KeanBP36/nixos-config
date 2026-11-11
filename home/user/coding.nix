@@ -36,6 +36,7 @@ in
   # ─────────────────────────────────────────────
 
   home.packages = with pkgs; [
+    (vscodium.fhsWithPackages editorFhsPackages)
     #text editors
     neovim
     uemacs
@@ -148,10 +149,6 @@ in
   # VSCodium (FHS)
   # ─────────────────────────────────────────────
 
-  programs.vscodium = {
-    enable = true;
-    package = pkgs.vscodium.fhsWithPackages editorFhsPackages;
-  };
 
   # ─────────────────────────────────────────────
   # Ranger

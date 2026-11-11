@@ -5,8 +5,8 @@
     enable = true;
 
     shellAliases = {
-      
-      # NixOS configuration 
+
+      # NixOS configuration
       nixshowtree = "find /etc/nixos-config -type f | sort";
       nixconfigs = "find /etc/nixos-config/configs -type f | sort";
       nixhome = "find /etc/nixos-config/home -type f | sort";
@@ -19,7 +19,7 @@
       #nixrebsw = "sudo nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME";
       nixrebsw = "sudo NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nixos-rebuild switch --flake /etc/nixos-config#$HOSTNAME --impure";
       nixcheck = "NIXOS_HARDWARE_CONFIG=/etc/nixos/hardware-configuration.nix nix flake check /etc/nixos-config --impure";
- 
+
       # Git branches
       nixmain = "cd /etc/nixos-config && git switch main";
       nixtesting = "cd /etc/nixos-config && git switch testing";
@@ -29,38 +29,38 @@
       # Git logs
       nixlogmain = "cd /etc/nixos-config && git log --oneline main";
       nixlogtesting = "cd /etc/nixos-config && git log --oneline testing";
-       
-      nixlogtestingto =
-        "cd /etc/nixos-config && git log --oneline unstable..testing";
- 
-      nixpackagecommits =
-        "cd /etc/nixos-config && git log --oneline -- flake.nix flake.lock";
+
+      nixlogtestingto = "cd /etc/nixos-config && git log --oneline unstable..testing";
+
+      nixpackagecommits = "cd /etc/nixos-config && git log --oneline -- flake.nix flake.lock";
 
       # Git comparisons
       nixdiffmain = "cd /etc/nixos-config && git diff main..HEAD";
       nixdifftesting = "cd /etc/nixos-config && git diff testing..HEAD";
-      
-      nixdifftestingunstable =
-        "cd /etc/nixos-config && git diff --name-status unstable..testing";
+
+      nixdifftestingunstable = "cd /etc/nixos-config && git diff --name-status unstable..testing";
 
       # Git sync
       nixsync = "cd /etc/nixos-config && git cherry-pick";
- 
-      nixshowcommit =
-        "cd /etc/nixos-config && git show --stat --oneline";
+
+      nixshowcommit = "cd /etc/nixos-config && git show --stat --oneline";
 
       # Branch synchronization
-      nixsynctesting =
-        "cd /etc/nixos-config && git switch testing && git reset --hard main && git push --force-with-lease origin testing";
+      nixsynctesting = "cd /etc/nixos-config && git switch testing && git reset --hard main && git push --force-with-lease origin testing";
 
-      nixmerge =
-        "cd /etc/nixos-config && git switch main && git merge testing && git push origin main";
+      nixmerge = "cd /etc/nixos-config && git switch main && git merge testing && git push origin main";
 
       # Hardware / networking
       ethup = "sudo nmcli device connect enp4s0";
+
+      codiumpull = "~/Projects/vscodium-config/sync.sh pull";
+      codiumapply = "~/Projects/vscodium-config/sync.sh push";
+      codiumformat = "npx prettier --write ~/Projects/vscodium-config/settings.json";
+      codiumdiff = "git -C ~/Projects/vscodium-config diff";
+      codiumpush = "~/Projects/vscodium-config/sync.sh pull && git -C ~/Projects/vscodium-config add -A && git -C ~/Projects/vscodium-config commit -m 'update settings' && git -C ~/Projects/vscodium-config push";
     };
 
-      initExtra = ''   
+    initExtra = ''
       # ─────────────────────────────────────────────
       # Environment
       # ─────────────────────────────────────────────
@@ -101,7 +101,7 @@
         read -rp "Commit message: " msg
         git commit -m "$msg" && git push origin testing
       }
-      
+
       #extra
             decrypt() {
         if [ -z "$1" ]; then
