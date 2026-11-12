@@ -147,6 +147,8 @@
     forceRun = true;
   };
 
+  programs.ssh.startAgent = true;
+
   programs.kdeconnect.enable = true;
 
   services.vice.enable = true;
@@ -169,6 +171,7 @@
   environment.systemPackages = with pkgs; [
     flatpak
     git
+    gh
     podman
     docker
     unzip
