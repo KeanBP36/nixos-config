@@ -46,7 +46,6 @@
   home.packages = with pkgs; [
     # Terminals and editors
     kitty
-    neovim
     fastfetch
     ghostty
 
@@ -56,7 +55,7 @@
     zapzap
 
     # Web browsing
-    qutebrowser
+    #qutebrowser
     #helium as flake
     #librewolf and flatpak
 
@@ -311,13 +310,15 @@
 
     kitty.enable = true;
     nvim.enable = true;
+
+    vscode.profiles.default.enable = false;
+
   };
 
   # ─────────────────────────────────────────────
   # Default applications
   # ─────────────────────────────────────────────
 
-  # Resolve conflicts with an existing mimeapps.list.
   xdg.configFile."mimeapps.list".force = true;
 
   xdg.mimeApps = {
@@ -325,77 +326,88 @@
 
     defaultApplications = {
       # Web browser
-      "x-scheme-handler/http" = "brave-browser.desktop";
-      "x-scheme-handler/https" = "brave-browser.desktop";
+      "x-scheme-handler/http" = [ "brave-browser.desktop" ];
+      "x-scheme-handler/https" = [ "brave-browser.desktop" ];
+
+      # GitHub Desktop authentication
+      "x-scheme-handler/x-github-desktop-dev-auth" = [
+        "github-desktop.desktop"
+      ];
+      "x-scheme-handler/x-github-desktop-auth" = [
+        "github-desktop.desktop"
+      ];
 
       # File manager
-      "inode/directory" = "thunar.desktop";
+      "inode/directory" = [ "thunar.desktop" ];
 
       # Text and code
-      "text/plain" = "nvim.desktop";
-      "text/markdown" = "nvim.desktop";
-      "text/x-markdown" = "nvim.desktop";
-      "text/html" = "nvim.desktop";
-      "text/css" = "nvim.desktop";
-      "text/xml" = "nvim.desktop";
-      "application/xml" = "nvim.desktop";
-      "application/json" = "nvim.desktop";
-      "application/javascript" = "nvim.desktop";
-      "text/javascript" = "nvim.desktop";
-      "text/x-python" = "nvim.desktop";
-      "text/x-shellscript" = "nvim.desktop";
-      "application/x-shellscript" = "nvim.desktop";
-      "text/x-c" = "nvim.desktop";
-      "text/x-c++" = "nvim.desktop";
-      "text/x-csrc" = "nvim.desktop";
-      "text/x-chdr" = "nvim.desktop";
-      "text/x-rust" = "nvim.desktop";
-      "text/x-go" = "nvim.desktop";
-      "text/x-lua" = "nvim.desktop";
-      "text/x-nix" = "nvim.desktop";
-      "application/x-nix" = "nvim.desktop";
-      "text/x-java" = "nvim.desktop";
-      "text/x-makefile" = "nvim.desktop";
-      "text/x-yaml" = "nvim.desktop";
-      "application/yaml" = "nvim.desktop";
-      "application/x-yaml" = "nvim.desktop";
-      "text/x-toml" = "nvim.desktop";
-      "application/toml" = "nvim.desktop";
-      "text/x-sql" = "nvim.desktop";
-      "text/x-php" = "nvim.desktop";
-      "text/x-perl" = "nvim.desktop";
-      "text/x-ruby" = "nvim.desktop";
-      "text/x-scss" = "nvim.desktop";
-      "text/x-less" = "nvim.desktop";
-      "application/x-desktop" = "nvim.desktop";
+      "text/plain" = [ "nvim.desktop" ];
+      "text/markdown" = [ "nvim.desktop" ];
+      "text/x-markdown" = [ "nvim.desktop" ];
+      "text/html" = [ "nvim.desktop" ];
+      "text/css" = [ "nvim.desktop" ];
+      "text/xml" = [ "nvim.desktop" ];
+      "application/xml" = [ "nvim.desktop" ];
+      "application/json" = [ "nvim.desktop" ];
+      "application/javascript" = [ "nvim.desktop" ];
+      "text/javascript" = [ "nvim.desktop" ];
+      "text/x-python" = [ "nvim.desktop" ];
+      "text/x-shellscript" = [ "nvim.desktop" ];
+      "application/x-shellscript" = [ "nvim.desktop" ];
+      "text/x-c" = [ "nvim.desktop" ];
+      "text/x-c++" = [ "nvim.desktop" ];
+      "text/x-csrc" = [ "nvim.desktop" ];
+      "text/x-chdr" = [ "nvim.desktop" ];
+      "text/x-rust" = [ "nvim.desktop" ];
+      "text/x-go" = [ "nvim.desktop" ];
+      "text/x-lua" = [ "nvim.desktop" ];
+      "text/x-nix" = [ "nvim.desktop" ];
+      "application/x-nix" = [ "nvim.desktop" ];
+      "text/x-java" = [ "nvim.desktop" ];
+      "text/x-makefile" = [ "nvim.desktop" ];
+      "text/x-yaml" = [ "nvim.desktop" ];
+      "application/yaml" = [ "nvim.desktop" ];
+      "application/x-yaml" = [ "nvim.desktop" ];
+      "text/x-toml" = [ "nvim.desktop" ];
+      "application/toml" = [ "nvim.desktop" ];
+      "text/x-sql" = [ "nvim.desktop" ];
+      "text/x-php" = [ "nvim.desktop" ];
+      "text/x-perl" = [ "nvim.desktop" ];
+      "text/x-ruby" = [ "nvim.desktop" ];
+      "text/x-scss" = [ "nvim.desktop" ];
+      "text/x-less" = [ "nvim.desktop" ];
+      "application/x-desktop" = [ "nvim.desktop" ];
 
       # PDFs
-      "application/pdf" = "onlyoffice-desktopeditors.desktop";
+      "application/pdf" = [ "onlyoffice-desktopeditors.desktop" ];
 
       # Images
-      "image/jpeg" = "org.gnome.gThumb.desktop";
-      "image/png" = "org.gnome.gThumb.desktop";
-      "image/gif" = "org.gnome.gThumb.desktop";
-      "image/webp" = "org.gnome.gThumb.desktop";
-      "image/tiff" = "org.gnome.gThumb.desktop";
+      "image/jpeg" = [ "org.gnome.gThumb.desktop" ];
+      "image/png" = [ "org.gnome.gThumb.desktop" ];
+      "image/gif" = [ "org.gnome.gThumb.desktop" ];
+      "image/webp" = [ "org.gnome.gThumb.desktop" ];
+      "image/tiff" = [ "org.gnome.gThumb.desktop" ];
 
       # Video
-      "video/mp4" = "vlc.desktop";
-      "video/x-matroska" = "vlc.desktop";
-      "video/webm" = "vlc.desktop";
-      "video/x-msvideo" = "vlc.desktop";
+      "video/mp4" = [ "vlc.desktop" ];
+      "video/x-matroska" = [ "vlc.desktop" ];
+      "video/webm" = [ "vlc.desktop" ];
+      "video/x-msvideo" = [ "vlc.desktop" ];
 
       # Audio
-      "audio/mpeg" = "vlc.desktop";
-      "audio/flac" = "vlc.desktop";
-      "audio/ogg" = "vlc.desktop";
-      "audio/wav" = "vlc.desktop";
+      "audio/mpeg" = [ "vlc.desktop" ];
+      "audio/flac" = [ "vlc.desktop" ];
+      "audio/ogg" = [ "vlc.desktop" ];
+      "audio/wav" = [ "vlc.desktop" ];
 
       # Torrents
-      "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
+      "application/x-bittorrent" = [
+        "org.qbittorrent.qBittorrent.desktop"
+      ];
 
       # Email
-      "x-scheme-handler/mailto" = "thunderbird.desktop";
+      "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
     };
   };
+
 }

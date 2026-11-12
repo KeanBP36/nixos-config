@@ -1,6 +1,7 @@
 {
   imports = [
     ../common.nix
+    ../../modules/secureboot.nix
 
     ../../profiles/amd-cpu.nix
     ../../profiles/nvidia-gpu.nix
