@@ -39,7 +39,7 @@ in
     (vscodium.fhsWithPackages editorFhsPackages)
     #text editors
     neovim
-    uemacs
+    # uemacs
 
     # General Development
     git
@@ -148,7 +148,6 @@ in
   # ─────────────────────────────────────────────
   # VSCodium (FHS)
   # ─────────────────────────────────────────────
-
 
   # ─────────────────────────────────────────────
   # Ranger
