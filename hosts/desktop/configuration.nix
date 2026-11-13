@@ -17,5 +17,6 @@
 
     ../../modules/flatpak.nix
     ../../modules/snap.nix
+    ../../modules/webapps.nix
   ];
 }
