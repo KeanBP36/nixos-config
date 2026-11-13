@@ -202,11 +202,6 @@
     categories = [ "Game" ];
   };
 
-  xdg.configFile."startup.sh" = {
-    source = ../../configs/startup.sh;
-    executable = true;
-  };
-
   # ─────────────────────────────────────────────
   # Neovim desktop entry
   # Opens files in Neovim inside Kitty
