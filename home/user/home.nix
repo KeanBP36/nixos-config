@@ -48,6 +48,7 @@
     kitty
     fastfetch
     ghostty
+    zoxide
 
     # Communication and collaboration
     discord

@@ -210,7 +210,6 @@
     snapper-gui
     polkit_gnome
     wezterm
-    zoxide
 
     unstable.mullvad-vpn
   ];

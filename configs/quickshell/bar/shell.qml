@@ -23,7 +23,7 @@ Variants {
        readonly property color highlight: "#3a3a3a"
        readonly property color urgent: "#f38ba8"
 
-              // =========================
+        // =========================
         // COMPOSITOR DETECTION
         // =========================
 
