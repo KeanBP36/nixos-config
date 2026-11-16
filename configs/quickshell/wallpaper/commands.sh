@@ -99,27 +99,78 @@ if is_video "$WALLPAPER" "$VIDEO_EXT_PATTERN"; then
     fi
 
     if command -v mpvpaper &>/dev/null; then
-        MONITOR=$(get_monitor_output)
-        echo "Using monitor: $MONITOR"
+        MONITOR_OUTPUTS=""
 
-        # -f forks mpvpaper into the background itself, so we don't also
-        # need a trailing '&' here.
-        mpvpaper -f -o "no-audio loop" "$MONITOR" "$WALLPAPER"
+        # Try Hyprland first.
+        if command -v hyprctl &>/dev/null && command -v jq &>/dev/null; then
+            HYPR_OUTPUTS=$(
+                hyprctl monitors -j 2>/dev/null |
+                    jq -r '
+                if type == "array" then
+                    .[] | .name // empty
+                else
+                    empty
+                end
+            ' 2>/dev/null
+            )
 
-        sleep 1
-        if pgrep -f "mpvpaper.*$WALLPAPER" >/dev/null; then
-            echo "✅ Video wallpaper started successfully on $MONITOR"
-            OVERALL_SUCCESS=true
+            if [[ -n "$HYPR_OUTPUTS" ]]; then
+                MONITOR_OUTPUTS="$HYPR_OUTPUTS"
+                echo "Detected monitor outputs using Hyprland"
+            fi
+        fi
+
+        # Fall back to wlr-randr.
+        if [[ -z "$MONITOR_OUTPUTS" ]] && command -v wlr-randr &>/dev/null; then
+            MONITOR_OUTPUTS=$(
+                wlr-randr 2>/dev/null |
+                    awk '
+                /^[^[:space:]]/ { output = $1 }
+                /Enabled: yes/ { print output }
+            '
+            )
+
+            if [[ -n "$MONITOR_OUTPUTS" ]]; then
+                echo "Detected monitor outputs using wlr-randr"
+            fi
+        fi
+
+        mapfile -t MONITORS < <(
+            printf '%s\n' "$MONITOR_OUTPUTS" |
+                awk 'NF && !seen[$0]++'
+        )
+
+        if [[ "${#MONITORS[@]}" -eq 0 ]]; then
+            echo "⚠️ Could not detect any active monitor outputs"
         else
-            echo "⚠️  mpvpaper may not have started correctly"
+            STARTED=0
+
+            for MONITOR in "${MONITORS[@]}"; do
+                echo "Starting video wallpaper on: $MONITOR"
+
+                if mpvpaper -f -o "no-audio loop" "$MONITOR" "$WALLPAPER"; then
+                    STARTED=$((STARTED + 1))
+                else
+                    echo "⚠️ Failed to start video on $MONITOR"
+                fi
+            done
+
+            sleep 1
+
+            if [[ "$STARTED" -gt 0 ]] && pgrep -x mpvpaper >/dev/null; then
+                echo "✅ Video wallpaper started on $STARTED monitor(s)"
+                OVERALL_SUCCESS=true
+            else
+                echo "⚠️ mpvpaper may not have started correctly"
+            fi
         fi
     else
         echo "Error: mpvpaper not found. Please install it for video wallpapers."
-        echo "  Arch: sudo pacman -S mpvpaper"
         notify "Video wallpaper failed" "mpvpaper not installed" critical
         exit 1
     fi
 else
+
     # For images, the picked file IS the still image.
     WALLPAPER_STILL="$WALLPAPER"
 
@@ -257,7 +308,6 @@ if [ -n "$STABLE_COPY_PATH" ]; then
         cp "$WALLPAPER" "$EXPANDED_COPY_PATH"
     fi
 fi
-
 
 # --- Optional post-apply hooks ----------------------------------------
 # Each entry in `post_apply` (config.json) runs after the wallpaper is
