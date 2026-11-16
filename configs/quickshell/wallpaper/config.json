@@ -1,7 +1,7 @@
 {
-  "wallpaper_path": "~/Pictures/Wallpapers/",
+  "wallpaper_path": "/etc/nixos-config/configs/quickshell/wallpaper/wallpapers/",
   "cache_path": "~/.cache/quickshell/thumbs/",
-  "active_layout": "layouts/shell-floating.qml",
+  "active_layout": "layouts/shell-bottom-dock.qml",
   "wallpaper_tool": "auto",
   "custom_command": "",
   "post_apply": [],

@@ -26,7 +26,7 @@ PanelWindow {
 
         JsonAdapter {
             id: configs
-            property string active_layout: "shell-floating-clear-clean.qml"
+            property string active_layout: "layouts/shell-classic.qml"
             property string border_color: "#C27B63"
         }
     }
