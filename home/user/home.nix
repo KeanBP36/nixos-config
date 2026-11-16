@@ -14,7 +14,6 @@
     ../../modules/distrobox.nix
     ../../modules/appimage.nix
     ./mango.nix
-    ./waypaper.nix
   ];
 
   # ─────────────────────────────────────────────
@@ -143,6 +142,13 @@
 
     ".config/quickshell/bar/BluetoothPanel.qml" = {
       source = ../../configs/quickshell/bar/BluetoothPanel.qml;
+      force = true;
+    };
+
+    # Quickshell wallpaper picker
+    ".config/quickshell/wallpaper" = {
+      source = ../../configs/quickshell/wallpaper;
+      recursive = true;
       force = true;
     };
 
