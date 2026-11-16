@@ -22,6 +22,7 @@ Column {
     property var allRows: []
     property var hidden: ({})          // notification ids cleared in this panel
     property var expandedGroups: ({})  // app name -> true when expanded
+    property var expandedItems: ({})
     property int visibleCount: 0
     property string lastText: "\u0000"
 
@@ -280,6 +281,16 @@ Column {
         root.rebuild()
     }
 
+    function toggleItem(nid) {
+        var e = {}
+
+        for (var k in root.expandedItems)
+            e[k] = root.expandedItems[k]
+
+        e[nid] = !root.expandedItems[nid]
+        root.expandedItems = e
+    }
+
     // Focus the app's window (Hyprland), then mark the notification as read
     function openApp(nid, appName, desktop) {
         var name = appName
@@ -307,7 +318,14 @@ Column {
     Process {
         id: historyProc
 
-        command: ["makoctl", "history"]
+        command: [
+            "busctl", "--user", "--json=short",
+            "call",
+            "org.freedesktop.Notifications",
+            "/fr/emersion/Mako",
+            "fr.emersion.Mako",
+            "ListHistory"
+        ]
         running: false
 
         stdout: StdioCollector {
@@ -611,6 +629,10 @@ Column {
 
                 urgent: row.critical
 
+                expanded: root.expandedItems[row.nid] === true
+                canExpand: row.kind !== "stack"
+                onExpandToggled: root.toggleItem(row.nid)
+
                 onActivated: {
                     if (row.kind === "stack")
                         root.toggleGroup(row.groupKey)
@@ -649,9 +671,12 @@ Column {
         property string text
         property string app
         property bool urgent
+        property bool expanded: false
+        property bool canExpand: true
 
         signal activated()
         signal closed()
+        signal expandToggled()
 
         height: content.implicitHeight + 20
 
@@ -703,6 +728,8 @@ Column {
                 }
 
                 Text {
+                    id: bodyText
+
                     width: parent.width
 
                     visible: item.text !== ""
@@ -713,7 +740,7 @@ Column {
                     font.pixelSize: 11
 
                     wrapMode: Text.Wrap
-                    maximumLineCount: 4
+                    maximumLineCount: item.expanded ? 1000 : 2
                     elide: Text.ElideRight
                 }
 
@@ -731,28 +758,53 @@ Column {
                 }
             }
 
-            Text {
-                text: "󰅖"
+            Column {
+                width: 20
+                spacing: 6
 
-                color: closeMouse.containsMouse
-                    ? "#f38ba8"
-                    : "#888888"
+                Text {
+                    text: "󰅖"
 
-                font.pixelSize: 16
+                    color: closeMouse.containsMouse
+                        ? "#f38ba8"
+                        : "#888888"
 
-                MouseArea {
-                    id: closeMouse
+                    font.pixelSize: 16
 
-                    anchors.fill: parent
-                    anchors.margins: -4
+                    MouseArea {
+                        id: closeMouse
 
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
+                        anchors.fill: parent
+                        anchors.margins: -4
 
-                    onClicked: item.closed()
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: item.closed()
+                    }
+                }
+
+                Text {
+                    visible: item.canExpand
+                        && (bodyText.truncated || item.expanded)
+
+                    text: item.expanded ? "▴" : "▾"
+                    color: expandMouse.containsMouse ? "#ffffff" : "#888888"
+                    font.pixelSize: 14
+
+                    MouseArea {
+                        id: expandMouse
+
+                        anchors.fill: parent
+                        anchors.margins: -4
+
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: item.expandToggled()
+                    }
                 }
             }
         }
     }
 }
-

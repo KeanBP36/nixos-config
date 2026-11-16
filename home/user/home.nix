@@ -14,6 +14,7 @@
     ../../modules/distrobox.nix
     ../../modules/appimage.nix
     ./mango.nix
+    ./waypaper.nix
   ];
 
   # ─────────────────────────────────────────────

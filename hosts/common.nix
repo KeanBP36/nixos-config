@@ -190,7 +190,6 @@
     mako
     hyprlock
     hypridle
-    awww
     bibata-cursors
     wl-clipboard
     grim
