@@ -205,6 +205,7 @@
     kdePackages.kwalletmanager
     awww
     qt6.qt5compat
+    mutagen
 
     btrfs-assistant
     btrfs-progs
