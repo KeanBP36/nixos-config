@@ -20,10 +20,10 @@ Rectangle {
     QtObject {
         id: theme
 
-        readonly property color background: "#1f1f1f"
-        readonly property color foreground: "#d4d4d4"
-        readonly property color critical: "#f38ba8"
-        readonly property color main: "#89b4fa"
+        readonly property color background: "#1c0c05"
+        readonly property color foreground: "#cfc3cd"
+        readonly property color critical: "#f3c9b7"
+        readonly property color main: "#e78f69"
         readonly property string fontFamily: Qt.application.font.family
     }
 

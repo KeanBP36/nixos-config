@@ -249,18 +249,18 @@ PanelWindow {
             anchors.fill: parent
             gradient: Gradient {
                 orientation: Gradient.Vertical
-                GradientStop { position: 0.0; color: "#33000000" }
+                GradientStop { position: 0.0; color: "#33161217" }
                 GradientStop { position: 0.5; color: "#00000000" }
-                GradientStop { position: 1.0; color: "#AA000000" }
+                GradientStop { position: 1.0; color: "#AA161217" }
             }
         }
         Rectangle {
             anchors.fill: parent
             gradient: Gradient {
                 orientation: Gradient.Horizontal
-                GradientStop { position: 0.0; color: "#77000000" }
+                GradientStop { position: 0.0; color: "#77161217" }
                 GradientStop { position: 0.5; color: "#00000000" }
-                GradientStop { position: 1.0; color: "#77000000" }
+                GradientStop { position: 1.0; color: "#77161217" }
             }
         }
     }
@@ -428,10 +428,10 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 radius: 6
-                color: "#1e1e2e"
+                color: "#440831"
                 clip: true
                 border.width: delegateItem.isCurrent ? 3 : 1
-                border.color: delegateItem.isCurrent ? configs.border_color : "#22ffffff"
+                border.color: delegateItem.isCurrent ? configs.border_color : "#22eae0e7"
 
                 Text {
                     id: alt
@@ -490,16 +490,16 @@ PanelWindow {
                     width: 46
                     height: 18
                     radius: 4
-                    color: "#cc000000"
+                    color: "#cc161217"
                     border.width: 1
-                    border.color: "#44ffffff"
+                    border.color: "#44eae0e7"
                     z: 20
                     visible: delegateItem.isVideo && img.status === Image.Ready
 
                     Text {
                         anchors.centerIn: parent
                         text: "VIDEO"
-                        color: "#ff6666"
+                        color: "#ef7686"
                         font.pixelSize: 9
                         font.weight: Font.Bold
                         font.letterSpacing: 1
@@ -559,19 +559,19 @@ PanelWindow {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: Qt.formatDateTime(currentDateTime, "dddd").toUpperCase()
-            color: "#f2f2f2"
+            color: "#eae0e7"
             font.pixelSize: 60
             font.letterSpacing: 12
             font.family: customDisplayFont.name
             font.capitalization: Font.AllUppercase
             style: Text.Raised
-            styleColor: "#40000000"
+            styleColor: "#40161217"
         }
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: Qt.formatDateTime(currentDateTime, "dd MMM yyyy").toUpperCase()
-            color: "#cfcfcf"
+            color: "#4c444c"
             font.pixelSize: 16
             font.letterSpacing: 4
             font.family: "sans-serif"
@@ -580,7 +580,7 @@ PanelWindow {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "- " + Qt.formatDateTime(currentDateTime, "hh:mm AP") + " -"
-            color: "#cfcfcf"
+            color: "#4c444c"
             font.pixelSize: 14
             font.letterSpacing: 3
             font.family: "sans-serif"
@@ -594,9 +594,9 @@ PanelWindow {
             width: 360
             height: 40
             radius: 20
-            color: "#33000000"
+            color: "#33161217"
             border.width: 1
-            border.color: "#33ffffff"
+            border.color: "#33eae0e7"
 
             TextInput {
                 id: searchInput
@@ -604,7 +604,7 @@ PanelWindow {
                 anchors.leftMargin: 18
                 anchors.rightMargin: 18
                 verticalAlignment: TextInput.AlignVCenter
-                color: "#f2f2f2"
+                color: "#eae0e7"
                 font.pixelSize: 14
                 clip: true
                 selectByMouse: true
@@ -624,7 +624,7 @@ PanelWindow {
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter
                     text: "Search wallpapers..."
-                    color: "#88ffffff"
+                    color: "#88eae0e7"
                     font.pixelSize: 14
                     visible: searchInput.text.length === 0
                 }

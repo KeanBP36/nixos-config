@@ -6,15 +6,15 @@
 }
 
 * {
-    bg:              rgba(31, 31, 31, 75%);
-    fg:              #b8b8b8;
-    selected-bg:     rgba(58, 58, 58, 75%);
-    selected-fg:     #d4d4d4;
+    bg:              rgba(17, 13, 17, 75%);
+    fg:              #4c444c;
+    selected-bg:     rgba(31, 26, 31, 75%);
+    selected-fg:     #4c444c;
 
-    border-gray:     #777777;
-    muted-gray:      #888888;
-    blue:            #569cd6;
-    offwhite:        #f5f5f5;
+    border-gray:     #231e23;
+    muted-gray:      #2e282e;
+    blue:            #ea42b4;
+    offwhite:        #eae0e7;
 
     background-color: @bg;
     text-color: @fg;

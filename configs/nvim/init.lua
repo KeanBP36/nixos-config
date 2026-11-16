@@ -303,9 +303,9 @@ require("lazy").setup({
 				end,
 			},
 			highlights = {
-				Normal = { guibg = "#1f1f1f" },
-				NormalFloat = { guibg = "#1f1f1f" },
-				FloatBorder = { guifg = "#666666", guibg = "#1f1f1f" },
+				Normal = { guibg = "#110d11" },
+				NormalFloat = { guibg = "#110d11" },
+				FloatBorder = { guifg = "#161217", guibg = "#110d11" },
 			},
 		},
 	},
@@ -315,7 +315,7 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			local bg, fg, gray = "#1f1f1f", "#d4d4d4", "#666666"
+			local bg, fg, gray = "#110d11", "#4c444c", "#161217"
 			local function mode_hl(color)
 				return { a = { fg = bg, bg = color, gui = "bold" } }
 			end
@@ -325,13 +325,13 @@ require("lazy").setup({
 					component_separators = "",
 					section_separators = "",
 					theme = {
-						normal = vim.tbl_extend("force", mode_hl("#569cd6"), {
-							b = { fg = fg, bg = "#292929" },
+						normal = vim.tbl_extend("force", mode_hl("#ea42b4"), {
+							b = { fg = fg, bg = "#110d11" },
 							c = { fg = fg, bg = bg },
 						}),
-						insert = mode_hl("#608b4e"),
-						visual = mode_hl("#c586c0"),
-						replace = mode_hl("#f44747"),
+						insert = mode_hl("#bb4d1e"),
+						visual = mode_hl("#ed5ebf"),
+						replace = mode_hl("#eb5065"),
 						inactive = {
 							a = { fg = gray, bg = bg },
 							b = { fg = gray, bg = bg },
@@ -382,7 +382,7 @@ require("lazy").setup({
 				timeout = 2500,
 				max_width = 60,
 				fps = 60,
-				background_colour = "#1f1f1f",
+				background_colour = "#110d11",
 			})
 			vim.notify = notify
 		end,
@@ -571,16 +571,16 @@ require("lazy").setup({
 -- Colors (re-applied after any colorscheme change)
 
 local colors = {
-	bg = "#1f1f1f",
-	fg = "#d4d4d4",
-	red = "#f44747",
-	green = "#608b4e",
-	yellow = "#dcdcaa",
-	blue = "#569cd6",
-	purple = "#c586c0",
-	cyan = "#4ec9b0",
-	gray = "#666666",
-	white = "#ffffff",
+	bg = "#110d11",
+	fg = "#4c444c",
+	red = "#eb5065",
+	green = "#bb4d1e",
+	yellow = "#eeb198",
+	blue = "#ea42b4",
+	purple = "#ed5ebf",
+	cyan = "#df6a38",
+	gray = "#161217",
+	white = "#eae0e7",
 }
 
 local function apply_colors()
@@ -598,7 +598,7 @@ local function apply_colors()
 	hl_all({
 		Normal = { fg = c.fg, bg = c.bg },
 		NormalFloat = { fg = c.fg, bg = c.bg },
-		CursorLine = { bg = "#292929" },
+		CursorLine = { bg = "#110d11" },
 		CursorLineNr = { fg = c.blue, bold = true },
 		LineNr = { fg = c.gray },
 	})
@@ -646,7 +646,7 @@ local function apply_colors()
 	hl_all({
 		TelescopeNormal = { fg = c.fg, bg = c.bg },
 		TelescopeBorder = { fg = c.gray, bg = c.bg },
-		TelescopeSelection = { fg = c.white, bg = "#333333" },
+		TelescopeSelection = { fg = c.white, bg = "#110d11" },
 		TelescopeMatching = { fg = c.blue, bold = true },
 	})
 end

@@ -231,7 +231,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: "#0a0b0d"
+        color: "#15020f"
         opacity: 0.72
     }
 
@@ -529,7 +529,7 @@ PanelWindow {
 
                         Rectangle {
                             anchors.fill: parent
-                            color: "#1e1e2e"
+                            color: "#440831"
                         }
 
                         Text {
@@ -587,7 +587,7 @@ PanelWindow {
                         ShapePath {
                             fillColor: "transparent"
                             strokeWidth: 4
-                            strokeColor: configs.border_color.length > 0 ? configs.border_color : "#ffffff"
+                            strokeColor: configs.border_color.length > 0 ? configs.border_color : "#eae0e7"
                             startX: tile.width * 0.25; startY: 0
                             PathLine { x: tile.width * 0.75; y: 0 }
                             PathLine { x: tile.width;        y: tile.height * 0.5 }

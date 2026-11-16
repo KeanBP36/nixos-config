@@ -24,14 +24,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 18
             }
@@ -53,7 +53,7 @@ Column {
         Text {
             text: "Network"
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 20
             font.bold: true
@@ -66,7 +66,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
     }
 
     // =================================
@@ -100,7 +100,7 @@ Column {
                 ? device.name
                 : "Network device"
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 14
             font.bold: true
@@ -112,8 +112,8 @@ Column {
                 : "Disconnected"
 
             color: device && device.connected
-                ? "#4ec9b0"
-                : "#888888"
+                ? "#df6a38"
+                : "#2e282e"
 
             font.pixelSize: 11
         }
@@ -144,15 +144,15 @@ Column {
             visible: device && device.connected
 
             color: disconnectMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "Disconnect"
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 12
             }
@@ -187,15 +187,15 @@ Column {
         radius: 6
 
         color: networkMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
+            ? "#1f1a1f"
+            : "#110d11"
 
         border.width:
             network && network.connected
                 ? 1
                 : 0
 
-        border.color: "#ffffff"
+        border.color: "#eae0e7"
 
         Row {
             anchors.fill: parent
@@ -210,7 +210,7 @@ Column {
                     ? "󰤨"
                     : "󰤯"
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 17
 
@@ -225,7 +225,7 @@ Column {
                     ? network.name
                     : "Unknown"
 
-                color: "#d4d4d4"
+                color: "#4c444c"
 
                 font.pixelSize: 12
 

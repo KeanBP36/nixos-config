@@ -364,14 +364,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 18
             }
@@ -393,7 +393,7 @@ Column {
         Text {
             text: "Notifications"
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 20
             font.bold: true
@@ -407,7 +407,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
     }
 
     // =================================
@@ -427,7 +427,7 @@ Column {
                     : " notifications"
             )
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 13
 
@@ -444,14 +444,14 @@ Column {
             visible: root.visibleCount > 0
 
             color: clearAllMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "Clear all"
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 11
                 font.bold: true
@@ -515,8 +515,8 @@ Column {
                 radius: 6
 
                 color: headerMouse.containsMouse
-                    ? "#3a3a3a"
-                    : "#252525"
+                    ? "#1f1a1f"
+                    : "#110d11"
 
                 Text {
                     anchors.left: parent.left
@@ -525,7 +525,7 @@ Column {
 
                     text: "▾  " + row.groupKey + " (" + row.groupCount + ")"
 
-                    color: "#ffffff"
+                    color: "#eae0e7"
 
                     font.pixelSize: 12
                     font.bold: true
@@ -552,14 +552,14 @@ Column {
                     radius: 5
 
                     color: groupClearMouse.containsMouse
-                        ? "#4a4a4a"
-                        : "#202020"
+                        ? "#1f1a1f"
+                        : "#110d11"
 
                     Text {
                         anchors.centerIn: parent
 
                         text: "Clear"
-                        color: "#ffffff"
+                        color: "#eae0e7"
 
                         font.pixelSize: 10
                     }
@@ -589,10 +589,10 @@ Column {
                 height: card.height
                 radius: 6
 
-                color: "#202020"
+                color: "#110d11"
 
                 border.width: 1
-                border.color: "#2e2e2e"
+                border.color: "#110d11"
             }
 
             Rectangle {
@@ -605,10 +605,10 @@ Column {
                 height: card.height
                 radius: 6
 
-                color: "#232323"
+                color: "#110d11"
 
                 border.width: 1
-                border.color: "#333333"
+                border.color: "#110d11"
             }
 
             // ---- Card ----
@@ -655,7 +655,7 @@ Column {
 
         text: "No notifications"
 
-        color: "#888888"
+        color: "#2e282e"
 
         font.pixelSize: 12
     }
@@ -683,11 +683,11 @@ Column {
         radius: 6
 
         color: cardMouse.containsMouse
-            ? "#2e2e2e"
-            : "#252525"
+            ? "#110d11"
+            : "#110d11"
 
         border.width: 1
-        border.color: item.urgent ? "#f38ba8" : "#3a3a3a"
+        border.color: item.urgent ? "#f28c9a" : "#1f1a1f"
 
         MouseArea {
             id: cardMouse
@@ -719,7 +719,7 @@ Column {
 
                     text: item.title
 
-                    color: "#ffffff"
+                    color: "#eae0e7"
 
                     font.pixelSize: 13
                     font.bold: true
@@ -735,7 +735,7 @@ Column {
                     visible: item.text !== ""
                     text: item.text
 
-                    color: "#cccccc"
+                    color: "#4c444c"
 
                     font.pixelSize: 11
 
@@ -750,7 +750,7 @@ Column {
                     visible: item.app !== ""
                     text: item.app
 
-                    color: "#888888"
+                    color: "#2e282e"
 
                     font.pixelSize: 10
 
@@ -766,8 +766,8 @@ Column {
                     text: "󰅖"
 
                     color: closeMouse.containsMouse
-                        ? "#f38ba8"
-                        : "#888888"
+                        ? "#f28c9a"
+                        : "#2e282e"
 
                     font.pixelSize: 16
 
@@ -789,7 +789,7 @@ Column {
                         && (bodyText.truncated || item.expanded)
 
                     text: item.expanded ? "▴" : "▾"
-                    color: expandMouse.containsMouse ? "#ffffff" : "#888888"
+                    color: expandMouse.containsMouse ? "#eae0e7" : "#2e282e"
                     font.pixelSize: 14
 
                     MouseArea {

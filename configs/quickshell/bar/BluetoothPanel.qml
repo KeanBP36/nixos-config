@@ -26,14 +26,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 18
             }
@@ -55,7 +55,7 @@ Column {
         Text {
             text: "Bluetooth"
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 20
             font.bold: true
@@ -69,7 +69,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
     }
 
     // =================================
@@ -91,7 +91,7 @@ Column {
                   )
                 : "No Bluetooth adapter"
 
-            color: "#ffffff"
+            color: "#eae0e7"
 
             font.pixelSize: 13
 
@@ -106,8 +106,8 @@ Column {
             radius: 6
 
             color: toggleMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
@@ -117,7 +117,7 @@ Column {
                     ? "ON"
                     : "OFF"
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 11
                 font.bold: true
@@ -145,7 +145,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
     }
 
     // =================================
@@ -155,7 +155,7 @@ Column {
     Text {
         text: "Devices"
 
-        color: "#ffffff"
+        color: "#eae0e7"
 
         font.pixelSize: 14
         font.bold: true
@@ -181,7 +181,7 @@ Column {
             ? "No paired devices"
             : "Bluetooth is off"
 
-        color: "#888888"
+        color: "#2e282e"
 
         font.pixelSize: 12
     }
@@ -200,8 +200,8 @@ Column {
         radius: 6
 
         color: deviceMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
+            ? "#1f1a1f"
+            : "#110d11"
 
         Row {
             anchors.fill: parent
@@ -214,7 +214,7 @@ Column {
             Text {
                 text: "󰂯"
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 18
 
@@ -237,7 +237,7 @@ Column {
                         ? device.name
                         : "Unknown device"
 
-                    color: "#ffffff"
+                    color: "#eae0e7"
 
                     font.pixelSize: 12
 
@@ -254,8 +254,8 @@ Column {
 
                     color:
                         device && device.connected
-                            ? "#4ec9b0"
-                            : "#888888"
+                            ? "#df6a38"
+                            : "#2e282e"
 
                     font.pixelSize: 10
                 }
@@ -270,7 +270,7 @@ Column {
                 anchors.verticalCenter:
                     parent.verticalCenter
 
-                color: "#202020"
+                color: "#110d11"
 
                 Text {
                     anchors.centerIn: parent
@@ -282,7 +282,7 @@ Column {
                                 ? "Connect"
                                 : "Pair"
 
-                    color: "#ffffff"
+                    color: "#eae0e7"
 
                     font.pixelSize: 10
                 }

@@ -18,14 +18,14 @@ shadows_size = 10
 shadows_blur = 15
 shadows_position_x = 0
 shadows_position_y = 0
-shadows_color = 0x000000ff
+shadows_color = 0x161217ff
 border_radius = 6
 no_radius_when_single = 0
 focused_opacity = 1.0
 unfocused_opacity = 1.0
 dim_enable = 0
-dim_focused_color = 0x00000000
-dim_unfocused_color = 0x00000055
+dim_focused_color = 0x16121700
+dim_unfocused_color = 0x16121755
 
 # Animation Configuration(support type:zoom,slide)
 # tag_animation_direction: 1-horizontal,0-vertical
@@ -142,16 +142,16 @@ gap_outer_vertical = 10
 scratchpad_width_ratio = 0.8
 scratchpad_height_ratio = 0.9
 border_px = 4
-root_color = 0x201b14ff
-border_color = 0x444444ff
-drop_color = 0x8FBA7C55
-split_color = 0xEB441EFF
-focus_color = 0xc9b890ff
-maximized_screen_color = 0x89aa61ff
-urgent_color = 0xad401fff
-scratchpad_color = 0x516c93ff
-global_color = 0xb153a7ff
-overlay_color = 0x14a57cff
+root_color = 0x2d1207ff
+border_color = 0x1f1a1fff
+drop_color = 0xe37e5355
+split_color = 0xdd612cFF
+focus_color = 0xe89471ff
+maximized_screen_color = 0xdd622eff
+urgent_color = 0xaf481dff
+scratchpad_color = 0xcd1793ff
+global_color = 0xe61ea6ff
+overlay_color = 0x9f411aff
 
 [bind.default]
 

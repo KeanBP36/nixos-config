@@ -27,7 +27,7 @@ PanelWindow {
         JsonAdapter {
             id: configs
             property string active_layout: "layouts/shell-classic.qml"
-            property string border_color: "#C27B63"
+            property string border_color: "#e17344"
         }
     }
 
@@ -76,7 +76,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: "#cc05070a"
+        color: "#cc0d020a"
     }
 
     Column {
@@ -89,7 +89,7 @@ PanelWindow {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "CHOOSE A LAYOUT"
-            color: "#f2f2f2"
+            color: "#eae0e7"
             font.pixelSize: 34
             font.letterSpacing: 10
             font.weight: Font.Bold
@@ -98,7 +98,7 @@ PanelWindow {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "hjkl / arrows to navigate  ·  Enter to apply  ·  Esc to close"
-            color: "#8899a3"
+            color: "#2e282e"
             font.pixelSize: 13
             font.letterSpacing: 2
         }
@@ -142,12 +142,12 @@ PanelWindow {
                 anchors.fill: parent
                 anchors.margins: 10
                 radius: 12
-                color: "#14171d"
+                color: "#2c0520"
                 // Border priority: active > focused > default.
                 border.width: isFocused ? 3 : (isActive ? 2 : 1)
                 border.color: isFocused
-                ? (configs.border_color || "#C27B63")
-                : (isActive ? "#8899a3" : "#33ffffff")
+                ? (configs.border_color || "#e17344")
+                : (isActive ? "#2e282e" : "#33eae0e7")
                 clip: true
 
                 Image {
@@ -167,7 +167,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: thumb.status === Image.Error ? "No screenshot" : ""
-                        color: "#8899a3"
+                        color: "#2e282e"
                         font.pixelSize: 12
                         visible: thumb.status === Image.Error
                     }
@@ -178,14 +178,14 @@ PanelWindow {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     height: 38
-                    color: "#cc000000"
+                    color: "#cc161217"
 
                     Text {
                         anchors.centerIn: parent
                         text: modelData.name
                         color: isFocused
-                        ? (configs.border_color || "#f2f2f2")
-                        : "#f2f2f2"
+                        ? (configs.border_color || "#eae0e7")
+                        : "#eae0e7"
                         font.pixelSize: 14
                         font.weight: Font.DemiBold
                     }

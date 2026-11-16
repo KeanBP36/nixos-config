@@ -316,8 +316,8 @@
     flavor = "mocha";
     accent = "blue";
 
-    kitty.enable = true;
-    nvim.enable = true;
+    kitty.enable = false;
+    nvim.enable = false;
 
     vscode.profiles.default.enable = false;
 

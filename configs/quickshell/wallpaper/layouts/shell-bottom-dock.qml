@@ -301,7 +301,7 @@ PanelWindow {
                 Rectangle {
                     id: cardContent
                     anchors.fill: parent
-                    color: "#1e1e2e"
+                    color: "#440831"
                     visible: false
 
                     Text {
@@ -363,16 +363,16 @@ PanelWindow {
                     width: 46
                     height: 18
                     radius: 4
-                    color: "#cc000000"
+                    color: "#cc161217"
                     border.width: 1
-                    border.color: "#44ffffff"
+                    border.color: "#44eae0e7"
                     z: 20
                     visible: delegateItem.isVideo && img.status === Image.Ready
 
                     Text {
                         anchors.centerIn: parent
                         text: "VIDEO"
-                        color: "#ff6666"
+                        color: "#ef7686"
                         font.pixelSize: 9
                         font.weight: Font.Bold
                         font.letterSpacing: 1
@@ -387,8 +387,8 @@ PanelWindow {
                     antialiasing: true
                     border.width: delegateItem.isCurrent ? 2 : 1
                     border.color: delegateItem.isCurrent
-                        ? (configs.border_color.length > 0 ? configs.border_color : "#e6e6e6")
-                        : "#33ffffff"
+                        ? (configs.border_color.length > 0 ? configs.border_color : "#cfc3cd")
+                        : "#33eae0e7"
                 }
             }
 

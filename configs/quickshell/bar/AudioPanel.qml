@@ -100,13 +100,13 @@ Column {
             height: 38
             radius: 10
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
                 text: "‹"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 27
             }
 
@@ -126,7 +126,7 @@ Column {
 
             Text {
                 text: "Music"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 19
                 font.bold: true
             }
@@ -136,7 +136,7 @@ Column {
                     ? (root.player.identity || "Media")
                     : "No player"
 
-                color: "#666666"
+                color: "#161217"
                 font.pixelSize: 11
             }
         }
@@ -148,7 +148,7 @@ Column {
         height: 230
         anchors.horizontalCenter: parent.horizontalCenter
         radius: 18
-        color: "#292929"
+        color: "#110d11"
         clip: true
 
         Image {
@@ -171,7 +171,7 @@ Column {
             anchors.centerIn: parent
 
             text: "♫"
-            color: "#555555"
+            color: "#161217"
             font.pixelSize: 64
 
             visible: !artwork.visible
@@ -190,7 +190,7 @@ Column {
                 ? (root.player.trackTitle || "Nothing playing")
                 : "Nothing playing"
 
-            color: "#d4d4d4"
+            color: "#4c444c"
             font.pixelSize: 17
             font.bold: true
 
@@ -205,7 +205,7 @@ Column {
                 ? (root.player.trackArtist || "Unknown artist")
                 : ""
 
-            color: "#999999"
+            color: "#2e282e"
             font.pixelSize: 13
 
             horizontalAlignment: Text.AlignHCenter
@@ -219,7 +219,7 @@ Column {
                 ? (root.player.trackAlbum || "")
                 : ""
 
-            color: "#666666"
+            color: "#161217"
             font.pixelSize: 11
 
             horizontalAlignment: Text.AlignHCenter
@@ -239,8 +239,8 @@ Column {
             radius: 11
 
             color: previousMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -248,7 +248,7 @@ Column {
                 anchors.centerIn: parent
 
                 text: "⏮"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 17
             }
 
@@ -276,11 +276,11 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
 
             color: playMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             border.width: 1
-            border.color: "#444444"
+            border.color: "#1f1a1f"
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -291,7 +291,7 @@ Column {
                     ? "󰏤"
                     : "󰐊"
 
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 20
             }
 
@@ -315,8 +315,8 @@ Column {
             radius: 11
 
             color: nextMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -324,7 +324,7 @@ Column {
                 anchors.centerIn: parent
 
                 text: "⏭"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 17
             }
 
@@ -356,14 +356,14 @@ Column {
             radius: 10
 
             color: volumeDownMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰕿"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 18
             }
 
@@ -385,14 +385,14 @@ Column {
             radius: 10
 
             color: muteMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰖁"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 18
             }
 
@@ -414,14 +414,14 @@ Column {
             radius: 10
 
             color: volumeUpMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
+                ? "#1f1a1f"
+                : "#110d11"
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰕾"
-                color: "#d4d4d4"
+                color: "#4c444c"
                 font.pixelSize: 18
             }
 
@@ -445,7 +445,7 @@ Column {
             ? (root.player.isPlaying ? "Playing" : "Paused")
             : "Nothing playing"
 
-        color: "#666666"
+        color: "#161217"
         font.pixelSize: 11
 
         horizontalAlignment: Text.AlignHCenter

@@ -258,6 +258,7 @@ if [ -n "$STABLE_COPY_PATH" ]; then
     fi
 fi
 
+
 # --- Optional post-apply hooks ----------------------------------------
 # Each entry in `post_apply` (config.json) runs after the wallpaper is
 # applied. `$WALLPAPER` is the picked file (may be a video). For theming

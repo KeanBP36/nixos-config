@@ -1,8 +1,8 @@
 font=JetBrainsMono Nerd Font 11
 
-background-color=#1f1f1f
-text-color=#d4d4d4
-border-color=#555555aa
+background-color=#161217
+text-color=#eae0e7
+border-color=#988e97aa
 
 border-size=3
 border-radius=10
@@ -19,3 +19,4 @@ max-icon-size=48
 
 markup=1
 format=<b>%s</b>\n%b
+include=~/.config/mako/mako-colors

@@ -1,11 +1,30 @@
-
 [config]
 version_check = false
 
 [config.wallpaper]
 set = false
+command = "true"
+arguments = []
 
+# Quickshell - preserve your existing template
 [templates.quickshell]
 input_path = "/etc/nixos-config/configs/matugen/templates/colors.json"
 output_path = "/home/keanbp/.config/quickshell/generated/colors.json"
 
+# Kitty - InioX community template
+[templates.kitty]
+input_path = "/etc/nixos-config/configs/matugen/templates/kitty-colors.conf"
+output_path = "/home/keanbp/.config/kitty/themes/Matugen.conf"
+post_hook = "pkill -USR1 kitty || true"
+
+# Mako - InioX community template
+[templates.mako]
+input_path = "/etc/nixos-config/configs/matugen/templates/mako"
+output_path = "/home/keanbp/.config/mako/mako-colors"
+post_hook = "makoctl reload"
+
+# Btop - InioX community template
+[templates.btop]
+input_path = "/etc/nixos-config/configs/matugen/templates/btop.theme"
+output_path = "/home/keanbp/.config/btop/themes/matugen.theme"
+post_hook = "pkill -USR2 btop || true"

@@ -210,7 +210,7 @@ PanelWindow {
 
         Rectangle {
             anchors.fill: parent
-            color: "#05070a"
+            color: "#0d020a"
             z: -1
         }
 
@@ -248,8 +248,8 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#22000000" }
-                    GradientStop { position: 1.0; color: "#55000000" }
+                    GradientStop { position: 0.0; color: "#22161217" }
+                    GradientStop { position: 1.0; color: "#55161217" }
                 }
             }
         }
@@ -342,7 +342,7 @@ PanelWindow {
                             if (absDiff === 2) return 18
                             return 16
                         }
-                        color: "#0a0c10"
+                        color: "#170311"
 
                         Rectangle {
                             id: cardMask
@@ -367,7 +367,7 @@ PanelWindow {
                                     Text {
                                         anchors.centerIn: parent
                                         text: "Loading..."
-                                        color: "#888"
+                                        color: "#2e282e"
                                         font.pixelSize: 12
                                         visible: cardImg.status !== Image.Ready
                                     }
@@ -411,7 +411,7 @@ PanelWindow {
 
                             Rectangle {
                                 anchors.fill: parent
-                                color: "#000000"
+                                color: "#161217"
                                 opacity: absDiff >= 3 ? 0.3 : 0.0
                             }
                         }
@@ -434,16 +434,16 @@ PanelWindow {
                             width: 46
                             height: 18
                             radius: 4
-                            color: "#cc000000"
+                            color: "#cc161217"
                             border.width: 1
-                            border.color: "#44ffffff"
+                            border.color: "#44eae0e7"
                             z: 20
                             visible: cardDelegate.isVideo && cardDelegate.imgReady
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "VIDEO"
-                                color: "#ff6666"
+                                color: "#ef7686"
                                 font.pixelSize: 9
                                 font.weight: Font.Bold
                                 font.letterSpacing: 1
@@ -493,9 +493,9 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 radius: 16
-                color: "#1affffff"
+                color: "#1aeae0e7"
                 border.width: 1
-                border.color: "#33ffffff"
+                border.color: "#33eae0e7"
 
                 layer.enabled: true
                 layer.effect: MultiEffect {
@@ -512,18 +512,18 @@ PanelWindow {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: Qt.formatDateTime(currentDateTime, "dddd").toUpperCase()
-                    color: "#f2f2f2"
+                    color: "#eae0e7"
                     font.pixelSize: 52
                     font.letterSpacing: 12
                     font.family: customDisplayFont.name
                     style: Text.Raised
-                    styleColor: "#88000000"
+                    styleColor: "#88161217"
                 }
 
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: Qt.formatDateTime(currentDateTime, "dd MMM yyyy").toUpperCase()
-                    color: "#cccccc"
+                    color: "#4c444c"
                     font.pixelSize: 14
                     font.letterSpacing: 4
                     font.family: "sans-serif"
@@ -535,7 +535,7 @@ PanelWindow {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: Qt.formatDateTime(currentDateTime, "h:mm AP")
-                    color: "#999999"
+                    color: "#2e282e"
                     font.pixelSize: 12
                     font.letterSpacing: 2
                     font.family: "sans-serif"

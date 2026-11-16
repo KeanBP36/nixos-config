@@ -28,12 +28,12 @@ PopupWindow {
         anchors.fill: parent
 
         // Dark transparent glass
-        color: Qt.rgba(0.08, 0.08, 0.08, 0.75)
+        color: Qt.rgba(0.0863, 0.0706, 0.0902, 0.75)
 
         radius: 10
 
         border.width: 3
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.18)
+        border.color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.18)
 
         // =================================
         // Main menu
@@ -49,7 +49,7 @@ PopupWindow {
             Text {
                 text: "Control Panel"
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 20
                 font.bold: true
@@ -59,7 +59,7 @@ PopupWindow {
                 width: parent.width
                 height: 1
 
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+                color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
             }
 
             // Audio / Network
@@ -114,7 +114,7 @@ PopupWindow {
                 width: parent.width
                 height: 1
 
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+                color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
             }
 
             // Lock / Sleep
@@ -231,11 +231,11 @@ PopupWindow {
         radius: 7
 
         color: mouse.containsMouse
-            ? Qt.rgba(0.23, 0.23, 0.23, 0.82)
-            : Qt.rgba(0.16, 0.16, 0.16, 0.72)
+            ? Qt.rgba(0.1216, 0.1020, 0.1216, 0.82)
+            : Qt.rgba(0.0667, 0.0510, 0.0667, 0.72)
 
         border.width: 1
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.12)
+        border.color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.12)
 
         Behavior on color {
             ColorAnimation {
@@ -251,7 +251,7 @@ PopupWindow {
             Text {
                 text: button.icon
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 20
             }
@@ -259,7 +259,7 @@ PopupWindow {
             Text {
                 text: button.label
 
-                color: "#ffffff"
+                color: "#eae0e7"
 
                 font.pixelSize: 14
 

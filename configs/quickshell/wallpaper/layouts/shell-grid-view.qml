@@ -232,7 +232,7 @@ PanelWindow {
         // instantly on open.
         Rectangle {
             anchors.fill: parent
-            color: "#05070a"
+            color: "#0d020a"
             z: -1
         }
 
@@ -290,8 +290,8 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#22000000" }
-                    GradientStop { position: 1.0; color: "#cc000000" }
+                    GradientStop { position: 0.0; color: "#22161217" }
+                    GradientStop { position: 1.0; color: "#cc161217" }
                 }
             }
         }
@@ -305,7 +305,7 @@ PanelWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             width: main.leftPanelWidth
-            color: "#8805070a" 
+            color: "#880d020a" 
             z: 10
             focus: true
             
@@ -316,7 +316,7 @@ PanelWindow {
                 width: 40
                 gradient: Gradient {
                     orientation: Gradient.Horizontal
-                    GradientStop { position: 0.0; color: "#99000000" }
+                    GradientStop { position: 0.0; color: "#99161217" }
                     GradientStop { position: 1.0; color: "#00000000" }
                 }
             }
@@ -326,7 +326,7 @@ PanelWindow {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 width: 1
-                color: "#1affffff"
+                color: "#1aeae0e7"
             }
 
             GridView {
@@ -353,10 +353,10 @@ PanelWindow {
                         anchors.fill: parent
                         anchors.margins: 8
                         radius: 8
-                        color: "#0a0c10"
+                        color: "#170311"
                         
                         border.width: isSelected ? 3 : 1
-                        border.color: isSelected ? (configs.border_color || "#70a0ff") : "#22ffffff"
+                        border.color: isSelected ? (configs.border_color || "#f07fcc") : "#22eae0e7"
                         clip: true
                         
                         Image {
@@ -374,7 +374,7 @@ PanelWindow {
                         Text {
                             anchors.centerIn: parent
                             text: gridImg.status === Image.Error ? (isVideo ? "🎬" : "✖") : ""
-                            color: "#8899a3"
+                            color: "#2e282e"
                             font.pixelSize: 20
                             visible: gridImg.status !== Image.Ready
                         }
@@ -392,16 +392,16 @@ PanelWindow {
                             width: 42
                             height: 16
                             radius: 3
-                            color: "#cc000000"
+                            color: "#cc161217"
                             border.width: 1
-                            border.color: "#44ffffff"
+                            border.color: "#44eae0e7"
                             z: 20
                             visible: isVideo && gridImg.status === Image.Ready
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "VIDEO"
-                                color: "#ff6666"
+                                color: "#ef7686"
                                 font.pixelSize: 8
                                 font.weight: Font.Bold
                                 font.letterSpacing: 1
@@ -473,7 +473,7 @@ PanelWindow {
                     
                     Text {
                         text: "CURRENTLY ACTIVE"
-                        color: configs.border_color || "#70a0ff"
+                        color: configs.border_color || "#f07fcc"
                         font.pixelSize: 13
                         font.letterSpacing: 4
                         font.weight: Font.Bold
@@ -484,9 +484,9 @@ PanelWindow {
                         width: w
                         height: w * (9/16)
                         radius: 12
-                        color: "#0a0c10"
+                        color: "#170311"
                         border.width: 1
-                        border.color: "#33ffffff"
+                        border.color: "#33eae0e7"
                         clip: true
 
                         Image {
@@ -503,7 +503,7 @@ PanelWindow {
 
                     Text {
                         text: "NEW SELECTION"
-                        color: "#ffffff"
+                        color: "#eae0e7"
                         font.pixelSize: 13
                         font.letterSpacing: 4
                         font.weight: Font.Bold
@@ -515,15 +515,15 @@ PanelWindow {
                         width: w
                         height: w * (9/16)
                         radius: 16
-                        color: "#0a0c10"
+                        color: "#170311"
                         border.width: 1
-                        border.color: "#44ffffff"
+                        border.color: "#44eae0e7"
                         clip: true
 
                         layer.enabled: true
                         layer.effect: MultiEffect {
                             shadowEnabled: true
-                            shadowColor: "#000000"
+                            shadowColor: "#161217"
                             shadowOpacity: 0.6
                             shadowBlur: 1.5
                             shadowVerticalOffset: 12
@@ -555,7 +555,7 @@ PanelWindow {
                             anchors.left: parent.left
                             width: parent.width * 0.6
                             text: folderModel.count > 0 ? folderModel.get(main.selectedIndex, "fileName") : ""
-                            color: "#f2f2f2"
+                            color: "#eae0e7"
                             font.pixelSize: 15
                             font.weight: Font.DemiBold
                             elide: Text.ElideMiddle
@@ -563,7 +563,7 @@ PanelWindow {
                         Text {
                             anchors.right: parent.right
                             text: "ENTER to apply · ESC to close"
-                            color: "#8899a3"
+                            color: "#2e282e"
                             font.pixelSize: 12
                         }
                     }

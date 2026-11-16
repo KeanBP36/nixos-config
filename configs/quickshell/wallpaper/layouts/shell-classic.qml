@@ -330,16 +330,16 @@ PanelWindow {
                 width: 50
                 height: 20
                 radius: 4
-                color: "#cc000000"
+                color: "#cc161217"
                 border.width: 1
-                border.color: "#44ffffff"
+                border.color: "#44eae0e7"
                 z: 20
                 visible: delegateItem.isVideo && img.status === Image.Ready
 
                 Text {
                     anchors.centerIn: parent
                     text: "VIDEO"
-                    color: "#ff6666"
+                    color: "#ef7686"
                     font.pixelSize: 9
                     font.weight: Font.Bold
                     font.letterSpacing: 1

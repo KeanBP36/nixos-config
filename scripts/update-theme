@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/etc/nixos-config"
+POINTER="$HOME/.cache/hyprquickpaper/current_wallpaper"
+
+if [[ $# -gt 0 ]]; then
+    WALLPAPER="$1"
+else
+    WALLPAPER="$(cat "$POINTER")"
+fi
+
+# If the pointer file itself was passed, read its contents.
+if [[ "$WALLPAPER" == "$POINTER" ]]; then
+    WALLPAPER="$(cat "$POINTER")"
+fi
+
+if [[ ! -f "$WALLPAPER" ]]; then
+    echo "Wallpaper image not found: $WALLPAPER" >&2
+    exit 1
+fi
+
+echo "Generating Matugen colors from: $WALLPAPER"
+
+nix run nixpkgs#matugen -- image "$WALLPAPER" \
+    --config "$ROOT/configs/matugen/config.toml" \
+    --source-color-index 0
+
+echo "All configured Matugen templates generated."
