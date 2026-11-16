@@ -145,6 +145,26 @@
       force = true;
     };
 
+    ".config/quickshell/bar/MatugenPalette.qml" = {
+      source = ../../configs/quickshell/bar/MatugenPalette.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/NotificationPanel.qml" = {
+      source = ../../configs/quickshell/bar/NotificationPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/NotificationCard.qml" = {
+      source = ../../configs/quickshell/bar/NotificationCard.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/MusicPanel.qml" = {
+      source = ../../configs/quickshell/bar/MusicPanel.qml;
+      force = true;
+    };
+
     # Quickshell wallpaper picker
     ".config/quickshell/wallpaper" = {
       source = ../../configs/quickshell/wallpaper;

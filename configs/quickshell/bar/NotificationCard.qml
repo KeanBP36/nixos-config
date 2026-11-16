@@ -5,6 +5,7 @@ import Quickshell.Services.Notifications
 
 Rectangle {
     id: root
+    MatugenPalette { id: matugen }
 
 
     property var notif: null
@@ -20,10 +21,10 @@ Rectangle {
     QtObject {
         id: theme
 
-        readonly property color background: "#1c0c05"
-        readonly property color foreground: "#cfc3cd"
-        readonly property color critical: "#f3c9b7"
-        readonly property color main: "#e78f69"
+        readonly property color background: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+        readonly property color foreground: matugen.onSurface
+        readonly property color critical: matugen.error
+        readonly property color main: matugen.primary
         readonly property string fontFamily: Qt.application.font.family
     }
 

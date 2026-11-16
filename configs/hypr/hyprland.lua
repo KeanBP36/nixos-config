@@ -40,6 +40,24 @@ local terminal    = "kitty"
 local fileManager = "dolphin"
 local menu        = "rofi -show drun"
 
+-- Matugen wallpaper colors
+local matugen_ok, matugen = pcall(
+    dofile,
+    "/home/keanbp/.config/hypr/matugen-colors.lua"
+)
+
+if not matugen_ok then
+    matugen = {
+        active_border = {
+            colors = {"rgba(2e282eee", "rgba(161217ee"},
+            angle = 45
+        },
+        inactive_border = "rgba(161217aa",
+        shadow_color = 0xee161217
+    }
+end
+
+
 
 -------------------
 ---- AUTOSTART ----
@@ -104,8 +122,8 @@ hl.config({
         border_size = 3,
 
         col = {
-            active_border   = { colors = {"rgba(2e282eee", "rgba(161217ee"}, angle = 45 },
-            inactive_border = "rgba(161217aa",
+            active_border   = matugen.active_border,
+            inactive_border = matugen.inactive_border,
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -129,7 +147,7 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            color        = 0xee161217,
+            color        = matugen.shadow_color,
         },
 
         blur = {

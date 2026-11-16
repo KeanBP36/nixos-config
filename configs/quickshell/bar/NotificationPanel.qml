@@ -6,6 +6,7 @@ import Quickshell.Io
 // stacked by app, with per-message / per-stack / clear-all and click-to-open-app.
 Column {
     id: root
+    MatugenPalette { id: matugen }
 
     signal backRequested()
 
@@ -364,14 +365,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#eae0e7"
+                color: matugen.onSurface
 
                 font.pixelSize: 18
             }
@@ -393,7 +394,7 @@ Column {
         Text {
             text: "Notifications"
 
-            color: "#eae0e7"
+            color: matugen.onSurface
 
             font.pixelSize: 20
             font.bold: true
@@ -407,7 +408,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
+        color: Qt.alpha(matugen.outline, 0.40)
     }
 
     // =================================
@@ -427,7 +428,7 @@ Column {
                     : " notifications"
             )
 
-            color: "#eae0e7"
+            color: matugen.onSurface
 
             font.pixelSize: 13
 
@@ -444,14 +445,14 @@ Column {
             visible: root.visibleCount > 0
 
             color: clearAllMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "Clear all"
-                color: "#eae0e7"
+                color: matugen.onSurface
 
                 font.pixelSize: 11
                 font.bold: true
@@ -515,8 +516,8 @@ Column {
                 radius: 6
 
                 color: headerMouse.containsMouse
-                    ? "#1f1a1f"
-                    : "#110d11"
+                    ? matugen.primary
+                    : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
                 Text {
                     anchors.left: parent.left
@@ -525,7 +526,7 @@ Column {
 
                     text: "▾  " + row.groupKey + " (" + row.groupCount + ")"
 
-                    color: "#eae0e7"
+                    color: matugen.onSurface
 
                     font.pixelSize: 12
                     font.bold: true
@@ -552,14 +553,14 @@ Column {
                     radius: 5
 
                     color: groupClearMouse.containsMouse
-                        ? "#1f1a1f"
-                        : "#110d11"
+                        ? matugen.primary
+                        : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
                     Text {
                         anchors.centerIn: parent
 
                         text: "Clear"
-                        color: "#eae0e7"
+                        color: matugen.onSurface
 
                         font.pixelSize: 10
                     }
@@ -589,10 +590,10 @@ Column {
                 height: card.height
                 radius: 6
 
-                color: "#110d11"
+                color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
                 border.width: 1
-                border.color: "#110d11"
+                border.color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
             }
 
             Rectangle {
@@ -605,10 +606,10 @@ Column {
                 height: card.height
                 radius: 6
 
-                color: "#110d11"
+                color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
                 border.width: 1
-                border.color: "#110d11"
+                border.color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
             }
 
             // ---- Card ----
@@ -655,7 +656,7 @@ Column {
 
         text: "No notifications"
 
-        color: "#2e282e"
+        color: matugen.outline
 
         font.pixelSize: 12
     }
@@ -683,11 +684,11 @@ Column {
         radius: 6
 
         color: cardMouse.containsMouse
-            ? "#110d11"
-            : "#110d11"
+            ? Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
         border.width: 1
-        border.color: item.urgent ? "#f28c9a" : "#1f1a1f"
+        border.color: item.urgent ? matugen.error : matugen.surfaceContainerHigh
 
         MouseArea {
             id: cardMouse
@@ -719,7 +720,7 @@ Column {
 
                     text: item.title
 
-                    color: "#eae0e7"
+                    color: matugen.onSurface
 
                     font.pixelSize: 13
                     font.bold: true
@@ -735,7 +736,7 @@ Column {
                     visible: item.text !== ""
                     text: item.text
 
-                    color: "#4c444c"
+                    color: matugen.onSurface
 
                     font.pixelSize: 11
 
@@ -750,7 +751,7 @@ Column {
                     visible: item.app !== ""
                     text: item.app
 
-                    color: "#2e282e"
+                    color: matugen.outline
 
                     font.pixelSize: 10
 
@@ -766,8 +767,8 @@ Column {
                     text: "󰅖"
 
                     color: closeMouse.containsMouse
-                        ? "#f28c9a"
-                        : "#2e282e"
+                        ? matugen.error
+                        : matugen.outline
 
                     font.pixelSize: 16
 
@@ -789,7 +790,7 @@ Column {
                         && (bodyText.truncated || item.expanded)
 
                     text: item.expanded ? "▴" : "▾"
-                    color: expandMouse.containsMouse ? "#eae0e7" : "#2e282e"
+                    color: expandMouse.containsMouse ? matugen.onSurface : matugen.outline
                     font.pixelSize: 14
 
                     MouseArea {

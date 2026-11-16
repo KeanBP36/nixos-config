@@ -27,3 +27,20 @@ nix run nixpkgs#matugen -- image "$WALLPAPER" \
     --source-color-index 0
 
 echo "All configured Matugen templates generated."
+
+# Reload MangoWC if running in a Mango session.
+if command -v mmsg >/dev/null 2>&1 &&
+   [[ -n "${MANGO_INSTANCE_SIGNATURE:-}" ]]; then
+    mmsg -d reload_config >/dev/null 2>&1 || true
+    echo "MangoWC theme reloaded."
+fi
+
+# Apply the generated Lua palette to a running Hyprland session.
+if command -v hyprctl >/dev/null 2>&1 &&
+   [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
+    hyprctl eval 'hl.config(dofile("/home/keanbp/.config/hypr/matugen-colors.lua").config)' \
+        >/dev/null 2>&1 || true
+    echo "Hyprland theme updated."
+fi
+
+echo "Rofi will use the generated palette on its next launch."

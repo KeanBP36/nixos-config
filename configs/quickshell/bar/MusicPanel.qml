@@ -6,6 +6,8 @@ import Quickshell.Services.Mpris
 Column {
     id: root
 
+    MatugenPalette { id: matugen }
+
     signal backRequested()
 
     spacing: 14
@@ -58,13 +60,13 @@ Column {
             height: 38
             radius: 10
             color: backMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.surfaceContainerHigh
+                : matugen.surfaceContainer
 
             Text {
                 anchors.centerIn: parent
                 text: "‹"
-                color: "#4c444c"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 27
             }
 
@@ -84,7 +86,7 @@ Column {
 
             Text {
                 text: "Music"
-                color: "#4c444c"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 19
                 font.bold: true
             }
@@ -94,7 +96,7 @@ Column {
                     ? (root.player.identity || "Media")
                     : "No player"
 
-                color: "#161217"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 11
             }
         }
@@ -106,7 +108,7 @@ Column {
         height: 150
         anchors.horizontalCenter: parent.horizontalCenter
         radius: 18
-        color: "#110d11"
+        color: matugen.surfaceContainer
         clip: true
 
         Image {
@@ -129,7 +131,7 @@ Column {
             anchors.centerIn: parent
 
             text: "♫"
-            color: "#161217"
+            color: matugen.onSurfaceVariant
             font.pixelSize: 64
 
             visible: !artwork.visible
@@ -148,7 +150,7 @@ Column {
                 ? (root.player.trackTitle || "Nothing playing")
                 : "Nothing playing"
 
-            color: "#4c444c"
+            color: matugen.onSurfaceVariant
             font.pixelSize: 17
             font.bold: true
 
@@ -163,7 +165,7 @@ Column {
                 ? (root.player.trackArtist || "Unknown artist")
                 : ""
 
-            color: "#2e282e"
+            color: matugen.outlineVariant
             font.pixelSize: 13
 
             horizontalAlignment: Text.AlignHCenter
@@ -177,7 +179,7 @@ Column {
                 ? (root.player.trackAlbum || "")
                 : ""
 
-            color: "#161217"
+            color: matugen.onSurfaceVariant
             font.pixelSize: 11
 
             horizontalAlignment: Text.AlignHCenter
@@ -197,16 +199,16 @@ Column {
             radius: 8
 
             color: previousMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.surfaceContainerHigh
+                : matugen.surfaceContainer
 
             border.width: 1
-            border.color: "#1f1a1f"
+            border.color: matugen.surfaceContainerHigh
 
             Text {
                 anchors.centerIn: parent
                 text: "󰒮"
-                color: "#4c444c"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 19
             }
 
@@ -230,11 +232,11 @@ Column {
             radius: 8
 
             color: playMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.surfaceContainerHigh
+                : matugen.surfaceContainer
 
             border.width: 1
-            border.color: "#1f1a1f"
+            border.color: matugen.surfaceContainerHigh
 
             Text {
                 anchors.centerIn: parent
@@ -243,7 +245,7 @@ Column {
                     ? "󰏤"
                     : "󰐊"
 
-                color: "#4c444c"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 20
             }
 
@@ -267,16 +269,16 @@ Column {
             radius: 8
 
             color: nextMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.surfaceContainerHigh
+                : matugen.surfaceContainer
 
             border.width: 1
-            border.color: "#1f1a1f"
+            border.color: matugen.surfaceContainerHigh
 
             Text {
                 anchors.centerIn: parent
                 text: "󰒭"
-                color: "#4c444c"
+                color: matugen.onSurfaceVariant
                 font.pixelSize: 19
             }
 
@@ -302,7 +304,7 @@ Column {
             ? (root.player.isPlaying ? "Playing" : "Paused")
             : "Nothing playing"
 
-        color: "#161217"
+        color: matugen.onSurfaceVariant
         font.pixelSize: 11
 
         horizontalAlignment: Text.AlignHCenter

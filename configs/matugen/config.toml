@@ -38,3 +38,23 @@ output_path = "/home/keanbp/.config/nvim/matugen.json"
 [templates.fastfetch]
 input_path = "/etc/nixos-config/configs/matugen/templates/fastfetch.jsonc"
 output_path = "/home/keanbp/.config/fastfetch/config.jsonc"
+
+# Rofi - dynamic wallpaper colors
+[templates.rofi]
+input_path = "/etc/nixos-config/configs/matugen/templates/rofi-colors.rasi"
+output_path = "/home/keanbp/.config/rofi/matugen-colors.rasi"
+
+# MangoWC - dynamic compositor colors
+[templates.mango]
+input_path = "/etc/nixos-config/configs/matugen/templates/mango-colors.conf"
+output_path = "/home/keanbp/.config/mango/matugen-colors.conf"
+
+# Hyprland - dynamic Lua colors
+[templates.hyprland]
+input_path = "/etc/nixos-config/configs/matugen/templates/hyprland-colors.lua"
+output_path = "/home/keanbp/.config/hypr/matugen-colors.lua"
+
+# Hyprlock - dynamic wallpaper colors
+[templates.hyprlock]
+input_path = "/etc/nixos-config/configs/matugen/templates/hyprlock-colors.conf"
+output_path = "/home/keanbp/.config/hypr/hyprlock-colors.conf"

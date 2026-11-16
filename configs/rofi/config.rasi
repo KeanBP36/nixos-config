@@ -1,3 +1,5 @@
+@import "/home/keanbp/.config/rofi/matugen-colors.rasi"
+
  configuration {
     modi: "drun";
     show-icons: true;
@@ -6,15 +8,7 @@
 }
 
 * {
-    bg:              rgba(17, 13, 17, 75%);
-    fg:              #4c444c;
-    selected-bg:     rgba(31, 26, 31, 75%);
-    selected-fg:     #4c444c;
 
-    border-gray:     #231e23;
-    muted-gray:      #2e282e;
-    blue:            #ea42b4;
-    offwhite:        #eae0e7;
 
     background-color: @bg;
     text-color: @fg;

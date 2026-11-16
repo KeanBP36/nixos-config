@@ -1,0 +1,11 @@
+* {
+    bg: {{colors.surface.default.hex}};
+    fg: {{colors.on_surface.default.hex}};
+    selected-bg: {{colors.primary_container.default.hex}};
+    selected-fg: {{colors.on_primary_container.default.hex}};
+
+    border-gray: {{colors.outline.default.hex}};
+    muted-gray: {{colors.outline_variant.default.hex}};
+    blue: {{colors.primary.default.hex}};
+    offwhite: {{colors.on_surface.default.hex}};
+}

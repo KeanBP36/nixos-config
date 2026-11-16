@@ -3,6 +3,7 @@ import Quickshell
 
 PopupWindow {
     id: popup
+    MatugenPalette { id: matugen }
 
     property Item anchorItem
     property string page: "main"
@@ -28,12 +29,12 @@ PopupWindow {
         anchors.fill: parent
 
         // Dark transparent glass
-        color: Qt.rgba(0.0863, 0.0706, 0.0902, 0.75)
+        color: Qt.alpha(matugen.surfaceContainer, 0.94)
 
         radius: 10
 
         border.width: 3
-        border.color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.18)
+        border.color: Qt.alpha(matugen.outlineVariant, 0.25)
 
         // =================================
         // Main menu
@@ -49,7 +50,7 @@ PopupWindow {
             Text {
                 text: "Control Panel"
 
-                color: "#eae0e7"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 20
                 font.bold: true
@@ -59,7 +60,7 @@ PopupWindow {
                 width: parent.width
                 height: 1
 
-                color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
+                color: Qt.alpha(matugen.outlineVariant, 0.20)
             }
 
             // Audio / Network
@@ -114,7 +115,7 @@ PopupWindow {
                 width: parent.width
                 height: 1
 
-                color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.15)
+                color: Qt.alpha(matugen.outlineVariant, 0.20)
             }
 
             // Lock / Sleep
@@ -230,12 +231,12 @@ PopupWindow {
 
         radius: 7
 
-        color: mouse.containsMouse
-            ? Qt.rgba(0.1216, 0.1020, 0.1216, 0.82)
-            : Qt.rgba(0.0667, 0.0510, 0.0667, 0.72)
+        color: mouse.containsMouse || mouse.pressed
+            ? matugen.primary
+            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
         border.width: 1
-        border.color: Qt.rgba(0.2980, 0.2667, 0.2980, 0.12)
+        border.color: Qt.alpha(matugen.outlineVariant, 0.35)
 
         Behavior on color {
             ColorAnimation {
@@ -251,7 +252,7 @@ PopupWindow {
             Text {
                 text: button.icon
 
-                color: "#eae0e7"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 20
             }
@@ -259,7 +260,7 @@ PopupWindow {
             Text {
                 text: button.label
 
-                color: "#eae0e7"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 14
 

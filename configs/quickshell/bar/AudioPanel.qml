@@ -5,6 +5,7 @@ import Quickshell.Services.Mpris
 
 Column {
     id: root
+    MatugenPalette { id: matugen }
 
     signal backRequested()
 
@@ -100,13 +101,13 @@ Column {
             height: 38
             radius: 10
             color: backMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+               : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
                 text: "‹"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 27
             }
 
@@ -126,7 +127,7 @@ Column {
 
             Text {
                 text: "Music"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 19
                 font.bold: true
             }
@@ -136,7 +137,7 @@ Column {
                     ? (root.player.identity || "Media")
                     : "No player"
 
-                color: "#161217"
+                color: "#000000"
                 font.pixelSize: 11
             }
         }
@@ -148,7 +149,7 @@ Column {
         height: 230
         anchors.horizontalCenter: parent.horizontalCenter
         radius: 18
-        color: "#110d11"
+        color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
         clip: true
 
         Image {
@@ -171,7 +172,7 @@ Column {
             anchors.centerIn: parent
 
             text: "♫"
-            color: "#161217"
+            color: "#000000"
             font.pixelSize: 64
 
             visible: !artwork.visible
@@ -190,7 +191,7 @@ Column {
                 ? (root.player.trackTitle || "Nothing playing")
                 : "Nothing playing"
 
-            color: "#4c444c"
+            color: "#000000"
             font.pixelSize: 17
             font.bold: true
 
@@ -205,7 +206,7 @@ Column {
                 ? (root.player.trackArtist || "Unknown artist")
                 : ""
 
-            color: "#2e282e"
+            color: matugen.outlineVariant
             font.pixelSize: 13
 
             horizontalAlignment: Text.AlignHCenter
@@ -219,7 +220,7 @@ Column {
                 ? (root.player.trackAlbum || "")
                 : ""
 
-            color: "#161217"
+            color: "#000000"
             font.pixelSize: 11
 
             horizontalAlignment: Text.AlignHCenter
@@ -239,8 +240,8 @@ Column {
             radius: 11
 
             color: previousMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -248,7 +249,7 @@ Column {
                 anchors.centerIn: parent
 
                 text: "⏮"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 17
             }
 
@@ -276,11 +277,11 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
 
             color: playMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             border.width: 1
-            border.color: "#1f1a1f"
+            border.color: matugen.surfaceContainerHigh
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -291,7 +292,7 @@ Column {
                     ? "󰏤"
                     : "󰐊"
 
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 20
             }
 
@@ -315,8 +316,8 @@ Column {
             radius: 11
 
             color: nextMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             opacity: root.player ? 1.0 : 0.45
 
@@ -324,7 +325,7 @@ Column {
                 anchors.centerIn: parent
 
                 text: "⏭"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 17
             }
 
@@ -356,14 +357,14 @@ Column {
             radius: 10
 
             color: volumeDownMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰕿"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 18
             }
 
@@ -385,14 +386,14 @@ Column {
             radius: 10
 
             color: muteMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰖁"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 18
             }
 
@@ -414,14 +415,14 @@ Column {
             radius: 10
 
             color: volumeUpMouse.containsMouse
-                ? "#1f1a1f"
-                : "#110d11"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰕾"
-                color: "#4c444c"
+                color: "#000000"
                 font.pixelSize: 18
             }
 
@@ -445,7 +446,7 @@ Column {
             ? (root.player.isPlaying ? "Playing" : "Paused")
             : "Nothing playing"
 
-        color: "#161217"
+        color: "#000000"
         font.pixelSize: 11
 
         horizontalAlignment: Text.AlignHCenter
