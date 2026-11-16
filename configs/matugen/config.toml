@@ -28,3 +28,13 @@ post_hook = "makoctl reload"
 input_path = "/etc/nixos-config/configs/matugen/templates/btop.theme"
 output_path = "/home/keanbp/.config/btop/themes/matugen.theme"
 post_hook = "pkill -USR2 btop || true"
+
+# Neovim - dynamic wallpaper colors
+[templates.nvim]
+input_path = "/etc/nixos-config/configs/matugen/templates/nvim.json"
+output_path = "/home/keanbp/.config/nvim/matugen.json"
+
+# Fastfetch - dynamic wallpaper colors
+[templates.fastfetch]
+input_path = "/etc/nixos-config/configs/matugen/templates/fastfetch.jsonc"
+output_path = "/home/keanbp/.config/fastfetch/config.jsonc"

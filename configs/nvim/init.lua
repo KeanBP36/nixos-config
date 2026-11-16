@@ -573,6 +573,8 @@ require("lazy").setup({
 local colors = {
 	bg = "#110d11",
 	fg = "#4c444c",
+	cursor = "#161217",
+	selection = "#161217",
 	red = "#eb5065",
 	green = "#bb4d1e",
 	yellow = "#eeb198",
@@ -598,7 +600,7 @@ local function apply_colors()
 	hl_all({
 		Normal = { fg = c.fg, bg = c.bg },
 		NormalFloat = { fg = c.fg, bg = c.bg },
-		CursorLine = { bg = "#110d11" },
+		CursorLine = { bg = c.cursor },
 		CursorLineNr = { fg = c.blue, bold = true },
 		LineNr = { fg = c.gray },
 	})
@@ -646,15 +648,69 @@ local function apply_colors()
 	hl_all({
 		TelescopeNormal = { fg = c.fg, bg = c.bg },
 		TelescopeBorder = { fg = c.gray, bg = c.bg },
-		TelescopeSelection = { fg = c.white, bg = "#110d11" },
+		TelescopeSelection = { fg = c.white, bg = c.selection },
 		TelescopeMatching = { fg = c.blue, bold = true },
 	})
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_colors })
+-- Load dynamic Matugen colors
+local matugen_file = vim.fn.stdpath("config") .. "/matugen.json"
+
+local function load_matugen_colors()
+	local file = io.open(matugen_file, "r")
+	if not file then
+		return
+	end
+
+	local contents = file:read("*a")
+	file:close()
+
+	local ok, generated = pcall(vim.json.decode, contents)
+	if not ok or type(generated) ~= "table" then
+		return
+	end
+
+	local aliases = {
+		background = "bg",
+		foreground = "fg",
+	}
+
+	for name, value in pairs(generated) do
+		local target = aliases[name] or name
+		if colors[target] ~= nil and type(value) == "string"
+			and value:match("^#%x%x%x%x%x%x$") then
+			colors[target] = value
+		end
+	end
+
+	apply_colors()
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = apply_colors,
+})
+
 vim.cmd("highlight clear")
 vim.opt.background = "dark"
+load_matugen_colors()
 apply_colors()
+
+-- Watch the config directory for Matugen updates
+local matugen_watcher = vim.uv.new_fs_event()
+local config_dir = vim.fn.stdpath("config")
+
+if matugen_watcher then
+	matugen_watcher:start(config_dir, {}, function(err, filename)
+		if not err and filename == "matugen.json" then
+			vim.schedule(load_matugen_colors)
+		end
+	end)
+end
+
+-- Also reload when returning to Neovim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	callback = load_matugen_colors,
+})
 
 -- Diagnostics
 

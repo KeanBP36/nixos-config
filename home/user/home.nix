@@ -158,7 +158,6 @@
     ".config/matugen/templates/colors.json".source = ../../configs/matugen/templates/colors.json;
 
     # Fastfetch
-    ".config/fastfetch/config.jsonc".source = ../../configs/fastfetch/config.jsonc;
   };
 
   # ─────────────────────────────────────────────
