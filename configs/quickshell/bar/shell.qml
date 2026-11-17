@@ -36,7 +36,7 @@ Variants {
 
         readonly property color background:
             matugenColors.surface || matugenColors.background || "#110d11"
-        readonly property color barBackground: Qt.alpha(background, 0.85)
+        readonly property color barBackground: Qt.alpha(background, 0.70)
         readonly property color foreground:
             matugenColors.foreground || "#4c444c"
         readonly property color highlight:
@@ -54,9 +54,7 @@ Variants {
             right: true
         }
 
-        implicitHeight: 48
-        // Space reserved for windows. Lower = windows sit closer to the pill.
-        exclusiveZone: implicitHeight - 4
+        implicitHeight: 44
         color: "transparent"
 
         // =========================
@@ -255,7 +253,7 @@ Variants {
             id: pill
 
             anchors.fill: parent
-            anchors.topMargin: 8
+            anchors.topMargin: 4
             anchors.bottomMargin: 0
             anchors.leftMargin: 8 
             anchors.rightMargin: 8 

@@ -11,6 +11,7 @@ PopupWindow {
     anchor.item: anchorItem
     anchor.edges: Edges.Bottom | Edges.Right
     anchor.gravity: Edges.Bottom | Edges.Right
+    anchor.margins.bottom: -10 
 
     implicitWidth: 340
     implicitHeight: 500
@@ -28,11 +29,11 @@ PopupWindow {
     Rectangle {
         anchors.fill: parent
 
-        color: Qt.alpha(matugen.surfaceContainerHigh, 0.97)
+        color: Qt.alpha(matugen.surface, 0.70)
         radius: 16
 
         border.width: 1
-        border.color: Qt.alpha(matugen.outlineVariant, 0.25)
+        border.color: Qt.alpha(matugen.outlineVariant, 0.12)
 
         // =================================
         // Main menu
@@ -47,7 +48,7 @@ PopupWindow {
 
             Text {
                 text: "Control Panel"
-                color: matugen.onSurface
+                color: root.foreground
                 font.pixelSize: 18
                 font.bold: true
                 bottomPadding: 6
@@ -188,8 +189,8 @@ PopupWindow {
         color: mouse.pressed
             ? matugen.primary
             : mouse.containsMouse
-                ? Qt.alpha(matugen.primary, 0.48)
-                : Qt.alpha(matugen.primary, 0.24)
+                ? Qt.alpha(matugen.primary, 0.75)
+                : Qt.alpha(matugen.primary, 0.20)
 
         Behavior on color {
             ColorAnimation { duration: 120 }
@@ -201,14 +202,14 @@ PopupWindow {
 
             Text {
                 text: button.icon
-                color: mouse.pressed ? matugen.onPrimary : matugen.onSurface
+                color: root.foreground
                 font.pixelSize: 18
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: button.label
-                color: mouse.pressed ? matugen.onPrimary : matugen.onSurface
+                color: root.foreground
                 font.pixelSize: 13
                 anchors.verticalCenter: parent.verticalCenter
             }
