@@ -302,11 +302,6 @@ require("lazy").setup({
 					return math.floor(vim.o.lines * 0.4)
 				end,
 			},
-			highlights = {
-				Normal = { guibg = "#110d11" },
-				NormalFloat = { guibg = "#110d11" },
-				FloatBorder = { guifg = "#161217", guibg = "#110d11" },
-			},
 		},
 	},
 
@@ -587,19 +582,40 @@ local colors = {
 
 local function apply_colors()
 	local c = colors
+
 	local function hl(group, spec)
 		vim.api.nvim_set_hl(0, group, spec)
 	end
+
 	local function hl_all(groups)
 		for group, spec in pairs(groups) do
 			hl(group, spec)
 		end
 	end
 
+	-- Terminal ANSI colors
+	vim.g.terminal_color_0 = c.bg
+	vim.g.terminal_color_1 = c.red
+	vim.g.terminal_color_2 = c.green
+	vim.g.terminal_color_3 = c.yellow
+	vim.g.terminal_color_4 = c.blue
+	vim.g.terminal_color_5 = c.purple
+	vim.g.terminal_color_6 = c.cyan
+	vim.g.terminal_color_7 = c.white
+	vim.g.terminal_color_8 = c.gray
+	vim.g.terminal_color_9 = c.red
+	vim.g.terminal_color_10 = c.green
+	vim.g.terminal_color_11 = c.yellow
+	vim.g.terminal_color_12 = c.blue
+	vim.g.terminal_color_13 = c.purple
+	vim.g.terminal_color_14 = c.cyan
+	vim.g.terminal_color_15 = c.white
+
 	-- Editor
 	hl_all({
 		Normal = { fg = c.fg, bg = c.bg },
 		NormalFloat = { fg = c.fg, bg = c.bg },
+		FloatBorder = { fg = c.gray, bg = c.bg },
 		CursorLine = { bg = c.cursor },
 		CursorLineNr = { fg = c.blue, bold = true },
 		LineNr = { fg = c.fg },
