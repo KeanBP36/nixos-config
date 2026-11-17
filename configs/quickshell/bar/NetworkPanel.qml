@@ -4,6 +4,7 @@ import Quickshell.Networking
 
 Column {
     id: root
+    MatugenPalette { id: matugen }
 
     signal backRequested()
 
@@ -24,14 +25,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 18
             }
@@ -53,7 +54,7 @@ Column {
         Text {
             text: "Network"
 
-            color: "#ffffff"
+            color: matugen.onSurface
 
             font.pixelSize: 20
             font.bold: true
@@ -66,7 +67,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.alpha(matugen.outline, 0.40)
     }
 
     // =================================
@@ -100,7 +101,7 @@ Column {
                 ? device.name
                 : "Network device"
 
-            color: "#ffffff"
+            color: matugen.onSurface
 
             font.pixelSize: 14
             font.bold: true
@@ -112,8 +113,8 @@ Column {
                 : "Disconnected"
 
             color: device && device.connected
-                ? "#4ec9b0"
-                : "#888888"
+                ? matugen.tertiary
+                : matugen.outline
 
             font.pixelSize: 11
         }
@@ -144,15 +145,15 @@ Column {
             visible: device && device.connected
 
             color: disconnectMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "Disconnect"
 
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 12
             }
@@ -187,15 +188,15 @@ Column {
         radius: 6
 
         color: networkMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
+            ? matugen.primary
+            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
         border.width:
             network && network.connected
                 ? 1
                 : 0
 
-        border.color: "#ffffff"
+        border.color: matugen.onSurface
 
         Row {
             anchors.fill: parent
@@ -210,7 +211,7 @@ Column {
                     ? "󰤨"
                     : "󰤯"
 
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 17
 
@@ -225,7 +226,7 @@ Column {
                     ? network.name
                     : "Unknown"
 
-                color: "#d4d4d4"
+                color: matugen.onSurface
 
                 font.pixelSize: 12
 

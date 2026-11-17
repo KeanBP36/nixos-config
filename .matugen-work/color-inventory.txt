@@ -1,0 +1,606 @@
+
+#d4d4d4  (31 uses)
+  configs/kitty/kitty.conf:6: foreground #d4d4d4
+  configs/kitty/kitty.conf:8: cursor #d4d4d4
+  configs/kitty/kitty.conf:12: selection_foreground #d4d4d4
+  configs/kitty/kitty.conf:22: color7  #d4d4d4
+  configs/mako/config:4: text-color=#d4d4d4
+  configs/nvim/init.lua:318: local bg, fg, gray = "#1f1f1f", "#d4d4d4", "#666666"
+  configs/nvim/init.lua:575: fg = "#d4d4d4",
+  configs/quickshell/bar/AudioPanel.qml:109: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:129: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:193: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:251: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:294: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:327: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:366: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:395: color: "#d4d4d4"
+  configs/quickshell/bar/AudioPanel.qml:424: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:67: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:87: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:151: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:209: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:246: color: "#d4d4d4"
+  configs/quickshell/bar/MusicPanel.qml:279: color: "#d4d4d4"
+  configs/quickshell/bar/NetworkPanel.qml:228: color: "#d4d4d4"
+  configs/quickshell/bar/NotificationCard.qml:24: readonly property color foreground: "#d4d4d4"
+  configs/quickshell/bar/shell.qml:22: readonly property color foreground: "#d4d4d4"
+  configs/qutebrowser/config.py:9: c.colors.completion.fg = "#d4d4d4"
+  configs/qutebrowser/config.py:17: c.colors.statusbar.normal.fg = "#d4d4d4"
+  configs/qutebrowser/config.py:23: c.colors.statusbar.command.fg = "#d4d4d4"
+  configs/qutebrowser/config.py:40: c.colors.tabs.selected.even.fg = "#d4d4d4"
+  configs/qutebrowser/config.py:43: c.colors.tabs.selected.odd.fg = "#d4d4d4"
+  configs/rofi/config.rasi:12: selected-fg:     #d4d4d4;
+
+#ffffff  (30 uses)
+  configs/kitty/kitty.conf:31: color15 #ffffff
+  configs/nvim/init.lua:583: white = "#ffffff",
+  configs/quickshell/bar/BluetoothPanel.qml:36: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:58: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:94: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:120: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:158: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:217: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:240: color: "#ffffff"
+  configs/quickshell/bar/BluetoothPanel.qml:285: color: "#ffffff"
+  configs/quickshell/bar/ControlPanel.qml:52: color: "#ffffff"
+  configs/quickshell/bar/ControlPanel.qml:254: color: "#ffffff"
+  configs/quickshell/bar/ControlPanel.qml:262: color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:34: color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:56: color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:103: color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:155: color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:198: border.color: "#ffffff"
+  configs/quickshell/bar/NetworkPanel.qml:213: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:374: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:396: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:430: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:454: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:528: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:562: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:722: color: "#ffffff"
+  configs/quickshell/bar/NotificationPanel.qml:792: color: expandMouse.containsMouse ? "#ffffff" : "#888888"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:506: color: "#ffffff"
+  configs/quickshell/wallpaper/layouts/shell-hexcomb.qml:590: strokeColor: configs.border_color.length > 0 ? configs.border_color : "#ffffff"
+  configs/qutebrowser/config.py:12: c.colors.completion.item.selected.fg = "#ffffff"
+
+#3a3a3a  (26 uses)
+  configs/kitty/kitty.conf:11: selection_background #3a3a3a
+  configs/quickshell/bar/AudioPanel.qml:103: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:242: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:279: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:318: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:359: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:388: ? "#3a3a3a"
+  configs/quickshell/bar/AudioPanel.qml:417: ? "#3a3a3a"
+  configs/quickshell/bar/BluetoothPanel.qml:29: ? "#3a3a3a"
+  configs/quickshell/bar/BluetoothPanel.qml:109: ? "#3a3a3a"
+  configs/quickshell/bar/BluetoothPanel.qml:203: ? "#3a3a3a"
+  configs/quickshell/bar/MusicPanel.qml:61: ? "#3a3a3a"
+  configs/quickshell/bar/MusicPanel.qml:200: ? "#3a3a3a"
+  configs/quickshell/bar/MusicPanel.qml:233: ? "#3a3a3a"
+  configs/quickshell/bar/MusicPanel.qml:270: ? "#3a3a3a"
+  configs/quickshell/bar/NetworkPanel.qml:27: ? "#3a3a3a"
+  configs/quickshell/bar/NetworkPanel.qml:147: ? "#3a3a3a"
+  configs/quickshell/bar/NetworkPanel.qml:190: ? "#3a3a3a"
+  configs/quickshell/bar/NotificationPanel.qml:367: ? "#3a3a3a"
+  configs/quickshell/bar/NotificationPanel.qml:447: ? "#3a3a3a"
+  configs/quickshell/bar/NotificationPanel.qml:518: ? "#3a3a3a"
+  configs/quickshell/bar/NotificationPanel.qml:690: border.color: item.urgent ? "#f38ba8" : "#3a3a3a"
+  configs/quickshell/bar/shell.qml:23: readonly property color highlight: "#3a3a3a"
+  configs/qutebrowser/config.py:13: c.colors.completion.item.selected.bg = "#3a3a3a"
+  configs/qutebrowser/config.py:41: c.colors.tabs.selected.even.bg = "#3a3a3a"
+  configs/qutebrowser/config.py:44: c.colors.tabs.selected.odd.bg = "#3a3a3a"
+
+#00000000  (21 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:242: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:243: GradientStop { position: 0.72; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:201: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:202: GradientStop { position: 0.72; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:253: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:262: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:255: GradientStop { position: 0.35; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:256: GradientStop { position: 0.7;  color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:533: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:534: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:255: GradientStop { position: 0.35; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:256: GradientStop { position: 0.7;  color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:519: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:520: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:510: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:511: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:255: GradientStop { position: 0.35; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:256: GradientStop { position: 0.7;  color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:538: GradientStop { position: 0.0; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:539: GradientStop { position: 0.5; color: "#00000000" }
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:320: GradientStop { position: 1.0; color: "#00000000" }
+
+#1f1f1f  (16 uses)
+  configs/kitty/kitty.conf:5: background #1f1f1f
+  configs/kitty/kitty.conf:9: cursor_text_color #1f1f1f
+  configs/kitty/kitty.conf:15: color0  #1f1f1f
+  configs/mako/config:3: background-color=#1f1f1f
+  configs/nvim/init.lua:306: Normal = { guibg = "#1f1f1f" },
+  configs/nvim/init.lua:307: NormalFloat = { guibg = "#1f1f1f" },
+  configs/nvim/init.lua:308: FloatBorder = { guifg = "#666666", guibg = "#1f1f1f" },
+  configs/nvim/init.lua:318: local bg, fg, gray = "#1f1f1f", "#d4d4d4", "#666666"
+  configs/nvim/init.lua:385: background_colour = "#1f1f1f",
+  configs/nvim/init.lua:574: bg = "#1f1f1f",
+  configs/quickshell/bar/NotificationCard.qml:23: readonly property color background: "#1f1f1f"
+  configs/qutebrowser/config.py:18: c.colors.statusbar.normal.bg = "#1f1f1f"
+  configs/qutebrowser/config.py:20: c.colors.statusbar.insert.fg = "#1f1f1f"
+  configs/qutebrowser/config.py:24: c.colors.statusbar.command.bg = "#1f1f1f"
+  configs/qutebrowser/config.py:32: c.colors.tabs.bar.bg = "#1f1f1f"
+  configs/qutebrowser/config.py:47: c.colors.webpage.bg = "#1f1f1f"
+
+#292929  (15 uses)
+  configs/nvim/init.lua:329: b = { fg = fg, bg = "#292929" },
+  configs/nvim/init.lua:601: CursorLine = { bg = "#292929" },
+  configs/quickshell/bar/AudioPanel.qml:104: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:151: color: "#292929"
+  configs/quickshell/bar/AudioPanel.qml:243: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:280: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:319: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:360: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:389: : "#292929"
+  configs/quickshell/bar/AudioPanel.qml:418: : "#292929"
+  configs/quickshell/bar/MusicPanel.qml:62: : "#292929"
+  configs/quickshell/bar/MusicPanel.qml:109: color: "#292929"
+  configs/quickshell/bar/MusicPanel.qml:201: : "#292929"
+  configs/quickshell/bar/MusicPanel.qml:234: : "#292929"
+  configs/quickshell/bar/MusicPanel.qml:271: : "#292929"
+
+#cc000000  (15 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:366: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-classic.qml:333: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:473: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:478: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:493: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:443: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:443: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:437: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:437: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:423: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:428: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:447: color: "#cc000000"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:294: GradientStop { position: 1.0; color: "#cc000000" }
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:395: color: "#cc000000"
+  configs/quickshell/wallpaper/settings.qml:181: color: "#cc000000"
+
+#44ffffff  (14 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:368: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-classic.qml:335: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:475: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:480: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:495: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:445: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:445: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:439: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:439: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:425: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:430: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:449: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:397: border.color: "#44ffffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:520: border.color: "#44ffffff"
+
+#252525  (13 uses)
+  configs/quickshell/bar/BluetoothPanel.qml:30: : "#252525"
+  configs/quickshell/bar/BluetoothPanel.qml:110: : "#252525"
+  configs/quickshell/bar/BluetoothPanel.qml:204: : "#252525"
+  configs/quickshell/bar/NetworkPanel.qml:28: : "#252525"
+  configs/quickshell/bar/NetworkPanel.qml:148: : "#252525"
+  configs/quickshell/bar/NetworkPanel.qml:191: : "#252525"
+  configs/quickshell/bar/NotificationPanel.qml:368: : "#252525"
+  configs/quickshell/bar/NotificationPanel.qml:448: : "#252525"
+  configs/quickshell/bar/NotificationPanel.qml:519: : "#252525"
+  configs/quickshell/bar/NotificationPanel.qml:687: : "#252525"
+  configs/qutebrowser/config.py:11: c.colors.completion.category.bg = "#252525"
+  configs/qutebrowser/config.py:35: c.colors.tabs.even.bg = "#252525"
+  configs/qutebrowser/config.py:38: c.colors.tabs.odd.bg = "#252525"
+
+#ff6666  (13 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:375: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-classic.qml:342: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:482: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:487: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:502: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:452: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:452: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:446: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:446: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:432: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:437: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:456: color: "#ff6666"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:404: color: "#ff6666"
+
+#f2f2f2  (13 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:542: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:587: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:562: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:607: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:604: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:521: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:515: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:590: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:609: color: "#f2f2f2"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:558: color: "#f2f2f2"
+  configs/quickshell/wallpaper/settings.qml:92: color: "#f2f2f2"
+  configs/quickshell/wallpaper/settings.qml:187: ? (configs.border_color || "#f2f2f2")
+  configs/quickshell/wallpaper/settings.qml:188: : "#f2f2f2"
+
+#666666  (10 uses)
+  configs/kitty/kitty.conf:24: color8  #666666
+  configs/nvim/init.lua:308: FloatBorder = { guifg = "#666666", guibg = "#1f1f1f" },
+  configs/nvim/init.lua:318: local bg, fg, gray = "#1f1f1f", "#d4d4d4", "#666666"
+  configs/nvim/init.lua:582: gray = "#666666",
+  configs/quickshell/bar/AudioPanel.qml:139: color: "#666666"
+  configs/quickshell/bar/AudioPanel.qml:222: color: "#666666"
+  configs/quickshell/bar/AudioPanel.qml:448: color: "#666666"
+  configs/quickshell/bar/MusicPanel.qml:97: color: "#666666"
+  configs/quickshell/bar/MusicPanel.qml:180: color: "#666666"
+  configs/quickshell/bar/MusicPanel.qml:305: color: "#666666"
+
+#888888  (10 uses)
+  configs/quickshell/bar/BluetoothPanel.qml:184: color: "#888888"
+  configs/quickshell/bar/BluetoothPanel.qml:258: : "#888888"
+  configs/quickshell/bar/NetworkPanel.qml:116: : "#888888"
+  configs/quickshell/bar/NotificationPanel.qml:658: color: "#888888"
+  configs/quickshell/bar/NotificationPanel.qml:753: color: "#888888"
+  configs/quickshell/bar/NotificationPanel.qml:770: : "#888888"
+  configs/quickshell/bar/NotificationPanel.qml:792: color: expandMouse.containsMouse ? "#ffffff" : "#888888"
+  configs/qutebrowser/config.py:34: c.colors.tabs.even.fg = "#888888"
+  configs/qutebrowser/config.py:37: c.colors.tabs.odd.fg = "#888888"
+  configs/rofi/config.rasi:15: muted-gray:      #888888;
+
+#33ffffff  (10 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:391: : "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:579: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:599: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:587: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:504: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:498: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:573: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:592: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:489: border.color: "#33ffffff"
+  configs/quickshell/wallpaper/settings.qml:150: : (isActive ? "#8899a3" : "#33ffffff")
+
+#22000000  (10 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:254: GradientStop { position: 0.0;  color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:535: GradientStop { position: 0.8; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:254: GradientStop { position: 0.0;  color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:251: GradientStop { position: 0.0; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:251: GradientStop { position: 0.0; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:237: GradientStop { position: 0.0; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:242: GradientStop { position: 0.0; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:254: GradientStop { position: 0.0;  color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:540: GradientStop { position: 0.8; color: "#22000000" }
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:293: GradientStop { position: 0.0; color: "#22000000" }
+
+#0a0c10  (10 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:351: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:351: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:345: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:345: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:331: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:336: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:353: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:356: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:487: color: "#0a0c10"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:518: color: "#0a0c10"
+
+#88000000  (9 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:536: GradientStop { position: 0.95; color: "#88000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:609: styleColor: "#88000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:526: styleColor: "#88000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:520: styleColor: "#88000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:522: GradientStop { position: 0.95; color: "#88000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:595: styleColor: "#88000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:513: GradientStop { position: 0.95; color: "#88000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:541: GradientStop { position: 0.95; color: "#88000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:614: styleColor: "#88000000"
+
+#4ec9b0  (8 uses)
+  configs/kitty/kitty.conf:21: color6  #4ec9b0
+  configs/kitty/kitty.conf:30: color14 #4ec9b0
+  configs/nvim/init.lua:581: cyan = "#4ec9b0",
+  configs/quickshell/bar/BluetoothPanel.qml:257: ? "#4ec9b0"
+  configs/quickshell/bar/NetworkPanel.qml:115: ? "#4ec9b0"
+  configs/qutebrowser/config.py:21: c.colors.statusbar.insert.bg = "#4ec9b0"
+  configs/qutebrowser/config.py:27: c.colors.statusbar.url.success.http.fg = "#4ec9b0"
+  configs/qutebrowser/config.py:28: c.colors.statusbar.url.success.https.fg = "#4ec9b0"
+
+#05070a  (8 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:198: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:198: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:213: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:213: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:199: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:204: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:198: color: "#05070a"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:235: color: "#05070a"
+
+#000000  (8 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:420: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:420: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:414: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:414: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:400: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:405: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:422: color: "#000000"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:526: shadowColor: "#000000"
+
+#569cd6  (7 uses)
+  configs/kitty/kitty.conf:19: color4  #569cd6
+  configs/kitty/kitty.conf:28: color12 #569cd6
+  configs/nvim/init.lua:328: normal = vim.tbl_extend("force", mode_hl("#569cd6"), {
+  configs/nvim/init.lua:579: blue = "#569cd6",
+  configs/qutebrowser/config.py:10: c.colors.completion.category.fg = "#569cd6"
+  configs/qutebrowser/config.py:26: c.colors.statusbar.url.fg = "#569cd6"
+  configs/rofi/config.rasi:16: blue:            #569cd6;
+
+#999999  (7 uses)
+  configs/quickshell/bar/AudioPanel.qml:208: color: "#999999"
+  configs/quickshell/bar/MusicPanel.qml:166: color: "#999999"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:627: color: "#999999"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:544: color: "#999999"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:538: color: "#999999"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:613: color: "#999999"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:632: color: "#999999"
+
+#888  (7 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:376: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:376: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:370: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:370: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:356: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:361: color: "#888"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:378: color: "#888"
+
+rgba(0.83, 0.83, 0.83, 0.15)  (6 uses)
+  configs/quickshell/bar/BluetoothPanel.qml:72: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+  configs/quickshell/bar/BluetoothPanel.qml:148: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+  configs/quickshell/bar/ControlPanel.qml:62: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+  configs/quickshell/bar/ControlPanel.qml:117: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+  configs/quickshell/bar/NetworkPanel.qml:69: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+  configs/quickshell/bar/NotificationPanel.qml:410: color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+
+#cccccc  (6 uses)
+  configs/quickshell/bar/NotificationPanel.qml:738: color: "#cccccc"
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:615: color: "#cccccc"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:532: color: "#cccccc"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:526: color: "#cccccc"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:601: color: "#cccccc"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:620: color: "#cccccc"
+
+#1affffff  (6 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:585: color: "#1affffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:502: color: "#1affffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:496: color: "#1affffff"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:571: color: "#1affffff"
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:590: color: "#1affffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:329: color: "#1affffff"
+
+#f44747  (5 uses)
+  configs/kitty/kitty.conf:16: color1  #f44747
+  configs/kitty/kitty.conf:25: color9  #f44747
+  configs/nvim/init.lua:334: replace = mode_hl("#f44747"),
+  configs/nvim/init.lua:576: red = "#f44747",
+  configs/qutebrowser/config.py:29: c.colors.statusbar.url.error.fg = "#f44747"
+
+#f38ba8  (5 uses)
+  configs/quickshell/bar/NotificationCard.qml:25: readonly property color critical: "#f38ba8"
+  configs/quickshell/bar/NotificationPanel.qml:690: border.color: item.urgent ? "#f38ba8" : "#3a3a3a"
+  configs/quickshell/bar/NotificationPanel.qml:769: ? "#f38ba8"
+  configs/quickshell/bar/shell.qml:24: readonly property color urgent: "#f38ba8"
+  configs/quickshell/bar/shell.qml:582: : "#f38ba8"
+
+#1e1e2e  (5 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:304: color: "#1e1e2e"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:412: color: "#1e1e2e"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:417: color: "#1e1e2e"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:431: color: "#1e1e2e"
+  configs/quickshell/wallpaper/layouts/shell-hexcomb.qml:532: color: "#1e1e2e"
+
+#33000000  (5 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:577: color: "#33000000"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:252: GradientStop { position: 0.0; color: "#33000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:597: color: "#33000000"
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:521: GradientStop { position: 0.8; color: "#33000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:512: GradientStop { position: 0.8; color: "#33000000" }
+
+#8899a3  (5 uses)
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:377: color: "#8899a3"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:566: color: "#8899a3"
+  configs/quickshell/wallpaper/settings.qml:101: color: "#8899a3"
+  configs/quickshell/wallpaper/settings.qml:150: : (isActive ? "#8899a3" : "#33ffffff")
+  configs/quickshell/wallpaper/settings.qml:170: color: "#8899a3"
+
+#608b4e  (4 uses)
+  configs/kitty/kitty.conf:17: color2  #608b4e
+  configs/kitty/kitty.conf:26: color10 #608b4e
+  configs/nvim/init.lua:332: insert = mode_hl("#608b4e"),
+  configs/nvim/init.lua:577: green = "#608b4e",
+
+#dcdcaa  (4 uses)
+  configs/kitty/kitty.conf:18: color3  #dcdcaa
+  configs/kitty/kitty.conf:27: color11 #dcdcaa
+  configs/nvim/init.lua:578: yellow = "#dcdcaa",
+  configs/qutebrowser/config.py:14: c.colors.completion.match.fg = "#dcdcaa"
+
+#c586c0  (4 uses)
+  configs/kitty/kitty.conf:20: color5  #c586c0
+  configs/kitty/kitty.conf:29: color13 #c586c0
+  configs/nvim/init.lua:333: visual = mode_hl("#c586c0"),
+  configs/nvim/init.lua:580: purple = "#c586c0",
+
+#444444  (4 uses)
+  configs/quickshell/bar/AudioPanel.qml:283: border.color: "#444444"
+  configs/quickshell/bar/MusicPanel.qml:204: border.color: "#444444"
+  configs/quickshell/bar/MusicPanel.qml:237: border.color: "#444444"
+  configs/quickshell/bar/MusicPanel.qml:274: border.color: "#444444"
+
+#22ffffff  (4 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:415: border.color: delegateItem.isCurrent ? configs.border_color : "#22ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:420: border.color: delegateItem.isCurrent ? configs.border_color : "#22ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:434: border.color: delegateItem.isCurrent ? configs.border_color : "#22ffffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:359: border.color: isSelected ? (configs.border_color || "#70a0ff") : "#22ffffff"
+
+#cfcfcf  (4 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:554: color: "#cfcfcf"
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:563: color: "#cfcfcf"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:574: color: "#cfcfcf"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:583: color: "#cfcfcf"
+
+#dd000000  (4 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:537: GradientStop { position: 1.0; color: "#dd000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:523: GradientStop { position: 1.0; color: "#dd000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:514: GradientStop { position: 1.0; color: "#dd000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:542: GradientStop { position: 1.0; color: "#dd000000" }
+
+#55000000  (4 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-clear-clean.qml:252: GradientStop { position: 1.0; color: "#55000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clear.qml:252: GradientStop { position: 1.0; color: "#55000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal-clean.qml:238: GradientStop { position: 1.0; color: "#55000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-minimal.qml:243: GradientStop { position: 1.0; color: "#55000000" }
+
+rgb(ffffff)  (3 uses)
+  configs/hyprlock/hyprlock.conf:25: outer_color = rgb(ffffff)
+  configs/hyprlock/hyprlock.conf:27: font_color = rgb(ffffff)
+  configs/hyprlock/hyprlock.conf:39: color = rgb(ffffff)
+
+#202020  (3 uses)
+  configs/quickshell/bar/BluetoothPanel.qml:273: color: "#202020"
+  configs/quickshell/bar/NotificationPanel.qml:556: : "#202020"
+  configs/quickshell/bar/NotificationPanel.qml:592: color: "#202020"
+
+#C27B63  (3 uses)
+  configs/quickshell/wallpaper/config.json:10: "border_color": "#C27B63",
+  configs/quickshell/wallpaper/settings.qml:30: property string border_color: "#C27B63"
+  configs/quickshell/wallpaper/settings.qml:149: ? (configs.border_color || "#C27B63")
+
+#99000000  (3 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:244: GradientStop { position: 1.0; color: "#99000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow-minimal.qml:203: GradientStop { position: 1.0; color: "#99000000" }
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:319: GradientStop { position: 0.0; color: "#99000000" }
+
+#66000000  (3 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:257: GradientStop { position: 0.85; color: "#66000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:257: GradientStop { position: 0.85; color: "#66000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:257: GradientStop { position: 0.85; color: "#66000000" }
+
+#ee000000  (3 uses)
+  configs/quickshell/wallpaper/layouts/shell-floating-center-reflection.qml:258: GradientStop { position: 1.0;  color: "#ee000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating-clean.qml:258: GradientStop { position: 1.0;  color: "#ee000000" }
+  configs/quickshell/wallpaper/layouts/shell-floating.qml:258: GradientStop { position: 1.0;  color: "#ee000000" }
+
+#333333  (2 uses)
+  configs/nvim/init.lua:649: TelescopeSelection = { fg = c.white, bg = "#333333" },
+  configs/quickshell/bar/NotificationPanel.qml:611: border.color: "#333333"
+
+#555555  (2 uses)
+  configs/quickshell/bar/AudioPanel.qml:174: color: "#555555"
+  configs/quickshell/bar/MusicPanel.qml:132: color: "#555555"
+
+#2e2e2e  (2 uses)
+  configs/quickshell/bar/NotificationPanel.qml:595: border.color: "#2e2e2e"
+  configs/quickshell/bar/NotificationPanel.qml:686: ? "#2e2e2e"
+
+#40000000  (2 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:548: styleColor: "#40000000"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:568: styleColor: "#40000000"
+
+#88ffffff  (2 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow-clear.qml:607: color: "#88ffffff"
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:627: color: "#88ffffff"
+
+#77000000  (2 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:261: GradientStop { position: 0.0; color: "#77000000" }
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:263: GradientStop { position: 1.0; color: "#77000000" }
+
+#70a0ff  (2 uses)
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:359: border.color: isSelected ? (configs.border_color || "#70a0ff") : "#22ffffff"
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:476: color: configs.border_color || "#70a0ff"
+
+rgba(888888ee)  (1 uses)
+  configs/hypr/hyprland.lua:107: active_border   = { colors = {"rgba(888888ee)", "rgba(555555ee)"}, angle = 45 },
+
+rgba(555555ee)  (1 uses)
+  configs/hypr/hyprland.lua:107: active_border   = { colors = {"rgba(888888ee)", "rgba(555555ee)"}, angle = 45 },
+
+rgba(555555aa)  (1 uses)
+  configs/hypr/hyprland.lua:108: inactive_border = "rgba(555555aa)",
+
+rgb(000000)  (1 uses)
+  configs/hyprlock/hyprlock.conf:26: inner_color = rgb(000000)
+
+#555555aa  (1 uses)
+  configs/mako/config:5: border-color=#555555aa
+
+rgba(0.08, 0.08, 0.08, 0.75)  (1 uses)
+  configs/quickshell/bar/ControlPanel.qml:31: color: Qt.rgba(0.08, 0.08, 0.08, 0.75)
+
+rgba(0.83, 0.83, 0.83, 0.18)  (1 uses)
+  configs/quickshell/bar/ControlPanel.qml:36: border.color: Qt.rgba(0.83, 0.83, 0.83, 0.18)
+
+rgba(0.23, 0.23, 0.23, 0.82)  (1 uses)
+  configs/quickshell/bar/ControlPanel.qml:234: ? Qt.rgba(0.23, 0.23, 0.23, 0.82)
+
+rgba(0.16, 0.16, 0.16, 0.72)  (1 uses)
+  configs/quickshell/bar/ControlPanel.qml:235: : Qt.rgba(0.16, 0.16, 0.16, 0.72)
+
+rgba(0.83, 0.83, 0.83, 0.12)  (1 uses)
+  configs/quickshell/bar/ControlPanel.qml:238: border.color: Qt.rgba(0.83, 0.83, 0.83, 0.12)
+
+#89b4fa  (1 uses)
+  configs/quickshell/bar/NotificationCard.qml:26: readonly property color main: "#89b4fa"
+
+#4a4a4a  (1 uses)
+  configs/quickshell/bar/NotificationPanel.qml:555: ? "#4a4a4a"
+
+#232323  (1 uses)
+  configs/quickshell/bar/NotificationPanel.qml:608: color: "#232323"
+
+rgba(31/255, 31/255, 31/255, 1.0)  (1 uses)
+  configs/quickshell/bar/shell.qml:20: readonly property color background: Qt.rgba(31/255, 31/255, 31/255, 1.0)
+
+rgba(31/255, 31/255, 31/255, 0.75)  (1 uses)
+  configs/quickshell/bar/shell.qml:21: readonly property color barBackground: Qt.rgba(31/255, 31/255, 31/255, 0.75)
+
+#f9e2af  (1 uses)
+  configs/quickshell/bar/shell.qml:579: ? "#f9e2af"
+
+#a6e3a1  (1 uses)
+  configs/quickshell/bar/shell.qml:581: ? "#a6e3a1"
+
+#e6e6e6  (1 uses)
+  configs/quickshell/wallpaper/layouts/shell-bottom-dock.qml:390: ? (configs.border_color.length > 0 ? configs.border_color : "#e6e6e6")
+
+#AA000000  (1 uses)
+  configs/quickshell/wallpaper/layouts/shell-coverflow.qml:254: GradientStop { position: 1.0; color: "#AA000000" }
+
+#8805070a  (1 uses)
+  configs/quickshell/wallpaper/layouts/shell-grid-view.qml:308: color: "#8805070a"
+
+#0a0b0d  (1 uses)
+  configs/quickshell/wallpaper/layouts/shell-hexcomb.qml:234: color: "#0a0b0d"
+
+#cc05070a  (1 uses)
+  configs/quickshell/wallpaper/settings.qml:79: color: "#cc05070a"
+
+#14171d  (1 uses)
+  configs/quickshell/wallpaper/settings.qml:145: color: "#14171d"
+
+rgba(31, 31, 31, 75%)  (1 uses)
+  configs/rofi/config.rasi:9: bg:              rgba(31, 31, 31, 75%);
+
+#b8b8b8  (1 uses)
+  configs/rofi/config.rasi:10: fg:              #b8b8b8;
+
+rgba(58, 58, 58, 75%)  (1 uses)
+  configs/rofi/config.rasi:11: selected-bg:     rgba(58, 58, 58, 75%);
+
+#777777  (1 uses)
+  configs/rofi/config.rasi:14: border-gray:     #777777;
+
+#f5f5f5  (1 uses)
+  configs/rofi/config.rasi:17: offwhite:        #f5f5f5;

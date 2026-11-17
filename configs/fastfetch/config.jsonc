@@ -7,15 +7,38 @@
     "host",
     "kernel",
     "uptime",
-    "packages",
+    {
+      "type": "packages",
+      "keyColor": "#eca78a"
+    },
     "shell",
     "separator",
-    "memory",
-    "swap",
-    "disk",
-    "localip",
+    {
+      "type": "memory",
+      "keyColor": "#4c444c"
+    },
+    {
+      "type": "swap",
+      "keyColor": "#eca78a"
+    },
+    {
+      "type": "disk",
+      "keyColor": "#e78f69"
+    },
+    {
+      "type": "localip",
+      "keyColor": "#4c444c"
+    },
     "separator",
     "break",
     "colors"
-  ]
+  ],
+  "display": {
+    "color": {
+      "keys": "#ffb599",
+      "title": "#fab1d9",
+      "separator": "#988e97",
+      "output": "#eae0e7"
+    }
+  }
 }

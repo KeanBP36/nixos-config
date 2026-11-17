@@ -4,6 +4,7 @@ import Quickshell.Bluetooth
 
 Column {
     id: root
+    MatugenPalette { id: matugen }
 
     signal backRequested()
 
@@ -26,14 +27,14 @@ Column {
             radius: 6
 
             color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
 
                 text: "󰁍"
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 18
             }
@@ -55,7 +56,7 @@ Column {
         Text {
             text: "Bluetooth"
 
-            color: "#ffffff"
+            color: matugen.onSurface
 
             font.pixelSize: 20
             font.bold: true
@@ -69,7 +70,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.alpha(matugen.outline, 0.40)
     }
 
     // =================================
@@ -91,7 +92,7 @@ Column {
                   )
                 : "No Bluetooth adapter"
 
-            color: "#ffffff"
+            color: matugen.onSurface
 
             font.pixelSize: 13
 
@@ -106,8 +107,8 @@ Column {
             radius: 6
 
             color: toggleMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+                ? matugen.primary
+                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
             Text {
                 anchors.centerIn: parent
@@ -117,7 +118,7 @@ Column {
                     ? "ON"
                     : "OFF"
 
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 11
                 font.bold: true
@@ -145,7 +146,7 @@ Column {
         width: parent.width
         height: 1
 
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+        color: Qt.alpha(matugen.outline, 0.40)
     }
 
     // =================================
@@ -155,7 +156,7 @@ Column {
     Text {
         text: "Devices"
 
-        color: "#ffffff"
+        color: matugen.onSurface
 
         font.pixelSize: 14
         font.bold: true
@@ -181,7 +182,7 @@ Column {
             ? "No paired devices"
             : "Bluetooth is off"
 
-        color: "#888888"
+        color: matugen.outline
 
         font.pixelSize: 12
     }
@@ -200,8 +201,8 @@ Column {
         radius: 6
 
         color: deviceMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
+            ? matugen.primary
+            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
         Row {
             anchors.fill: parent
@@ -214,7 +215,7 @@ Column {
             Text {
                 text: "󰂯"
 
-                color: "#ffffff"
+                color: matugen.onSurface
 
                 font.pixelSize: 18
 
@@ -237,7 +238,7 @@ Column {
                         ? device.name
                         : "Unknown device"
 
-                    color: "#ffffff"
+                    color: matugen.onSurface
 
                     font.pixelSize: 12
 
@@ -254,8 +255,8 @@ Column {
 
                     color:
                         device && device.connected
-                            ? "#4ec9b0"
-                            : "#888888"
+                            ? matugen.tertiary
+                            : matugen.outline
 
                     font.pixelSize: 10
                 }
@@ -270,7 +271,7 @@ Column {
                 anchors.verticalCenter:
                     parent.verticalCenter
 
-                color: "#202020"
+                color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
                 Text {
                     anchors.centerIn: parent
@@ -282,7 +283,7 @@ Column {
                                 ? "Connect"
                                 : "Pair"
 
-                    color: "#ffffff"
+                    color: matugen.onSurface
 
                     font.pixelSize: 10
                 }

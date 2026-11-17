@@ -1,0 +1,14 @@
+{
+  "background": "{{colors.background.default.hex}}",
+  "foreground": "{{colors.on_surface.default.hex}}",
+  "cursor": "{{colors.surface_container.default.hex}}",
+  "selection": "{{colors.surface_container_high.default.hex}}",
+  "red": "{{colors.error.default.hex}}",
+  "green": "{{colors.tertiary.default.hex}}",
+  "yellow": "{{colors.secondary.default.hex}}",
+  "blue": "{{colors.primary.default.hex}}",
+  "purple": "{{colors.secondary.default.hex}}",
+  "cyan": "{{colors.tertiary.default.hex}}",
+  "gray": "{{colors.on_surface_variant.default.hex}}",
+  "white": "{{colors.on_background.default.hex}}"
+}

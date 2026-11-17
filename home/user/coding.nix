@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 let
   # Python environment with debugging support
@@ -19,15 +19,15 @@ let
     exec ${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb "$@"
   '';
 
-  # Shared FHS dependencies for both editors
-  editorFhsPackages =
-    ps: with ps; [
-      zlib
-      openssl
-      pkg-config
-      gcc
-      gnumake
-    ];
+  # # Shared FHS dependencies for both editors
+  # editorFhsPackages =
+  #   ps: with ps; [
+  #     zlib
+  #     openssl
+  #     pkg-config
+  #     gcc
+  #     gnumake
+  #   ];
 
 in
 {
@@ -36,10 +36,15 @@ in
   # ─────────────────────────────────────────────
 
   home.packages = with pkgs; [
-    (vscodium.fhsWithPackages editorFhsPackages)
+
+    # (vscodium.fhsWithPackages editorFhsPackages)
+    # (unstable.vscode.fhsWithPackages editorFhsPackages)
+    (lib.lowPrio vscodium)
+    unstable.vscode
+
     #text editors
     neovim
-    # uemacs
+    uemacs
 
     # General Development
     git
@@ -132,8 +137,8 @@ in
     bat
 
     # Git GUI Applications
-    github-desktop
-    sourcegit
+    # github-desktop
+    # sourcegit
   ];
 
   # # ─────────────────────────────────────────────
@@ -144,10 +149,6 @@ in
   #   enable = true;
   #   package = pkgs.vscode.fhsWithPackages editorFhsPackages;
   # };
-
-  # ─────────────────────────────────────────────
-  # VSCodium (FHS)
-  # ─────────────────────────────────────────────
 
   # ─────────────────────────────────────────────
   # Ranger

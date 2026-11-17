@@ -3,6 +3,7 @@ import Quickshell
 
 PopupWindow {
     id: popup
+    MatugenPalette { id: matugen }
 
     property Item anchorItem
     property string page: "main"
@@ -18,16 +19,22 @@ PopupWindow {
 
     grabFocus: true
 
+    // Always reopen on the main page
+    onVisibleChanged: {
+        if (!visible)
+            page = "main";
+    }
+
     Rectangle {
         anchors.fill: parent
 
         // Dark transparent glass
-        color: Qt.rgba(0.08, 0.08, 0.08, 0.75)
+        color: Qt.alpha(matugen.surfaceContainer, 0.94)
 
         radius: 10
 
         border.width: 3
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.18)
+        border.color: Qt.alpha(matugen.outlineVariant, 0.25)
 
         // =================================
         // Main menu
@@ -43,7 +50,7 @@ PopupWindow {
             Text {
                 text: "Control Panel"
 
-                color: "#ffffff"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 20
                 font.bold: true
@@ -53,13 +60,10 @@ PopupWindow {
                 width: parent.width
                 height: 1
 
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+                color: Qt.alpha(matugen.outlineVariant, 0.20)
             }
 
-            // =========================
             // Audio / Network
-            // =========================
-
             Row {
                 width: parent.width
                 spacing: 8
@@ -70,9 +74,7 @@ PopupWindow {
                     icon: "󰕾"
                     label: "Audio"
 
-                    onClicked: {
-                        popup.page = "audio"
-                    }
+                    onClicked: popup.page = "audio"
                 }
 
                 QuickButton {
@@ -81,16 +83,11 @@ PopupWindow {
                     icon: "󰤨"
                     label: "Network"
 
-                    onClicked: {
-                        popup.page = "network"
-                    }
+                    onClicked: popup.page = "network"
                 }
             }
 
-            // =========================
-            // Bluetooth / Lock
-            // =========================
-
+            // Bluetooth / Notifications
             Row {
                 width: parent.width
                 spacing: 8
@@ -101,10 +98,30 @@ PopupWindow {
                     icon: "󰂯"
                     label: "Bluetooth"
 
-                    onClicked: {
-                        popup.page = "bluetooth"
-                    }
+                    onClicked: popup.page = "bluetooth"
                 }
+
+                QuickButton {
+                    width: (parent.width - 8) / 2
+
+                    icon: "󰂚"
+                    label: "Notifications"
+
+                    onClicked: popup.page = "notifications"
+                }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 1
+
+                color: Qt.alpha(matugen.outlineVariant, 0.20)
+            }
+
+            // Lock / Sleep
+            Row {
+                width: parent.width
+                spacing: 8
 
                 QuickButton {
                     width: (parent.width - 8) / 2
@@ -112,28 +129,46 @@ PopupWindow {
                     icon: "󰌾"
                     label: "Lock"
 
-                    onClicked: {
-                        Quickshell.execDetached([
-                            "hyprlock"
-                        ])
-                    }
+                    onClicked: Quickshell.execDetached(["hyprlock"])
+                }
+
+                QuickButton {
+                    width: (parent.width - 8) / 2
+
+                    icon: "󰒲"
+                    label: "Sleep"
+
+                    onClicked: Quickshell.execDetached(["systemctl", "suspend"])
                 }
             }
 
-            // =========================
-            // Separator
-            // =========================
-
-            Rectangle {
+            // Reboot / Logout
+            Row {
                 width: parent.width
-                height: 1
+                spacing: 8
 
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
+                QuickButton {
+                    width: (parent.width - 8) / 2
+
+                    icon: "󰜉"
+                    label: "Reboot"
+
+                    onClicked: Quickshell.execDetached(["systemctl", "reboot"])
+                }
+
+                QuickButton {
+                    width: (parent.width - 8) / 2
+
+                    icon: "󰍃"
+                    label: "Logout"
+
+                    onClicked: Quickshell.execDetached([
+                        "loginctl",
+                        "terminate-user",
+                        "keanbp"
+                    ])
+                }
             }
-
-            // =========================
-            // Power
-            // =========================
 
             QuickButton {
                 width: parent.width
@@ -141,76 +176,19 @@ PopupWindow {
                 icon: "󰐥"
                 label: "Power Off"
 
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "poweroff"
-                    ])
-                }
-            }
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰜉"
-                label: "Reboot"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "reboot"
-                    ])
-                }
-            }
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰒲"
-                label: "Sleep"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "suspend"
-                    ])
-                }
-            }
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰍃"
-                label: "Logout"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "loginctl",
-                        "terminate-user",
-                        "keanbp"
-                    ])
-                }
+                onClicked: Quickshell.execDetached(["systemctl", "poweroff"])
             }
         }
 
-        // =================================
-        // Audio submenu
-        // =================================
-
+        // Submenus
         AudioPanel {
             anchors.fill: parent
             anchors.margins: 16
 
             visible: popup.page === "audio"
 
-            onBackRequested: {
-                popup.page = "main"
-            }
+            onBackRequested: popup.page = "main"
         }
-
-        // =================================
-        // Network submenu
-        // =================================
 
         NetworkPanel {
             anchors.fill: parent
@@ -218,14 +196,8 @@ PopupWindow {
 
             visible: popup.page === "network"
 
-            onBackRequested: {
-                popup.page = "main"
-            }
+            onBackRequested: popup.page = "main"
         }
-
-        // =================================
-        // Bluetooth submenu
-        // =================================
 
         BluetoothPanel {
             anchors.fill: parent
@@ -233,16 +205,20 @@ PopupWindow {
 
             visible: popup.page === "bluetooth"
 
-            onBackRequested: {
-                popup.page = "main"
-            }
+            onBackRequested: popup.page = "main"
+        }
+
+        NotificationPanel {
+            anchors.fill: parent
+            anchors.margins: 16
+
+            visible: popup.page === "notifications"
+
+            onBackRequested: popup.page = "main"
         }
     }
 
-    // =================================
     // Reusable button
-    // =================================
-
     component QuickButton: Rectangle {
         id: button
 
@@ -255,12 +231,12 @@ PopupWindow {
 
         radius: 7
 
-        color: mouse.containsMouse
-            ? Qt.rgba(0.23, 0.23, 0.23, 0.82)
-            : Qt.rgba(0.16, 0.16, 0.16, 0.72)
+        color: mouse.containsMouse || mouse.pressed
+            ? matugen.primary
+            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
 
         border.width: 1
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.12)
+        border.color: Qt.alpha(matugen.outlineVariant, 0.35)
 
         Behavior on color {
             ColorAnimation {
@@ -276,7 +252,7 @@ PopupWindow {
             Text {
                 text: button.icon
 
-                color: "#ffffff"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 20
             }
@@ -284,7 +260,7 @@ PopupWindow {
             Text {
                 text: button.label
 
-                color: "#ffffff"
+                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
 
                 font.pixelSize: 14
 
@@ -301,9 +277,7 @@ PopupWindow {
 
             cursorShape: Qt.PointingHandCursor
 
-            onClicked: {
-                button.clicked()
-            }
+            onClicked: button.clicked()
         }
     }
 }

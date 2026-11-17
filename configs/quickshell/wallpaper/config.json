@@ -1,0 +1,29 @@
+{
+  "wallpaper_path": "/etc/nixos-config/configs/quickshell/wallpaper/wallpapers/",
+  "cache_path": "~/.cache/quickshell/thumbs/",
+  "active_layout": "layouts/shell-bottom-dock.qml",
+  "wallpaper_tool": "auto",
+  "custom_command": "",
+  "post_apply": [
+    "mkdir -p \"$HOME/.local/state\"; { echo \"[$(date -Is)] Wallpaper: $WALLPAPER\"; if [ -n \"$WALLPAPER_STILL\" ] && [ -f \"$WALLPAPER_STILL\" ]; then /etc/nixos-config/scripts/update-theme \"$WALLPAPER_STILL\"; status=$?; echo \"Theme update exit: $status\"; exit \"$status\"; else echo \"No valid wallpaper image: $WALLPAPER_STILL\"; exit 1; fi; } >> \"$HOME/.local/state/matugen-wallpaper.log\" 2>&1"
+  ],
+  "notify_on_apply": false,
+  "number_of_pictures": 7,
+  "border_color": "#e17344",
+  "cache_batch_size": 20,
+  "stable_copy_path": "",
+  "video_extensions": [
+    "mp4",
+    "webm",
+    "mov",
+    "avi",
+    "mkv",
+    "gif",
+    "m4v",
+    "flv",
+    "wmv",
+    "mpeg",
+    "3gp"
+  ],
+  "video_thumbnail_interval": 5
+}

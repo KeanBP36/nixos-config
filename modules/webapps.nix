@@ -10,7 +10,6 @@ let
   # ── add web apps here ───────────────────────────
   urls = [
     "https://youtube.com"
-    "https://web.whatsapp.com"
     "https://github.com"
   ];
   # ────────────────────────────────────────────────
