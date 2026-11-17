@@ -28,12 +28,10 @@ PopupWindow {
     Rectangle {
         anchors.fill: parent
 
-        // Dark transparent glass
-        color: Qt.alpha(matugen.surfaceContainer, 0.94)
+        color: Qt.alpha(matugen.surfaceContainerHigh, 0.97)
+        radius: 16
 
-        radius: 10
-
-        border.width: 3
+        border.width: 1
         border.color: Qt.alpha(matugen.outlineVariant, 0.25)
 
         // =================================
@@ -43,124 +41,92 @@ PopupWindow {
         Column {
             anchors.fill: parent
             anchors.margins: 16
-            spacing: 12
+            spacing: 10
 
             visible: popup.page === "main"
 
-        Text {
-            text: "Control Panel"
-
-            color: matugen.primary
-
-            font.pixelSize: 20
-            font.bold: true
-        }
-            Rectangle {
-                width: parent.width
-                height: 1
-
-                color: Qt.alpha(matugen.outlineVariant, 0.20)
+            Text {
+                text: "Control Panel"
+                color: matugen.onSurface
+                font.pixelSize: 18
+                font.bold: true
+                bottomPadding: 6
             }
 
-            // Audio / Network
             Row {
                 width: parent.width
                 spacing: 8
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰕾"
                     label: "Audio"
-
                     onClicked: popup.page = "audio"
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰤨"
                     label: "Network"
-
                     onClicked: popup.page = "network"
                 }
             }
 
-            // Bluetooth / Notifications
             Row {
                 width: parent.width
                 spacing: 8
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰂯"
                     label: "Bluetooth"
-
                     onClicked: popup.page = "bluetooth"
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰂚"
                     label: "Notifications"
-
                     onClicked: popup.page = "notifications"
                 }
             }
 
-            Rectangle {
-                width: parent.width
-                height: 1
+            Item { width: 1; height: 8 }
 
-                color: Qt.alpha(matugen.outlineVariant, 0.20)
-            }
-
-            // Lock / Sleep
             Row {
                 width: parent.width
                 spacing: 8
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰌾"
                     label: "Lock"
-
                     onClicked: Quickshell.execDetached(["hyprlock"])
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰒲"
                     label: "Sleep"
-
                     onClicked: Quickshell.execDetached(["systemctl", "suspend"])
                 }
             }
 
-            // Reboot / Logout
             Row {
                 width: parent.width
                 spacing: 8
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰜉"
                     label: "Reboot"
-
                     onClicked: Quickshell.execDetached(["systemctl", "reboot"])
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰍃"
                     label: "Logout"
-
                     onClicked: Quickshell.execDetached([
                         "loginctl",
                         "terminate-user",
@@ -171,10 +137,8 @@ PopupWindow {
 
             QuickButton {
                 width: parent.width
-
                 icon: "󰐥"
                 label: "Power Off"
-
                 onClicked: Quickshell.execDetached(["systemctl", "poweroff"])
             }
         }
@@ -183,41 +147,33 @@ PopupWindow {
         AudioPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "audio"
-
             onBackRequested: popup.page = "main"
         }
 
         NetworkPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "network"
-
             onBackRequested: popup.page = "main"
         }
 
         BluetoothPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "bluetooth"
-
             onBackRequested: popup.page = "main"
         }
 
         NotificationPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "notifications"
-
             onBackRequested: popup.page = "main"
         }
     }
 
-    // Reusable button
+    // Reusable pill button
     component QuickButton: Rectangle {
         id: button
 
@@ -226,56 +182,43 @@ PopupWindow {
 
         signal clicked()
 
-        height: 52
+        height: 46
+        radius: height / 2
 
-        radius: 7
-
-        color: mouse.containsMouse || mouse.pressed
+        color: mouse.pressed
             ? matugen.primary
-            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
-
-        border.width: 1
-        border.color: Qt.alpha(matugen.outlineVariant, 0.35)
+            : mouse.containsMouse
+                ? Qt.alpha(matugen.primary, 0.48)
+                : Qt.alpha(matugen.primary, 0.24)
 
         Behavior on color {
-            ColorAnimation {
-                duration: 100
-            }
+            ColorAnimation { duration: 120 }
         }
 
         Row {
             anchors.centerIn: parent
-
             spacing: 10
 
             Text {
                 text: button.icon
-
-                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
-
-                font.pixelSize: 20
+                color: mouse.pressed ? matugen.onPrimary : matugen.onSurface
+                font.pixelSize: 18
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: button.label
-
-                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
-
-                font.pixelSize: 14
-
+                color: mouse.pressed ? matugen.onPrimary : matugen.onSurface
+                font.pixelSize: 13
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
 
         MouseArea {
             id: mouse
-
             anchors.fill: parent
-
             hoverEnabled: true
-
             cursorShape: Qt.PointingHandCursor
-
             onClicked: button.clicked()
         }
     }

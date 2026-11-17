@@ -7,7 +7,6 @@ Rectangle {
     id: root
     MatugenPalette { id: matugen }
 
-
     property var notif: null
     property bool showClose: false
     property string time: ""
@@ -17,11 +16,11 @@ Rectangle {
     signal clicked
     signal actionTaken
 
-    // Local theme (replaces the missing Theme singleton)
+    // Local theme
     QtObject {
         id: theme
 
-        readonly property color background: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+        readonly property color background: matugen.surfaceContainerHigh
         readonly property color foreground: matugen.onSurface
         readonly property color critical: matugen.error
         readonly property color main: matugen.primary
@@ -36,13 +35,16 @@ Rectangle {
         return Quickshell.iconPath(notif.appIcon, true) || "";
     }
 
-    implicitHeight: content.implicitHeight + 24
-    radius: 10
-    color: Qt.alpha(theme.background, 0.92)
-    border.width: 2
-    border.color: notif?.urgency === NotificationUrgency.Critical
-        ? theme.critical
-        : theme.foreground
+    readonly property bool critical:
+        notif?.urgency === NotificationUrgency.Critical
+
+    implicitHeight: content.implicitHeight + 28
+    radius: 16
+    color: Qt.alpha(theme.background, 0.97)
+
+    // Only critical notifications get an outline
+    border.width: critical ? 1.5 : 0
+    border.color: theme.critical
 
     MouseArea {
         id: bg
@@ -59,24 +61,24 @@ Rectangle {
             left: parent.left
             right: parent.right
             top: parent.top
-            margins: 12
+            margins: 14
         }
-        spacing: 8
+        spacing: 10
 
         Row {
             width: parent.width
-            spacing: 10
+            spacing: 12
 
             IconImage {
                 id: icon
 
                 visible: root.iconSource !== ""
-                implicitSize: 48
+                implicitSize: 40
                 source: root.iconSource
             }
 
             Column {
-                width: parent.width - (icon.visible ? 58 : 0) - (root.showClose ? 28 : 0)
+                width: parent.width - (icon.visible ? 52 : 0) - (root.showClose ? 28 : 0)
                 spacing: 2
 
                 Text {
@@ -84,7 +86,7 @@ Rectangle {
                     text: root.notif?.summary ?? ""
                     color: theme.foreground
                     font.family: theme.fontFamily
-                    font.pointSize: 13
+                    font.pointSize: 12
                     font.bold: true
                     elide: Text.ElideRight
                 }
@@ -95,7 +97,7 @@ Rectangle {
                     text: root.notif?.body ?? ""
                     color: Qt.alpha(theme.foreground, 0.8)
                     font.family: theme.fontFamily
-                    font.pointSize: 11
+                    font.pointSize: 10
                     textFormat: Text.StyledText
                     wrapMode: Text.Wrap
                     maximumLineCount: 4
@@ -108,7 +110,7 @@ Rectangle {
                     text: [root.notif?.appName, root.time].filter(s => s).join(" · ")
                     color: Qt.alpha(theme.foreground, 0.5)
                     font.family: theme.fontFamily
-                    font.pointSize: 10
+                    font.pointSize: 9
                     elide: Text.ElideRight
                 }
             }
@@ -118,9 +120,9 @@ Rectangle {
                 text: "󰅖"
                 color: closeArea.containsMouse
                     ? theme.critical
-                    : Qt.alpha(theme.foreground, 0.6)
+                    : Qt.alpha(theme.foreground, 0.5)
                 font.family: theme.fontFamily
-                font.pointSize: 13
+                font.pointSize: 12
 
                 MouseArea {
                     id: closeArea
@@ -128,6 +130,7 @@ Rectangle {
                     anchors.fill: parent
                     anchors.margins: -4
                     hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
                     onClicked: root.notif?.dismiss()
                 }
             }
@@ -145,19 +148,26 @@ Rectangle {
 
                     required property var modelData
 
-                    implicitWidth: actionText.implicitWidth + 20
-                    implicitHeight: 26
-                    radius: 13
-                    color: actionArea.containsMouse
-                        ? Qt.alpha(theme.main, 0.45)
-                        : Qt.alpha(theme.foreground, 0.12)
+                    implicitWidth: actionText.implicitWidth + 24
+                    implicitHeight: 28
+                    radius: height / 2
+
+                    color: actionArea.pressed
+                        ? theme.main
+                        : actionArea.containsMouse
+                            ? Qt.alpha(theme.main, 0.65)
+                            : Qt.alpha(theme.main, 0.30)
+
+                    Behavior on color {
+                        ColorAnimation { duration: 120 }
+                    }
 
                     Text {
                         id: actionText
 
                         anchors.centerIn: parent
                         text: actionBtn.modelData.text || actionBtn.modelData.identifier
-                        color: theme.foreground
+                        color: actionArea.pressed ? matugen.onPrimary : theme.foreground
                         font.family: theme.fontFamily
                         font.pointSize: 10
                     }
@@ -167,6 +177,7 @@ Rectangle {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             actionBtn.modelData.invoke();
                             root.actionTaken();

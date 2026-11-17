@@ -14,7 +14,7 @@ Column {
     // Optional: in ControlPanel.qml add  onCloseRequested: popup.visible = false
     signal closeRequested()
 
-    spacing: 10
+    spacing: 12
 
     // =================================
     // State
@@ -356,59 +356,47 @@ Column {
 
     Row {
         width: parent.width
-        height: 32
-        spacing: 8
+        height: 34
+        spacing: 10
 
         Rectangle {
-            width: 32
-            height: 32
-            radius: 6
+            width: 34
+            height: 34
+            radius: width / 2
 
-            color: backMouse.containsMouse
-                ? matugen.primary
-                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+            color: backMouse.pressed
+                ? Qt.alpha(matugen.primary, 0.65)
+                : backMouse.containsMouse
+                    ? Qt.alpha(matugen.primary, 0.48)
+                    : Qt.alpha(matugen.primary, 0.24)
+
+            Behavior on color {
+                ColorAnimation { duration: 120 }
+            }
 
             Text {
                 anchors.centerIn: parent
-
                 text: "󰁍"
                 color: matugen.onSurface
-
                 font.pixelSize: 18
             }
 
             MouseArea {
                 id: backMouse
-
                 anchors.fill: parent
-
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    root.backRequested()
-                }
+                onClicked: root.backRequested()
             }
         }
 
         Text {
             text: "Notifications"
-
             color: matugen.onSurface
-
-            font.pixelSize: 20
+            font.pixelSize: 18
             font.bold: true
-
-            anchors.verticalCenter:
-                parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
-    }
-
-    Rectangle {
-        width: parent.width
-        height: 1
-
-        color: Qt.alpha(matugen.outline, 0.40)
     }
 
     // =================================
@@ -420,7 +408,8 @@ Column {
         height: 28
 
         Text {
-            width: parent.width - 90
+            width: parent.width - 84
+            leftPadding: 4
 
             text: root.visibleCount + (
                 root.visibleCount === 1
@@ -428,44 +417,41 @@ Column {
                     : " notifications"
             )
 
-            color: matugen.onSurface
+            color: Qt.lighter(matugen.outline, 1.6)
+            font.pixelSize: 12
 
-            font.pixelSize: 13
-
-            anchors.verticalCenter:
-                parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Rectangle {
             width: 80
             height: 28
-
-            radius: 6
+            radius: height / 2
 
             visible: root.visibleCount > 0
 
-            color: clearAllMouse.containsMouse
+            color: clearAllMouse.pressed
                 ? matugen.primary
-                : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+                : clearAllMouse.containsMouse
+                    ? Qt.alpha(matugen.primary, 0.65)
+                    : Qt.alpha(matugen.primary, 0.30)
+
+            Behavior on color {
+                ColorAnimation { duration: 120 }
+            }
 
             Text {
                 anchors.centerIn: parent
-
                 text: "Clear all"
-                color: matugen.onSurface
-
+                color: clearAllMouse.pressed ? matugen.onPrimary : matugen.onSurface
                 font.pixelSize: 11
-                font.bold: true
             }
 
             MouseArea {
                 id: clearAllMouse
-
                 anchors.fill: parent
-
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
                 onClicked: root.clearAll()
             }
         }
@@ -479,7 +465,7 @@ Column {
         id: list
 
         width: root.width
-        height: Math.max(100, root.height - 96)
+        height: Math.max(100, root.height - 88)
 
         clip: true
         spacing: 8
@@ -513,21 +499,24 @@ Column {
 
                 width: parent.width
                 height: 28
-                radius: 6
+                radius: height / 2
 
                 color: headerMouse.containsMouse
-                    ? matugen.primary
-                    : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+                    ? Qt.alpha(matugen.primary, 0.48)
+                    : Qt.alpha(matugen.primary, 0.24)
+
+                Behavior on color {
+                    ColorAnimation { duration: 120 }
+                }
 
                 Text {
                     anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 14
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: "▾  " + row.groupKey + " (" + row.groupCount + ")"
 
                     color: matugen.onSurface
-
                     font.pixelSize: 12
                     font.bold: true
                 }
@@ -536,7 +525,6 @@ Column {
                     id: headerMouse
 
                     anchors.fill: parent
-
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
 
@@ -550,18 +538,18 @@ Column {
 
                     width: 52
                     height: 20
-                    radius: 5
+                    radius: height / 2
 
-                    color: groupClearMouse.containsMouse
+                    color: groupClearMouse.pressed
                         ? matugen.primary
-                        : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+                        : groupClearMouse.containsMouse
+                            ? Qt.alpha(matugen.primary, 0.65)
+                            : Qt.alpha(matugen.primary, 0.30)
 
                     Text {
                         anchors.centerIn: parent
-
                         text: "Clear"
-                        color: matugen.onSurface
-
+                        color: groupClearMouse.pressed ? matugen.onPrimary : matugen.onSurface
                         font.pixelSize: 10
                     }
 
@@ -569,7 +557,6 @@ Column {
                         id: groupClearMouse
 
                         anchors.fill: parent
-
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
@@ -588,12 +575,9 @@ Column {
 
                 width: parent.width - 24
                 height: card.height
-                radius: 6
+                radius: 14
 
-                color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
-
-                border.width: 1
-                border.color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+                color: Qt.alpha(matugen.primary, 0.14)
             }
 
             Rectangle {
@@ -604,12 +588,9 @@ Column {
 
                 width: parent.width - 12
                 height: card.height
-                radius: 6
+                radius: 14
 
-                color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
-
-                border.width: 1
-                border.color: Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+                color: Qt.alpha(matugen.primary, 0.18)
             }
 
             // ---- Card ----
@@ -656,9 +637,9 @@ Column {
 
         text: "No notifications"
 
-        color: matugen.outline
-
+        color: Qt.lighter(matugen.outline, 1.6)
         font.pixelSize: 12
+        leftPadding: 4
     }
 
     // =================================
@@ -679,16 +660,21 @@ Column {
         signal closed()
         signal expandToggled()
 
-        height: content.implicitHeight + 20
+        height: content.implicitHeight + 24
 
-        radius: 6
+        radius: 14
 
         color: cardMouse.containsMouse
-            ? Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
-            : Qt.tint(matugen.surfaceContainerHigh, Qt.alpha(matugen.secondary, 0.75))
+            ? Qt.alpha(matugen.primary, 0.38)
+            : Qt.alpha(matugen.primary, 0.24)
 
-        border.width: 1
-        border.color: item.urgent ? matugen.error : matugen.surfaceContainerHigh
+        Behavior on color {
+            ColorAnimation { duration: 120 }
+        }
+
+        // Only critical notifications get an outline
+        border.width: item.urgent ? 1.5 : 0
+        border.color: matugen.error
 
         MouseArea {
             id: cardMouse
@@ -707,7 +693,7 @@ Column {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.margins: 10
+            anchors.margins: 12
 
             spacing: 8
 
@@ -721,7 +707,6 @@ Column {
                     text: item.title
 
                     color: matugen.onSurface
-
                     font.pixelSize: 13
                     font.bold: true
 
@@ -736,8 +721,7 @@ Column {
                     visible: item.text !== ""
                     text: item.text
 
-                    color: matugen.onSurface
-
+                    color: Qt.alpha(matugen.onSurface, 0.8)
                     font.pixelSize: 11
 
                     wrapMode: Text.Wrap
@@ -751,8 +735,7 @@ Column {
                     visible: item.app !== ""
                     text: item.app
 
-                    color: matugen.outline
-
+                    color: Qt.lighter(matugen.outline, 1.6)
                     font.pixelSize: 10
 
                     elide: Text.ElideRight
@@ -768,7 +751,7 @@ Column {
 
                     color: closeMouse.containsMouse
                         ? matugen.error
-                        : matugen.outline
+                        : Qt.lighter(matugen.outline, 1.6)
 
                     font.pixelSize: 16
 
@@ -790,7 +773,7 @@ Column {
                         && (bodyText.truncated || item.expanded)
 
                     text: item.expanded ? "▴" : "▾"
-                    color: expandMouse.containsMouse ? matugen.onSurface : matugen.outline
+                    color: expandMouse.containsMouse ? matugen.onSurface : Qt.lighter(matugen.outline, 1.6)
                     font.pixelSize: 14
 
                     MouseArea {
