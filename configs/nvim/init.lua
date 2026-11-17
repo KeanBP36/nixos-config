@@ -602,12 +602,12 @@ local function apply_colors()
 		NormalFloat = { fg = c.fg, bg = c.bg },
 		CursorLine = { bg = c.cursor },
 		CursorLineNr = { fg = c.blue, bold = true },
-		LineNr = { fg = c.gray },
+		LineNr = { fg = c.fg },
 	})
 
 	-- Syntax
 	hl_all({
-		Comment = { fg = c.gray, italic = true },
+		Comment = { fg = c.fg, italic = true },
 		Constant = { fg = c.cyan },
 		String = { fg = c.green },
 		Character = { fg = c.green },
@@ -634,7 +634,7 @@ local function apply_colors()
 		["@string"] = { fg = c.green },
 		["@constant"] = { fg = c.cyan },
 		["@number"] = { fg = c.cyan },
-		["@comment"] = { fg = c.gray, italic = true },
+		["@comment"] = { fg = c.fg, italic = true },
 	})
 
 	-- Diagnostics
@@ -647,7 +647,7 @@ local function apply_colors()
 	-- Telescope
 	hl_all({
 		TelescopeNormal = { fg = c.fg, bg = c.bg },
-		TelescopeBorder = { fg = c.gray, bg = c.bg },
+		TelescopeBorder = { fg = c.fg, bg = c.bg },
 		TelescopeSelection = { fg = c.white, bg = c.selection },
 		TelescopeMatching = { fg = c.blue, bold = true },
 	})
@@ -677,8 +677,7 @@ local function load_matugen_colors()
 
 	for name, value in pairs(generated) do
 		local target = aliases[name] or name
-		if colors[target] ~= nil and type(value) == "string"
-			and value:match("^#%x%x%x%x%x%x$") then
+		if colors[target] ~= nil and type(value) == "string" and value:match("^#%x%x%x%x%x%x$") then
 			colors[target] = value
 		end
 	end

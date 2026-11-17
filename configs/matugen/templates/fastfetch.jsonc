@@ -9,36 +9,54 @@
     "uptime",
     {
       "type": "packages",
-      "keyColor": "{{colors.primary.default.hex}}"
+      "keyColor": "{{colors.primary.default.hex}}",
     },
     "shell",
     "separator",
     {
       "type": "memory",
-      "keyColor": "{{colors.on_surface.default.hex}}"
+      "keyColor": "{{colors.primary.default.hex}}",
+      "outputColor": "{{colors.on_surface.default.hex}}",
+      "percent": {
+        "green": 80,
+        "yellow": 95,
+        "type": 6,
+      },
     },
     {
       "type": "swap",
-      "keyColor": "{{colors.secondary.default.hex}}"
+      "keyColor": "{{colors.secondary.default.hex}}",
+      "outputColor": "{{colors.on_surface.default.hex}}",
+      "percent": {
+        "green": 80,
+        "yellow": 95,
+        "type": 6,
+      },
     },
     {
       "type": "disk",
-      "keyColor": "{{colors.tertiary.default.hex}}"
+      "keyColor": "{{colors.tertiary.default.hex}}",
+      "outputColor": "{{colors.on_surface.default.hex}}",
+      "percent": {
+        "green": 80,
+        "yellow": 95,
+        "type": 6,
+      },
     },
     {
       "type": "localip",
-      "keyColor": "{{colors.on_surface_variant.default.hex}}"
+      "keyColor": "{{colors.on_surface_variant.default.hex}}",
     },
     "separator",
     "break",
-    "colors"
+    "colors",
   ],
   "display": {
     "color": {
       "keys": "{{colors.primary.default.hex}}",
       "title": "{{colors.tertiary.default.hex}}",
       "separator": "{{colors.outline.default.hex}}",
-      "output": "{{colors.on_surface.default.hex}}"
-    }
-  }
+      "output": "{{colors.on_surface.default.hex}}",
+    },
+  },
 }
