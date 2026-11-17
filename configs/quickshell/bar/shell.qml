@@ -358,100 +358,107 @@ Variants {
         color: root.barBackground
 
         // =========================
-        // WORKSPACE BUTTONS
-        // =========================
+// WORKSPACE BUTTONS
+// =========================
 
-        Row {
-            id: workspaces
+Row {
+    id: workspaces
 
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    anchors.leftMargin: 12
+    anchors.verticalCenter: parent.verticalCenter
 
-            spacing: 6
+    spacing: 6
 
-            Repeater {
-                model: workspaceModel
+    Repeater {
+        model: workspaceModel
 
-                Rectangle {
-                    id: workspaceButton
+        Rectangle {
+            id: workspaceButton
 
-                    required property var workspaceId
-                    required property bool focused
-                    required property bool occupied
-                    required property bool urgent
+            required property var workspaceId
+            required property bool focused
+            required property bool occupied
+            required property bool urgent
 
-                    property bool hovered: false
+            property bool hovered: false
 
-                    width: 32
-                    height: 28
-                    radius: 4
+            width: 32
+            height: 28
+            radius: 4
 
-                    color: focused || hovered
-                        ? root.highlight
-                        : root.background
+            color: focused
+                ? Qt.lighter(root.highlight, 1.12)
+                : hovered
+                    ? Qt.lighter(root.background, 1.08)
+                    : root.background
 
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 100
-                        }
-                    }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 100
+                }
+            }
 
-                    Text {
-                        anchors.centerIn: parent
+            Text {
+                anchors.centerIn: parent
 
-                        text: workspaceButton.workspaceId
+                text: workspaceButton.workspaceId
 
-                        color: workspaceButton.urgent
-                            ? root.urgent
-                            : workspaceButton.occupied
-                                ? root.foreground
-                                : Qt.darker(root.foreground, 1.6)
+                color: workspaceButton.urgent
+                    ? root.urgent
+                    : workspaceButton.focused
+                        ? matugen.onPrimary
+                        : workspaceButton.occupied
+                            ? root.foreground
+                            : Qt.lighter(root.foreground, 1.15)
 
-                        font.pixelSize: 14
-                        font.bold: workspaceButton.focused
-                            || workspaceButton.hovered
-                    }
+                font.pixelSize: 14
+                font.bold: workspaceButton.focused
+                    || workspaceButton.hovered
 
-                    // Active workspace indicator
-
-                    Rectangle {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 3
-
-                        width: 12
-                        height: 2
-                        radius: 1
-
-                        color: root.foreground
-                        visible: workspaceButton.focused
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-
-                        onEntered: {
-                            workspaceButton.hovered = true
-                        }
-
-                        onExited: {
-                            workspaceButton.hovered = false
-                        }
-
-                        onClicked: {
-                            root.switchWorkspace(
-                                workspaceButton.workspaceId
-                            )
-                        }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
                     }
                 }
             }
-        }
 
+            // Active workspace indicator
+
+            Rectangle {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 3
+
+                width: 12
+                height: 2
+                radius: 1
+
+                color: workspaceButton.focused
+                    ? matugen.onPrimary
+                    : root.foreground
+
+                visible: workspaceButton.focused
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+
+                onEntered: workspaceButton.hovered = true
+                onExited: workspaceButton.hovered = false
+
+                onClicked: {
+                    root.switchWorkspace(
+                        workspaceButton.workspaceId
+                    )
+                }
+            }
+        }
+    }
+}
         // =========================
         // AUDIO VISUALIZER
         // =========================

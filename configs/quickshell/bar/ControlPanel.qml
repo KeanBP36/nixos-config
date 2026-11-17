@@ -47,15 +47,14 @@ PopupWindow {
 
             visible: popup.page === "main"
 
-            Text {
-                text: "Control Panel"
+        Text {
+            text: "Control Panel"
 
-                color: mouse.containsMouse || mouse.pressed ? matugen.onPrimary : matugen.onSurface
+            color: matugen.primary
 
-                font.pixelSize: 20
-                font.bold: true
-            }
-
+            font.pixelSize: 20
+            font.bold: true
+        }
             Rectangle {
                 width: parent.width
                 height: 1

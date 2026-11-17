@@ -126,7 +126,7 @@ Column {
             spacing: 1
 
             Text {
-                text: "Music"
+                text: "Audio"
                 color: "#000000"
                 font.pixelSize: 19
                 font.bold: true
