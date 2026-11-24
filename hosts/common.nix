@@ -181,6 +181,7 @@
     wget
     tree
     btop
+    nvtopPackages.full
     mpvpaper
     gcc
     wlr-randr

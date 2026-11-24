@@ -35,7 +35,8 @@
         io.github.Soundux \
         org.torproject.torbrowser-launcher \
         com.oppzippy.OpenSCQ30 \
-        it.mijorus.gearlever
+        it.mijorus.gearlever \
+       net.lutris.Lutris 
 
 
       # Mortar isn't on Flathub yet; install it from the developer's own repo
