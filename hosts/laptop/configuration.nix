@@ -6,5 +6,7 @@
 
     ../../modules/flatpak.nix
     ../../modules/snap.nix
+
+    ../../profiles/gaming.nix
   ];
 }

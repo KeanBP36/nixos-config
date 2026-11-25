@@ -302,11 +302,6 @@ require("lazy").setup({
 					return math.floor(vim.o.lines * 0.4)
 				end,
 			},
-			highlights = {
-				Normal = { guibg = "#1f1f1f" },
-				NormalFloat = { guibg = "#1f1f1f" },
-				FloatBorder = { guifg = "#666666", guibg = "#1f1f1f" },
-			},
 		},
 	},
 
@@ -315,7 +310,7 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			local bg, fg, gray = "#1f1f1f", "#d4d4d4", "#666666"
+			local bg, fg, gray = "#110d11", "#4c444c", "#161217"
 			local function mode_hl(color)
 				return { a = { fg = bg, bg = color, gui = "bold" } }
 			end
@@ -325,13 +320,13 @@ require("lazy").setup({
 					component_separators = "",
 					section_separators = "",
 					theme = {
-						normal = vim.tbl_extend("force", mode_hl("#569cd6"), {
-							b = { fg = fg, bg = "#292929" },
+						normal = vim.tbl_extend("force", mode_hl("#ea42b4"), {
+							b = { fg = fg, bg = "#110d11" },
 							c = { fg = fg, bg = bg },
 						}),
-						insert = mode_hl("#608b4e"),
-						visual = mode_hl("#c586c0"),
-						replace = mode_hl("#f44747"),
+						insert = mode_hl("#bb4d1e"),
+						visual = mode_hl("#ed5ebf"),
+						replace = mode_hl("#eb5065"),
 						inactive = {
 							a = { fg = gray, bg = bg },
 							b = { fg = gray, bg = bg },
@@ -382,7 +377,7 @@ require("lazy").setup({
 				timeout = 2500,
 				max_width = 60,
 				fps = 60,
-				background_colour = "#1f1f1f",
+				background_colour = "#110d11",
 			})
 			vim.notify = notify
 		end,
@@ -571,41 +566,64 @@ require("lazy").setup({
 -- Colors (re-applied after any colorscheme change)
 
 local colors = {
-	bg = "#1f1f1f",
-	fg = "#d4d4d4",
-	red = "#f44747",
-	green = "#608b4e",
-	yellow = "#dcdcaa",
-	blue = "#569cd6",
-	purple = "#c586c0",
-	cyan = "#4ec9b0",
-	gray = "#666666",
-	white = "#ffffff",
+	bg = "#110d11",
+	fg = "#4c444c",
+	cursor = "#161217",
+	selection = "#161217",
+	red = "#eb5065",
+	green = "#bb4d1e",
+	yellow = "#eeb198",
+	blue = "#ea42b4",
+	purple = "#ed5ebf",
+	cyan = "#df6a38",
+	gray = "#161217",
+	white = "#eae0e7",
 }
 
 local function apply_colors()
 	local c = colors
+
 	local function hl(group, spec)
 		vim.api.nvim_set_hl(0, group, spec)
 	end
+
 	local function hl_all(groups)
 		for group, spec in pairs(groups) do
 			hl(group, spec)
 		end
 	end
 
+	-- Terminal ANSI colors
+	vim.g.terminal_color_0 = c.bg
+	vim.g.terminal_color_1 = c.red
+	vim.g.terminal_color_2 = c.green
+	vim.g.terminal_color_3 = c.yellow
+	vim.g.terminal_color_4 = c.blue
+	vim.g.terminal_color_5 = c.purple
+	vim.g.terminal_color_6 = c.cyan
+	vim.g.terminal_color_7 = c.white
+	vim.g.terminal_color_8 = c.gray
+	vim.g.terminal_color_9 = c.red
+	vim.g.terminal_color_10 = c.green
+	vim.g.terminal_color_11 = c.yellow
+	vim.g.terminal_color_12 = c.blue
+	vim.g.terminal_color_13 = c.purple
+	vim.g.terminal_color_14 = c.cyan
+	vim.g.terminal_color_15 = c.white
+
 	-- Editor
 	hl_all({
 		Normal = { fg = c.fg, bg = c.bg },
 		NormalFloat = { fg = c.fg, bg = c.bg },
-		CursorLine = { bg = "#292929" },
+		FloatBorder = { fg = c.gray, bg = c.bg },
+		CursorLine = { bg = c.cursor },
 		CursorLineNr = { fg = c.blue, bold = true },
-		LineNr = { fg = c.gray },
+		LineNr = { fg = c.fg },
 	})
 
 	-- Syntax
 	hl_all({
-		Comment = { fg = c.gray, italic = true },
+		Comment = { fg = c.fg, italic = true },
 		Constant = { fg = c.cyan },
 		String = { fg = c.green },
 		Character = { fg = c.green },
@@ -632,7 +650,7 @@ local function apply_colors()
 		["@string"] = { fg = c.green },
 		["@constant"] = { fg = c.cyan },
 		["@number"] = { fg = c.cyan },
-		["@comment"] = { fg = c.gray, italic = true },
+		["@comment"] = { fg = c.fg, italic = true },
 	})
 
 	-- Diagnostics
@@ -645,16 +663,69 @@ local function apply_colors()
 	-- Telescope
 	hl_all({
 		TelescopeNormal = { fg = c.fg, bg = c.bg },
-		TelescopeBorder = { fg = c.gray, bg = c.bg },
-		TelescopeSelection = { fg = c.white, bg = "#333333" },
+		TelescopeBorder = { fg = c.fg, bg = c.bg },
+		TelescopeSelection = { fg = c.white, bg = c.selection },
 		TelescopeMatching = { fg = c.blue, bold = true },
 	})
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_colors })
+-- Load dynamic Matugen colors
+local matugen_file = vim.fn.stdpath("config") .. "/matugen.json"
+
+local function load_matugen_colors()
+	local file = io.open(matugen_file, "r")
+	if not file then
+		return
+	end
+
+	local contents = file:read("*a")
+	file:close()
+
+	local ok, generated = pcall(vim.json.decode, contents)
+	if not ok or type(generated) ~= "table" then
+		return
+	end
+
+	local aliases = {
+		background = "bg",
+		foreground = "fg",
+	}
+
+	for name, value in pairs(generated) do
+		local target = aliases[name] or name
+		if colors[target] ~= nil and type(value) == "string" and value:match("^#%x%x%x%x%x%x$") then
+			colors[target] = value
+		end
+	end
+
+	apply_colors()
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = apply_colors,
+})
+
 vim.cmd("highlight clear")
 vim.opt.background = "dark"
+load_matugen_colors()
 apply_colors()
+
+-- Watch the config directory for Matugen updates
+local matugen_watcher = vim.uv.new_fs_event()
+local config_dir = vim.fn.stdpath("config")
+
+if matugen_watcher then
+	matugen_watcher:start(config_dir, {}, function(err, filename)
+		if not err and filename == "matugen.json" then
+			vim.schedule(load_matugen_colors)
+		end
+	end)
+end
+
+-- Also reload when returning to Neovim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	callback = load_matugen_colors,
+})
 
 -- Diagnostics
 

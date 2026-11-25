@@ -6,6 +6,8 @@ import Quickshell.Services.Mpris
 Column {
     id: root
 
+    MatugenPalette { id: matugen }
+
     signal backRequested()
 
     spacing: 14
@@ -20,23 +22,6 @@ Column {
             : null
     }
 
-    function playPause() {
-        if (!root.player)
-            return
-
-        root.player.togglePlaying()
-    }
-
-    function previous() {
-        if (root.player && root.player.canGoPrevious)
-            root.player.previous()
-    }
-
-    function next() {
-        if (root.player && root.player.canGoNext)
-            root.player.next()
-    }
-
     Component.onCompleted: updatePlayer()
 
     Connections {
@@ -47,35 +32,20 @@ Column {
         }
     }
 
+    // =================================
     // Header
+    // =================================
+
     Row {
         width: parent.width
-        height: 38
+        height: 34
         spacing: 10
 
-        Rectangle {
-            width: 38
-            height: 38
-            radius: 10
-            color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            Text {
-                anchors.centerIn: parent
-                text: "‹"
-                color: "#d4d4d4"
-                font.pixelSize: 27
-            }
-
-            MouseArea {
-                id: backMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: root.backRequested()
-            }
+        RoundButton {
+            width: 34
+            height: 34
+            icon: "󰁍"
+            onClicked: root.backRequested()
         }
 
         Column {
@@ -84,8 +54,8 @@ Column {
 
             Text {
                 text: "Music"
-                color: "#d4d4d4"
-                font.pixelSize: 19
+                color: matugen.onSurface
+                font.pixelSize: 18
                 font.bold: true
             }
 
@@ -94,28 +64,29 @@ Column {
                     ? (root.player.identity || "Media")
                     : "No player"
 
-                color: "#666666"
+                color: Qt.lighter(matugen.outline, 1.6)
                 font.pixelSize: 11
             }
         }
     }
 
-    // Album artwork
+    // =================================
+    // Artwork
+    // =================================
+
     Rectangle {
         width: 150
         height: 150
         anchors.horizontalCenter: parent.horizontalCenter
-        radius: 18
-        color: "#292929"
+        radius: 20
+        color: Qt.alpha(matugen.primary, 0.24)
         clip: true
 
         Image {
             id: artwork
             anchors.fill: parent
 
-            source: root.player
-                ? root.player.trackArtUrl
-                : ""
+            source: root.player ? root.player.trackArtUrl : ""
 
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
@@ -127,16 +98,17 @@ Column {
 
         Text {
             anchors.centerIn: parent
-
             text: "♫"
-            color: "#555555"
-            font.pixelSize: 64
-
+            color: Qt.alpha(matugen.onSurface, 0.5)
+            font.pixelSize: 56
             visible: !artwork.visible
         }
     }
 
-    // Track information
+    // =================================
+    // Track info
+    // =================================
+
     Column {
         width: parent.width
         spacing: 3
@@ -148,8 +120,8 @@ Column {
                 ? (root.player.trackTitle || "Nothing playing")
                 : "Nothing playing"
 
-            color: "#d4d4d4"
-            font.pixelSize: 17
+            color: matugen.onSurface
+            font.pixelSize: 16
             font.bold: true
 
             horizontalAlignment: Text.AlignHCenter
@@ -163,8 +135,8 @@ Column {
                 ? (root.player.trackArtist || "Unknown artist")
                 : ""
 
-            color: "#999999"
-            font.pixelSize: 13
+            color: Qt.lighter(matugen.outline, 1.6)
+            font.pixelSize: 12
 
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
@@ -173,11 +145,10 @@ Column {
         Text {
             width: parent.width
 
-            text: root.player
-                ? (root.player.trackAlbum || "")
-                : ""
+            visible: text !== ""
+            text: root.player ? (root.player.trackAlbum || "") : ""
 
-            color: "#666666"
+            color: Qt.alpha(Qt.lighter(matugen.outline, 1.6), 0.8)
             font.pixelSize: 11
 
             horizontalAlignment: Text.AlignHCenter
@@ -185,126 +156,89 @@ Column {
         }
     }
 
-    // Media controls
+    // =================================
+    // Controls
+    // =================================
+
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 8
+        spacing: 10
 
-        // Previous
-        Rectangle {
-            width: 46
-            height: 46
-            radius: 8
-
-            color: previousMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            border.width: 1
-            border.color: "#444444"
-
-            Text {
-                anchors.centerIn: parent
-                text: "󰒮"
-                color: "#d4d4d4"
-                font.pixelSize: 19
-            }
-
-            MouseArea {
-                id: previousMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    if (root.player)
-                        root.player.previous()
-                }
+        RoundButton {
+            width: 40
+            height: 40
+            icon: "󰒮"
+            enabled: root.player !== null
+            onClicked: {
+                if (root.player)
+                    root.player.previous()
             }
         }
 
-        // Play / Pause
-        Rectangle {
-            width: 46
-            height: 46
-            radius: 8
-
-            color: playMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            border.width: 1
-            border.color: "#444444"
-
-            Text {
-                anchors.centerIn: parent
-
-                text: root.player && root.player.isPlaying
-                    ? "󰏤"
-                    : "󰐊"
-
-                color: "#d4d4d4"
-                font.pixelSize: 20
-            }
-
-            MouseArea {
-                id: playMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    if (root.player)
-                        root.player.togglePlaying()
-                }
+        RoundButton {
+            width: 48
+            height: 48
+            icon: root.player && root.player.isPlaying ? "󰏤" : "󰐊"
+            iconSize: 20
+            filled: true
+            enabled: root.player !== null
+            onClicked: {
+                if (root.player)
+                    root.player.togglePlaying()
             }
         }
 
-        // Next
-        Rectangle {
-            width: 46
-            height: 46
-            radius: 8
-
-            color: nextMouse.containsMouse
-                ? "#3a3a3a"
-                : "#292929"
-
-            border.width: 1
-            border.color: "#444444"
-
-            Text {
-                anchors.centerIn: parent
-                text: "󰒭"
-                color: "#d4d4d4"
-                font.pixelSize: 19
-            }
-
-            MouseArea {
-                id: nextMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    if (root.player)
-                        root.player.next()
-                }
+        RoundButton {
+            width: 40
+            height: 40
+            icon: "󰒭"
+            enabled: root.player !== null
+            onClicked: {
+                if (root.player)
+                    root.player.next()
             }
         }
     }
 
-    // Status
-    Text {
-        width: parent.width
+    // Round icon button
+    component RoundButton: Rectangle {
+        id: btn
 
-        text: root.player
-            ? (root.player.isPlaying ? "Playing" : "Paused")
-            : "Nothing playing"
+        property string icon
+        property int iconSize: 18
+        property bool filled: false
 
-        color: "#666666"
-        font.pixelSize: 11
+        signal clicked()
 
-        horizontalAlignment: Text.AlignHCenter
-   }
+        radius: width / 2
+
+        color: filled
+            ? (btnMouse.containsMouse ? Qt.lighter(matugen.primary, 1.1) : matugen.primary)
+            : btnMouse.pressed
+                ? Qt.alpha(matugen.primary, 0.65)
+                : btnMouse.containsMouse
+                    ? Qt.alpha(matugen.primary, 0.48)
+                    : Qt.alpha(matugen.primary, 0.24)
+
+        opacity: enabled ? 1.0 : 0.4
+
+        Behavior on color {
+            ColorAnimation { duration: 120 }
+        }
+
+        Text {
+            anchors.centerIn: parent
+            text: btn.icon
+            color: btn.filled ? matugen.onPrimary : matugen.onSurface
+            font.pixelSize: btn.iconSize
+        }
+
+        MouseArea {
+            id: btnMouse
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: btn.clicked()
+        }
+    }
 }

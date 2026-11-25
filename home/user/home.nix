@@ -48,6 +48,7 @@
     kitty
     fastfetch
     ghostty
+    zoxide
 
     # Communication and collaboration
     discord
@@ -144,8 +145,39 @@
       force = true;
     };
 
+    ".config/quickshell/bar/MatugenPalette.qml" = {
+      source = ../../configs/quickshell/bar/MatugenPalette.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/NotificationPanel.qml" = {
+      source = ../../configs/quickshell/bar/NotificationPanel.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/NotificationCard.qml" = {
+      source = ../../configs/quickshell/bar/NotificationCard.qml;
+      force = true;
+    };
+
+    ".config/quickshell/bar/MusicPanel.qml" = {
+      source = ../../configs/quickshell/bar/MusicPanel.qml;
+      force = true;
+    };
+
+    # Quickshell wallpaper picker
+    ".config/quickshell/wallpaper" = {
+      source = ../../configs/quickshell/wallpaper;
+      recursive = true;
+      force = true;
+    };
+
+    # Matugen
+    ".config/matugen/config.toml".source = ../../configs/matugen/config.toml;
+
+    ".config/matugen/templates/colors.json".source = ../../configs/matugen/templates/colors.json;
+
     # Fastfetch
-    ".config/fastfetch/config.jsonc".source = ../../configs/fastfetch/config.jsonc;
   };
 
   # ─────────────────────────────────────────────
@@ -303,8 +335,8 @@
     flavor = "mocha";
     accent = "blue";
 
-    kitty.enable = true;
-    nvim.enable = true;
+    kitty.enable = false;
+    nvim.enable = false;
 
     vscode.profiles.default.enable = false;
 

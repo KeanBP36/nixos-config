@@ -4,10 +4,11 @@ import Quickshell.Networking
 
 Column {
     id: root
+    MatugenPalette { id: matugen }
 
     signal backRequested()
 
-    spacing: 10
+    spacing: 12
 
     // =================================
     // Header
@@ -15,58 +16,47 @@ Column {
 
     Row {
         width: parent.width
-        height: 32
-        spacing: 8
+        height: 34
+        spacing: 10
 
         Rectangle {
-            width: 32
-            height: 32
-            radius: 6
+            width: 34
+            height: 34
+            radius: width / 2
 
-            color: backMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+            color: backMouse.pressed
+                ? Qt.alpha(matugen.primary, 0.65)
+                : backMouse.containsMouse
+                    ? Qt.alpha(matugen.primary, 0.48)
+                    : Qt.alpha(matugen.primary, 0.24)
+
+            Behavior on color {
+                ColorAnimation { duration: 120 }
+            }
 
             Text {
                 anchors.centerIn: parent
-
                 text: "󰁍"
-                color: "#ffffff"
-
+                color: matugen.onSurface
                 font.pixelSize: 18
             }
 
             MouseArea {
                 id: backMouse
-
                 anchors.fill: parent
-
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                    root.backRequested()
-                }
+                onClicked: root.backRequested()
             }
         }
 
         Text {
             text: "Network"
-
-            color: "#ffffff"
-
-            font.pixelSize: 20
+            color: matugen.onSurface
+            font.pixelSize: 18
             font.bold: true
-
             anchors.verticalCenter: parent.verticalCenter
         }
-    }
-
-    Rectangle {
-        width: parent.width
-        height: 1
-
-        color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
     }
 
     // =================================
@@ -93,35 +83,41 @@ Column {
 
         spacing: 6
 
-        Text {
+        Row {
             width: parent.width
+            spacing: 8
+            leftPadding: 4
 
-            text: device
-                ? device.name
-                : "Network device"
+            Rectangle {
+                width: 8
+                height: 8
+                radius: 4
+                anchors.verticalCenter: parent.verticalCenter
 
-            color: "#ffffff"
+                color: device && device.connected
+                    ? matugen.primary
+                    : "transparent"
 
-            font.pixelSize: 14
-            font.bold: true
+                border.width: device && device.connected ? 0 : 1.5
+                border.color: Qt.darker(Qt.lighter(matugen.outline, 1.6), 1.2)
+            }
+
+            Text {
+                text: device ? device.name : "Network device"
+                color: matugen.onSurface
+                font.pixelSize: 13
+                font.bold: true
+            }
+
+            Text {
+                text: device && device.connected ? "Connected" : "Disconnected"
+                color: Qt.lighter(matugen.outline, 1.6)
+                font.pixelSize: 11
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
 
-        Text {
-            text: device && device.connected
-                ? "Connected"
-                : "Disconnected"
-
-            color: device && device.connected
-                ? "#4ec9b0"
-                : "#888888"
-
-            font.pixelSize: 11
-        }
-
-        // =================================
         // Wi-Fi networks
-        // =================================
-
         Repeater {
             model: device ? device.networks : []
 
@@ -131,37 +127,34 @@ Column {
             }
         }
 
-        // =================================
         // Disconnect
-        // =================================
-
         Rectangle {
             width: parent.width
-            height: 32
-
-            radius: 6
+            height: 34
+            radius: height / 2
 
             visible: device && device.connected
 
-            color: disconnectMouse.containsMouse
-                ? "#3a3a3a"
-                : "#252525"
+            color: disconnectMouse.pressed
+                ? matugen.primary
+                : disconnectMouse.containsMouse
+                    ? Qt.alpha(matugen.primary, 0.48)
+                    : Qt.alpha(matugen.primary, 0.24)
+
+            Behavior on color {
+                ColorAnimation { duration: 120 }
+            }
 
             Text {
                 anchors.centerIn: parent
-
                 text: "Disconnect"
-
-                color: "#ffffff"
-
+                color: disconnectMouse.pressed ? matugen.onPrimary : matugen.onSurface
                 font.pixelSize: 12
             }
 
             MouseArea {
                 id: disconnectMouse
-
                 anchors.fill: parent
-
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
@@ -182,57 +175,43 @@ Column {
 
         property var network
 
-        height: 38
+        height: 40
+        radius: height / 2
 
-        radius: 6
+        color: network && network.connected
+            ? Qt.alpha(matugen.primary, 0.48)
+            : networkMouse.containsMouse
+                ? Qt.alpha(matugen.primary, 0.36)
+                : Qt.alpha(matugen.primary, 0.18)
 
-        color: networkMouse.containsMouse
-            ? "#3a3a3a"
-            : "#252525"
-
-        border.width:
-            network && network.connected
-                ? 1
-                : 0
-
-        border.color: "#ffffff"
+        Behavior on color {
+            ColorAnimation { duration: 120 }
+        }
 
         Row {
             anchors.fill: parent
+            anchors.leftMargin: 16
+            anchors.rightMargin: 16
 
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-
-            spacing: 8
+            spacing: 10
 
             Text {
-                text: network && network.connected
-                    ? "󰤨"
-                    : "󰤯"
-
-                color: "#ffffff"
-
-                font.pixelSize: 17
-
-                anchors.verticalCenter:
-                    parent.verticalCenter
+                text: network && network.connected ? "󰤨" : "󰤯"
+                color: matugen.onSurface
+                font.pixelSize: 16
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 width: parent.width - 30
 
-                text: network
-                    ? network.name
-                    : "Unknown"
+                text: network ? network.name : "Unknown"
 
-                color: "#d4d4d4"
-
+                color: matugen.onSurface
                 font.pixelSize: 12
-
                 elide: Text.ElideRight
 
-                anchors.verticalCenter:
-                    parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
 
@@ -240,7 +219,6 @@ Column {
             id: networkMouse
 
             anchors.fill: parent
-
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
 

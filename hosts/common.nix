@@ -108,6 +108,7 @@
   environment.variables = {
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
+    QML_IMPORT_PATH = "${pkgs.qt6.qt5compat}/lib/qt-6/qml";
   };
 
   # Virtualization: QEMU/KVM and libvirt
@@ -180,6 +181,7 @@
     wget
     tree
     btop
+    nvtopPackages.full
     mpvpaper
     gcc
     wlr-randr
@@ -190,7 +192,6 @@
     mako
     hyprlock
     hypridle
-    awww
     bibata-cursors
     wl-clipboard
     grim
@@ -203,6 +204,9 @@
     ntfs3g
     kdePackages.kwallet
     kdePackages.kwalletmanager
+    awww
+    qt6.qt5compat
+    mutagen
 
     btrfs-assistant
     btrfs-progs
@@ -210,7 +214,6 @@
     snapper-gui
     polkit_gnome
     wezterm
-    zoxide
 
     unstable.mullvad-vpn
   ];

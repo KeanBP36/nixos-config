@@ -3,6 +3,7 @@ import Quickshell
 
 PopupWindow {
     id: popup
+    MatugenPalette { id: matugen }
 
     property Item anchorItem
     property string page: "main"
@@ -10,6 +11,7 @@ PopupWindow {
     anchor.item: anchorItem
     anchor.edges: Edges.Bottom | Edges.Right
     anchor.gravity: Edges.Bottom | Edges.Right
+    anchor.margins.bottom: -10 
 
     implicitWidth: 340
     implicitHeight: 500
@@ -18,16 +20,20 @@ PopupWindow {
 
     grabFocus: true
 
+    // Always reopen on the main page
+    onVisibleChanged: {
+        if (!visible)
+            page = "main";
+    }
+
     Rectangle {
         anchors.fill: parent
 
-        // Dark transparent glass
-        color: Qt.rgba(0.08, 0.08, 0.08, 0.75)
+        color: Qt.alpha(matugen.surface, 0.70)
+        radius: 16
 
-        radius: 10
-
-        border.width: 3
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.18)
+        border.width: 1
+        border.color: Qt.alpha(matugen.outlineVariant, 0.12)
 
         // =================================
         // Main menu
@@ -36,29 +42,17 @@ PopupWindow {
         Column {
             anchors.fill: parent
             anchors.margins: 16
-            spacing: 12
+            spacing: 10
 
             visible: popup.page === "main"
 
             Text {
                 text: "Control Panel"
-
-                color: "#ffffff"
-
-                font.pixelSize: 20
+                color: root.foreground
+                font.pixelSize: 18
                 font.bold: true
+                bottomPadding: 6
             }
-
-            Rectangle {
-                width: parent.width
-                height: 1
-
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
-            }
-
-            // =========================
-            // Audio / Network
-            // =========================
 
             Row {
                 width: parent.width
@@ -66,30 +60,18 @@ PopupWindow {
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰕾"
                     label: "Audio"
-
-                    onClicked: {
-                        popup.page = "audio"
-                    }
+                    onClicked: popup.page = "audio"
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰤨"
                     label: "Network"
-
-                    onClicked: {
-                        popup.page = "network"
-                    }
+                    onClicked: popup.page = "network"
                 }
             }
-
-            // =========================
-            // Bluetooth / Lock
-            // =========================
 
             Row {
                 width: parent.width
@@ -97,152 +79,102 @@ PopupWindow {
 
                 QuickButton {
                     width: (parent.width - 8) / 2
-
                     icon: "󰂯"
                     label: "Bluetooth"
-
-                    onClicked: {
-                        popup.page = "bluetooth"
-                    }
+                    onClicked: popup.page = "bluetooth"
                 }
 
                 QuickButton {
                     width: (parent.width - 8) / 2
+                    icon: "󰂚"
+                    label: "Notifications"
+                    onClicked: popup.page = "notifications"
+                }
+            }
 
+            Item { width: 1; height: 8 }
+
+            Row {
+                width: parent.width
+                spacing: 8
+
+                QuickButton {
+                    width: (parent.width - 8) / 2
                     icon: "󰌾"
                     label: "Lock"
+                    onClicked: Quickshell.execDetached(["hyprlock"])
+                }
 
-                    onClicked: {
-                        Quickshell.execDetached([
-                            "hyprlock"
-                        ])
-                    }
+                QuickButton {
+                    width: (parent.width - 8) / 2
+                    icon: "󰒲"
+                    label: "Sleep"
+                    onClicked: Quickshell.execDetached(["systemctl", "suspend"])
                 }
             }
 
-            // =========================
-            // Separator
-            // =========================
-
-            Rectangle {
+            Row {
                 width: parent.width
-                height: 1
+                spacing: 8
 
-                color: Qt.rgba(0.83, 0.83, 0.83, 0.15)
-            }
-
-            // =========================
-            // Power
-            // =========================
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰐥"
-                label: "Power Off"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "poweroff"
-                    ])
+                QuickButton {
+                    width: (parent.width - 8) / 2
+                    icon: "󰜉"
+                    label: "Reboot"
+                    onClicked: Quickshell.execDetached(["systemctl", "reboot"])
                 }
-            }
 
-            QuickButton {
-                width: parent.width
-
-                icon: "󰜉"
-                label: "Reboot"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "reboot"
-                    ])
-                }
-            }
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰒲"
-                label: "Sleep"
-
-                onClicked: {
-                    Quickshell.execDetached([
-                        "systemctl",
-                        "suspend"
-                    ])
-                }
-            }
-
-            QuickButton {
-                width: parent.width
-
-                icon: "󰍃"
-                label: "Logout"
-
-                onClicked: {
-                    Quickshell.execDetached([
+                QuickButton {
+                    width: (parent.width - 8) / 2
+                    icon: "󰍃"
+                    label: "Logout"
+                    onClicked: Quickshell.execDetached([
                         "loginctl",
                         "terminate-user",
                         "keanbp"
                     ])
                 }
             }
-        }
 
-        // =================================
-        // Audio submenu
-        // =================================
-
-        AudioPanel {
-            anchors.fill: parent
-            anchors.margins: 16
-
-            visible: popup.page === "audio"
-
-            onBackRequested: {
-                popup.page = "main"
+            QuickButton {
+                width: parent.width
+                icon: "󰐥"
+                label: "Power Off"
+                onClicked: Quickshell.execDetached(["systemctl", "poweroff"])
             }
         }
 
-        // =================================
-        // Network submenu
-        // =================================
+        // Submenus
+        AudioPanel {
+            anchors.fill: parent
+            anchors.margins: 16
+            visible: popup.page === "audio"
+            onBackRequested: popup.page = "main"
+        }
 
         NetworkPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "network"
-
-            onBackRequested: {
-                popup.page = "main"
-            }
+            onBackRequested: popup.page = "main"
         }
-
-        // =================================
-        // Bluetooth submenu
-        // =================================
 
         BluetoothPanel {
             anchors.fill: parent
             anchors.margins: 16
-
             visible: popup.page === "bluetooth"
+            onBackRequested: popup.page = "main"
+        }
 
-            onBackRequested: {
-                popup.page = "main"
-            }
+        NotificationPanel {
+            anchors.fill: parent
+            anchors.margins: 16
+            visible: popup.page === "notifications"
+            onBackRequested: popup.page = "main"
         }
     }
 
-    // =================================
-    // Reusable button
-    // =================================
-
+    // Reusable pill button
     component QuickButton: Rectangle {
         id: button
 
@@ -251,59 +183,44 @@ PopupWindow {
 
         signal clicked()
 
-        height: 52
+        height: 46
+        radius: height / 2
 
-        radius: 7
-
-        color: mouse.containsMouse
-            ? Qt.rgba(0.23, 0.23, 0.23, 0.82)
-            : Qt.rgba(0.16, 0.16, 0.16, 0.72)
-
-        border.width: 1
-        border.color: Qt.rgba(0.83, 0.83, 0.83, 0.12)
+        color: mouse.pressed
+            ? matugen.primary
+            : mouse.containsMouse
+                ? Qt.alpha(matugen.primary, 0.75)
+                : Qt.alpha(matugen.primary, 0.20)
 
         Behavior on color {
-            ColorAnimation {
-                duration: 100
-            }
+            ColorAnimation { duration: 120 }
         }
 
         Row {
             anchors.centerIn: parent
-
             spacing: 10
 
             Text {
                 text: button.icon
-
-                color: "#ffffff"
-
-                font.pixelSize: 20
+                color: root.foreground
+                font.pixelSize: 18
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 text: button.label
-
-                color: "#ffffff"
-
-                font.pixelSize: 14
-
+                color: root.foreground
+                font.pixelSize: 13
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
 
         MouseArea {
             id: mouse
-
             anchors.fill: parent
-
             hoverEnabled: true
-
             cursorShape: Qt.PointingHandCursor
-
-            onClicked: {
-                button.clicked()
-            }
+            onClicked: button.clicked()
         }
     }
 }

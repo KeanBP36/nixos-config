@@ -32,7 +32,12 @@
         org.vinegarhq.Sober \
         com.github.tchx84.Flatseal \
         com.heroicgameslauncher.hgl \
-        com.visualstudio.code
+        io.github.Soundux \
+        org.torproject.torbrowser-launcher \
+        com.oppzippy.OpenSCQ30 \
+        it.mijorus.gearlever \
+       net.lutris.Lutris 
+
 
       # Mortar isn't on Flathub yet; install it from the developer's own repo
       ${pkgs.flatpak}/bin/flatpak install -y --system \

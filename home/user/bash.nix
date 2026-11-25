@@ -12,6 +12,7 @@
       nixhome = "find /etc/nixos-config/home -type f | sort";
       nixhosts = "find /etc/nixos-config/hosts -type f | sort";
       nixmodules = "find /etc/nixos-config/modules -type f | sort";
+      rwall = " bash ~/.config/quickshell/wallpaper/cache.sh ~/.config/quickshell/wallpaper";
 
       nixtree = "tree /etc/nixos-config";
 
